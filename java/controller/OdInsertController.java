@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import dao.OrderDaoImpl;
+import dto.Address;
 import dto.Cart;
 import dto.Customer;
 import dto.Order;
@@ -36,6 +37,8 @@ public class OdInsertController {
 				product.setQuantity(quantity);
 				List<Product> products = new ArrayList<Product>();
 				products.add(product);
+				int point = orderDaoImpl.selectPoint(customer.getEmail());
+				model.addAttribute("point", point);
 				model.addAttribute("products", products);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -47,7 +50,7 @@ public class OdInsertController {
 		}
 	}
 	
-
+	//장바구니에서 결제페이지 이동
 	@PostMapping("customer/order")
 	public String form(HttpSession session, @RequestParam("cartid")ArrayList<Integer> cartidList, Model model) {
 		Customer customer = (Customer)session.getAttribute("authInfo");
@@ -55,6 +58,8 @@ public class OdInsertController {
 			try {
 				List<Cart> cartList = orderDaoImpl.selectCartList(cartidList);
 				model.addAttribute("products", cartList);
+				int point = orderDaoImpl.selectPoint(customer.getEmail());
+				model.addAttribute("point", point);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -65,14 +70,35 @@ public class OdInsertController {
 		}
 	}
 	
+	//주문하기를 눌렀을 떄
 	@GetMapping("customer/payment")
-	public String action1(HttpSession session, OrderPage orderPage, @RequestParam("point") int point) {
+	public String action1(HttpSession session, OrderPage orderPage, Address address,@RequestParam("point") int point) {
 		Customer customer = (Customer)session.getAttribute("authInfo");
-		point = customer.getPoint() - point;
+		
+		if(address.getPostcode() != null) {
+			updateAddress(customer.getEmail(), address);
+		}
+		
+		//사용자 포인트 가지고 오기
+		int existPoint = orderDaoImpl.selectPoint(customer.getEmail());
+		point = existPoint - point;
+		
+		//총 주문 금액 가지고 오기(포인트 사용전)
+		int amount = orderPage.getAmount();
 		List<Order> orders = orderPage.getOrders();
-		orderDaoImpl.insertOrder(customer.getEmail(), orders, point);
+		
+		//주문 로직 수행
+		orderDaoImpl.insertOrder(customer.getEmail(), orders, point, amount);
+		
 		return "redirect:/customer/main"; //결제 하기 버튼을 누르면 팝업 창으로 결제하시겠습니까? 물어보기 네 하면 이 메소드로 전달
 	}
+	
+	
+	public void updateAddress(String email, Address address) {
+		String zip_code = address.getPostcode();
+		String addressinfo = address.getAddress() + " " + address.getDetailAddress();
 
+		orderDaoImpl.updateCustomerAddress(email, zip_code, addressinfo);
+	}
 	
 }
