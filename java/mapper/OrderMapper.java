@@ -9,8 +9,8 @@ import dto.Cart;
 import dto.Order;
 
 public interface OrderMapper {
-	@Insert("insert into orders(email) values(#{email})")
-	public void insertOrder(@Param("email")String email);
+	@Insert("insert into orders(email, amount) values(#{email}, #{amount})")
+	public void insertOrder(@Param("email")String email, @Param("amount")int amount);
 	
 	@Insert("insert into order_detail(oseq, pseq, quantity) values(#{oseq}, #{pseq}, #{quantity})")
 	public void insertOrderDetail(@Param("oseq")int oseq, @Param("pseq")int pseq, @Param("quantity")int quantity);
@@ -26,5 +26,14 @@ public interface OrderMapper {
 	
 	@Update("update customer set point=#{point} where email=#{email}")
 	public void updateCustomerPoint(@Param("email")String email, @Param("point")int point);
+	
+	@Select("select point from customer where email=#{email}")
+	public int selectPoint(@Param("email")String email);
+	
+	@Update("update product set quantity=quantity-#{quantity} where pseq=#{pseq}")
+	public void updateQuantity(@Param("pseq")int pseq, @Param("quantity")int quantity);
+	
+	@Update("update customer set zip_code=#{zip_code}, address=#{address} where email=#{email}")
+	public void updateAddress(@Param("zip_code")String zip_code, @Param("address")String address, @Param("email")String email);
 }
  
