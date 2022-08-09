@@ -7,8 +7,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import dto.Cart;
+import dto.Like;
 import dto.Order;
 import dto.Product;
+import mapper.CartMapper;
+import mapper.LikeMapper;
 import mapper.OrderMapper;
 import mapper.ProductMapper;
 
@@ -41,8 +44,9 @@ public class OrderDaoImpl {
 		
 			for(Order order: orderList) {
 				sqlSession.getMapper(OrderMapper.class).insertOrderDetail(maxOseq, order.getPseq(), order.getQuantity());
+				//sqlSession.getMapper(OrderMapper.class).updateCartResult(email, order.getPseq(), order.getQuantity());
 				sqlSession.getMapper(OrderMapper.class).updateCartResult(email, order.getPseq(), order.getQuantity());	
-				sqlSession.getMapper(OrderMapper.class).updateQuantity(order.getPseq(), order.getQuantity());
+				sqlSession.getMapper(OrderMapper.class).deleteCart(email, order.getPseq(), order.getQuantity());
 			}
 			sqlSession.commit();
 		}finally {
@@ -90,5 +94,33 @@ public class OrderDaoImpl {
 			sqlSession.close();
 		}
 	}
+	
+	//좋아요 판별 버튼 비활성화시 사용
+	public boolean checkLikeExist(String email, int pseq) {
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			Like like = sqlSession.getMapper(LikeMapper.class).checkLikeProduct(email, pseq);
+			if(like == null) {
+				return false; //false는 db에 값이 존재하지 않음 채워진 하트 
+			}else {
+				return true; // true는 db에 값 존재 비워진 하트
+			}
+		}finally {
+			sqlSession.close();
+		}
+	}
+	
+	//주문/배송 조회
+	public List<Order> selectOrderRecent(String email){
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			return sqlSession.getMapper(OrderMapper.class).selectRecentorder(email);
+			
+		}finally {
+			sqlSession.close();
+		}
+		
+	}
+	
 	
 }

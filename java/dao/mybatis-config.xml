@@ -24,6 +24,7 @@
     <mapper class="mapper.ProductMapper"/> 
     <mapper class="mapper.CartMapper"/> 
     <mapper class="mapper.OrderMapper"/> 
+    <mapper class="mapper.LikeMapper"/> 
    	<!-- <mapper resource = "dao/MemberMapper.xml"/> -->
   </mappers>
 </configuration>

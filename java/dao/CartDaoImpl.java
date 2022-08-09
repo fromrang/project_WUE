@@ -41,10 +41,11 @@ public class CartDaoImpl {
 		}
 	}
 	
-	public void delectCart(int cseq) {
+	public void delectCart(int cseq, String email) {
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		try {
-			sqlSession.getMapper(CartMapper.class).deleteDept(cseq);
+			sqlSession.getMapper(CartMapper.class).deleteDept(email, cseq);
+			sqlSession.commit();
 		}finally {
 			sqlSession.close();
 		}

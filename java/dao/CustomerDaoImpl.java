@@ -41,5 +41,17 @@ public class CustomerDaoImpl implements CustomerDao{
 			sqlSession.close();
 		}
 	}
+
+	@Override
+	public void CustomerJoin(Customer customer) throws Exception {
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			sqlSession.getMapper(CustomerMapper.class).insertCustomer(customer);
+			sqlSession.commit();
+		}finally {
+			sqlSession.close();
+		}
+		
+	}
 	
 }
