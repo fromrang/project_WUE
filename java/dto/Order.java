@@ -19,6 +19,7 @@ public class Order {
 	private String sale;
 	private String result;
 	private int point;
+	
 	public int getPoint() {
 		return point;
 	}

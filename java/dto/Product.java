@@ -17,6 +17,14 @@ public class Product {
 	private Date reg_date;
 	private String url;
 	private int quantity; //총 수량
+	private String like;
+
+	public String getLike() {
+		return like;
+	}
+	public void setLike(String like) {
+		this.like = like;
+	}
 	public int getQuantity() {
 		return quantity;
 	}
