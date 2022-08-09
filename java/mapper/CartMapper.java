@@ -17,8 +17,8 @@ public interface CartMapper {
 	@Select("select * from cart_view where email = #{email}")
 	public List<Cart> selectCartList(@Param("email")String email);
 	
-	@Delete("delete from cart where cseq = #{cseq}")
-    public void deleteDept(int cseq);
+	@Delete("delete from cart where cseq = #{cseq} and email = #{email}")
+    public void deleteDept(@Param("email")String email, @Param("cseq")int cseq);
 	
 	@Select("select url from pimages where pseq=#{pseq}")
 	public List<String> getImages(@Param("pseq")int pseq) throws Exception;
