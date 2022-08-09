@@ -39,44 +39,38 @@
 		form.action= "/WUE/customer/dislike="+pseq;
 		form.submit();
 	}
+	function clickBtn() {
+	   form.action = "/WUE/customer/like/delete"; 
+	   form.submit(); 
+	}
 </script>
 </head>
 <body>
 	<form action="" name='form'>
-	<span>best 상품</span>
+	<span>좋아요 누른 상품</span>
 	<ul class="cunit_thmb_lst">
-	<c:forEach var="product" items="${products}">
+	<c:forEach var="like" items="${likeList}">
+		
 		<li class="cunit_t232">
 				<div class = "cunit_prod">
-					<img src="/WUE/img/Simage/${product.url}" style="width:100px; height:100px;">
+					<input type="checkbox" name="likeid" value="${like.pseq}">
+					<img src="/WUE/img/Simage/${like.url}" style="width:100px; height:100px;">
 				</div>
-				<c:choose>
-					<c:when test="${product.like eq 'Exist'}">
-						<div>
-							<input type="button" value="좋아요 취소" onclick="disLike(${product.pseq})">
-						</div>
-					</c:when>
-					<c:otherwise>
-						<div>
-							<input type="button" value="좋아요" onclick="insertLike(${product.pseq})">
-						</div>
-					</c:otherwise>
-				</c:choose>
 			<div class = "cunit_info">
 				<div class = "title">
-					<a href="/WUE/customer/pseq=${product.pseq}"><span>${product.name}</span></a>
+					<a href="/WUE/customer/pseq=${like.pseq}"><span>${like.pname}</span></a>
 				</div>
 				<div>
 					<c:choose>
-						<c:when test="${product.sale eq 'y'}">
+						<c:when test="${like.sale eq 'y'}">
 						<div class="cunit_price">
 							<div class="before_sale_price">
-								<em class = "price">${product.price}</em>
+								<em class = "price">${like.price}</em>
 								<span>원</span>	
 							</div>
 							
 							<div class = "product_price">
-								<em class = "price">${product.sale_price}</em>
+								<em class = "price">${like.sale_price}</em>
 								<span>원</span>									
 							</div>
 						</div>
@@ -84,7 +78,7 @@
 						<c:otherwise>
 						<div class="cunit_price">
 							<div class = "product_price">
-								<em>${product.price}</em>
+								<em>${like.price}</em>
 								<span>원</span>									
 							</div>
 						</div>
@@ -95,6 +89,7 @@
 		</li>
 	</c:forEach>
 	</ul>
+	<input type="button" value="선택 상품 삭제하기" onclick="clickBtn()"/>
 	</form>
 </body>
 </html>

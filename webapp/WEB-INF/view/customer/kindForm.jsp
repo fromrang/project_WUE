@@ -32,7 +32,7 @@
 </style>
 <script type="text/javascript">
 //이름 / 값 / 저장 시킬 시간
-	function SetCookie(cookie_name, value, hours) {
+/* 	function SetCookie(cookie_name, value, hours) {
 	    if (hours) {
 	        var date = new Date();
 	        date.setTime(date.getTime() + (hours * 60 * 60 * 1000));
@@ -41,10 +41,21 @@
 	        var expires = "";
 	    }
 	    document.cookie = cookie_name+ "=" + value + expires + "; path=/";
+	} */
+	
+	function insertLike(pseq){
+		form.action = "/WUE/customer/like="+pseq;
+		form.submit();
+	}
+	
+	function disLike(pseq){
+		form.action= "/WUE/customer/dislike="+pseq;
+		form.submit();
 	}
 </script> 
 </head>
 <body>
+<form action="" name="form">
 <c:set var="size" value="${fn:length(products)}" />
 
 <div class="product_List" id ="area_itemlist">
@@ -52,9 +63,23 @@
 			<%-- <c:forEach var="product" items="${products}"> --%>
 			<c:forEach var="i" begin="0" end="${size-1}">
 				<li class="cunit_t232">
-						<div class = "cunit_prod">
-							<img src="/WUE/img/Simage/${imagebyProduct[i]}" style="width:100px; height:100px;">
-						</div>
+					<div class = "cunit_prod">
+						<img src="/WUE/img/Simage/${imagebyProduct[i]}" style="width:100px; height:100px;">
+						<span>${product[i].like}</span>
+					</div>
+					<c:choose>
+						<c:when test="${products[i].like eq 'Exist'}">
+							<div>
+								<input type="button" value="좋아요 취소" onclick="disLike(${products[i].pseq})">
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div>
+								<input type="button" value="좋아요" onclick="insertLike(${products[i].pseq})">
+							</div>
+						</c:otherwise>
+					</c:choose>
+					
 					<div class = "cunit_info">
 						<div class = "title">
 							<a href="/WUE/customer/pseq=${products[i].pseq}">${products[i].name}</a>
@@ -89,6 +114,6 @@
 			</c:forEach>
 		</ul>
 </div>
-
+</form>
 </body>
 </html>

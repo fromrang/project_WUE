@@ -24,13 +24,14 @@
 	<c:choose>
 		<c:when test="${empty sessionScope.authInfo}">
 			<a href="/WUE/customer/login">로그인</a>
-			<a href="">회원가입</a>
+			<a href="/WUE/customer/Join">회원가입</a>
 		</c:when>
 		<c:otherwise>
 			${sessionScope.authInfo.name} 님 반갑습니다.
 			<a href="/WUE/customer/cart/list">장바구니</a>
-			<a href="">마이페이지</a>
-			<a href="">로그아웃</a>
+			<a href="/WUE/customer/likeList">좋아요</a>
+			<a href="/WUE/customer/mypage">마이페이지</a>
+			<!-- <a href="/WUE/customer/logout">로그아웃</a> -->
 		</c:otherwise>
 	</c:choose>
 	

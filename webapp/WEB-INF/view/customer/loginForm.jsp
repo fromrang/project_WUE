@@ -8,6 +8,12 @@
 <meta charset="UTF-8">
 <jsp:include page = "header.jsp"/>
 <title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
+<link rel="stylesheet" 
+href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
+crossorigin="anonymous">
 	<script type="text/javascript">
 	
 		<c:if test="${member != null && member =='notid'}" var="result">
@@ -25,7 +31,7 @@
 	PW  <input type = "password" name= "pw"><p>
 	<input type="submit" value="로그인" onload="loginCheck();">
 	<input type="reset" value="취소"><br>
-	<input type='button' value= '회원가입' onclick= 'location.href= "/webapp/MemberAddSV"' />
+	<input type='button' class="btn btn-info" value= '회원가입' onclick= 'location.href= "/webapp/MemberAddSV"' />
 </fieldset>
 </form>
 </body>
