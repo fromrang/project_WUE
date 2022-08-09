@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -14,7 +15,6 @@ import dto.Customer;
 
 
 @Controller
-@RequestMapping("customer/login")
 public class CLoginController {
 	private CustomerDaoImpl customerDao;
 	public CLoginController setcustomerDao(CustomerDaoImpl customerDao) {
@@ -23,7 +23,7 @@ public class CLoginController {
 	}
 
 	//맨처음 켰을때 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = "customer/login", method = RequestMethod.GET)
 	public String form(Customer loginCommand, HttpSession session, Model model) { //session 쓰고 싶으면 넣어주면 된다. 여기서 인자 첫번째로 Member을 넣어주었기 때문에 위에 주석 처리한 부분이 필요 없다.
 		
 		if(session.getAttribute("authInfo") != null) {
@@ -38,7 +38,7 @@ public class CLoginController {
 	}
 	
 	//form에 입력하고 넘어 왔을때
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value = "customer/login", method = RequestMethod.POST)
 	//바로 이어서 쓰는게 멀티플컨트롤러
 	public String submit(Customer loginCommand, HttpSession session, HttpServletResponse response, Model model) {
 
@@ -63,5 +63,10 @@ public class CLoginController {
 			e.printStackTrace();
 			return "customer/loginForm";
 		}
+	}
+	@GetMapping("customer/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:login";
 	}
 }
