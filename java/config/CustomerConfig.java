@@ -8,11 +8,12 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
+import controller.CIdCheckController;
+import controller.CJoinController;
 import controller.CLoginController;
+import controller.CMyPageController;
 import dao.CustomerDaoImpl;
-import mapper.CustomerMapper;
 
 @Configuration
 //@Import ( CustomerMapper.class)
@@ -44,4 +45,22 @@ public class CustomerConfig {
 		
 		return logInController;
 	}
+	
+	@Bean
+	public CJoinController joinController() {
+		CJoinController joinController = new CJoinController();
+		joinController.setcustomerDao(customerDao);
+		
+		return joinController;
+	}
+	
+	@Bean
+	public CIdCheckController cIdCheckController() {
+		CIdCheckController cIdCheckController = new CIdCheckController();
+		cIdCheckController.setcustomerDao(customerDao);
+		
+		return cIdCheckController;
+	}
+	
+
 }
