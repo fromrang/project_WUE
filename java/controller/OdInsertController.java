@@ -33,12 +33,13 @@ public class OdInsertController {
 		Customer customer = (Customer)session.getAttribute("authInfo");
 		if(customer != null) {
 			try {
+				
 				Product product = orderDaoImpl.selectOne(pseq);
 				product.setQuantity(quantity);
 				List<Product> products = new ArrayList<Product>();
 				products.add(product);
-				int point = orderDaoImpl.selectPoint(customer.getEmail());
-				model.addAttribute("point", point);
+				Customer recustomer = orderDaoImpl.selectCustomer(customer.getEmail());
+				model.addAttribute("customer", recustomer);
 				model.addAttribute("products", products);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -58,8 +59,8 @@ public class OdInsertController {
 			try {
 				List<Cart> cartList = orderDaoImpl.selectCartList(cartidList);
 				model.addAttribute("products", cartList);
-				int point = orderDaoImpl.selectPoint(customer.getEmail());
-				model.addAttribute("point", point);
+				Customer recustomer = orderDaoImpl.selectCustomer(customer.getEmail());
+				model.addAttribute("customer", recustomer);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -101,4 +102,5 @@ public class OdInsertController {
 		orderDaoImpl.updateCustomerAddress(email, zip_code, addressinfo);
 	}
 	
+
 }
