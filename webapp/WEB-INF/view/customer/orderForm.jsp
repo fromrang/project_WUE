@@ -41,7 +41,7 @@
 		// 가격
 		let amount = total;
 		// 가용
-		let exist_point = ${point};
+		let exist_point = ${customer.point};
 		console.log(point)
 		if(point < 0) {
 			alert("0 보다 작은 포인트는 사용할 수 없습니다.");
@@ -49,10 +49,10 @@
 			point =  0;
 			return;
 		}
-		if(point > ${point}){
+		if(point > ${customer.point}){
 			alert("사용 가능한 포인트를 초과하였습니다.")
-			document.getElementById('point').value = ${point};
-			point =  ${point}
+			document.getElementById('point').value = ${customer.point};
+			point =  ${customer.point}
 		}
 		if(point < amount){
 			amount = amount-point;
@@ -65,7 +65,7 @@
 		
 	}
 	function submitForm(){
-		if(${sessionScope.authInfo.address==null} && document.getElementById("postcode").value == ""){
+		if(${customer.address==null} && document.getElementById("postcode").value == ""){
 			alert("우편번호를 입력해주세요.");
 		}else{
 			form.action = "/WUE/customer/payment";
@@ -98,7 +98,7 @@
 						${sessionScope.authInfo.phone}
 					</div>
 					<c:choose>
-						<c:when test="${sessionScope.authInfo.address == null}">
+						<c:when test="${customer.address == null}">
 							<div class="address_area" id="address_area">
 								<input type="text" id="postcode" name = "postcode" value = "" placeholder="우편번호">
 								<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
@@ -108,8 +108,8 @@
 						</c:when>
 						<c:otherwise>
 							<div class="address_area" id="address_area">
-								${sessionScope.authInfo.address}
-								${sessionScope.authInfo.zip_code}
+								${customer.address}
+								${customer.zip_code}
 							</div>
 						</c:otherwise>
 					</c:choose>
@@ -171,6 +171,7 @@
 											<div class = "product_price">
 												<em class = "price">${products[i].sale_price * products[i].quantity}</em>
 												<span>원</span>
+												<input type="hidden" value="${products[i].sale_price * products[i].quantity}" name="orders[${i}].payment">
 												<c:set var="total" value = "${total + products[i].sale_price * products[i].quantity}"/>
           									
 											</div>
@@ -181,6 +182,7 @@
 										<div class = "product_price">
 											<em>${products[i].price * products[i].quantity}</em>
 											<span>원</span>
+											<input type="hidden" value="${products[i].price * products[i].quantity}" name="orders[${i}].payment">
 											<c:set var="total" value = "${total + products[i].price * products[i].quantity}"/>									
 										</div>
 									</div>
@@ -204,7 +206,7 @@
 		<div class="point_use_area">
 			<div class="exist_point">
 				가용 포인트 : 
-				<span id= "exist_point">${point}</span>
+				<span id= "exist_point">${customer.point}</span>
 				<em> 점 </em>
 			</div>
 			<div class="use_point">

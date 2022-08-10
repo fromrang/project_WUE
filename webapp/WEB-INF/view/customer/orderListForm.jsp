@@ -1,11 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.Date"%>
-<%@ page import="java.text.SimpleDateFormat"%>
-<%
-Date nowTime = new Date();
-SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
-%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -128,10 +122,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 	}
 </style>
 <script type="text/javascript">
-	function cancelBtn(odseq, oseq, payment){
-		form.action = "/WUE/customer/order/delete/odseq="+odseq+"&oseq="+oseq+"&payment="+payment;
-		form.submit();
-	}
+
 </script>
 </head>
 <body>
@@ -171,7 +162,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 	<div class="codr_unit"> 
 		<table class = "cart_table">
 			<tbody>
-				<c:forEach var="order" items="${orders}">
+				<c:forEach var="order" items="${orderList}">
 					<tr class="pay_item_area" id="a">
 						<td class="area_image_item">
 							<div class = "image_unit_item">
@@ -198,40 +189,10 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 						</td>
 						<td class="delivery_Status_area">
 							<div class="delivery_Status">
-								<c:choose>
-									<c:when test="${order.result == 0}">
-										<em>주문 확인 중</em>
-									</c:when>
-									<c:when test="${order.result == 1}">
-										<em>상품 준비 중</em>
-									</c:when>
-									<c:when test="${order.result == 2}">
-										<em>배송 시작</em>
-										<span>${order.mod_date}</span>
-	
-									</c:when>
-								</c:choose>
+								<em>배송 완료</em>
 							</div>
 						</td>
-						<td class="order_delete_area">
-							<div class="order_delete">
-								<c:choose>
-									<c:when test="${order.result == 0}">
-										<div>
-											<%-- <input type="hidden" value="${order.odseq}" name="odseq">
-											<input type="hidden" value="${order.oseq}" name="oseq">
-											<input type="hidden" value="${order.payment}" name="payment"> --%>
-											<input type="button" value="주문 취소" onclick="cancelBtn(${order.odseq}, ${order.oseq}, ${order.payment});">
-										</div>
-									</c:when>
-									<c:otherwise>
-										<em>주문 취소 불가능</em>
-									</c:otherwise>
-								</c:choose>
-							</div>
-						</td>
-						
-						
+					
 					</tr>
 	
 				</c:forEach>

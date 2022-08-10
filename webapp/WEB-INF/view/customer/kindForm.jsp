@@ -82,7 +82,19 @@
 					
 					<div class = "cunit_info">
 						<div class = "title">
-							<a href="/WUE/customer/pseq=${products[i].pseq}">${products[i].name}</a>
+							<c:choose>
+								<c:when test="${products[i].quantity == 0}">
+									<span>
+										${products[i].name}
+									</span><p>
+									<span>
+										품절
+									</span>
+								</c:when>
+								<c:otherwise>
+									<a href="/WUE/customer/pseq=${products[i].pseq}">${products[i].name}</a>								
+								</c:otherwise>
+							</c:choose>
 						</div>
 						<div>
 							<c:choose>

@@ -64,7 +64,19 @@
 				</c:choose>
 			<div class = "cunit_info">
 				<div class = "title">
-					<a href="/WUE/customer/pseq=${product.pseq}"><span>${product.name}</span></a>
+					<c:choose>
+						<c:when test="${product.quantity == 0}">
+							<span>
+								${product.name}
+							</span><p>
+							<span>
+								품절
+							</span>
+						</c:when>
+						<c:otherwise>
+							<a href="/WUE/customer/pseq=${product.pseq}">${product.name}</a>								
+						</c:otherwise>
+					</c:choose>
 				</div>
 				<div>
 					<c:choose>

@@ -146,14 +146,24 @@
 	
 	function plusPrice(event){
 		var obj_length = form.productPrice.length;
-		console.log(form.productPrice);
-		var newTotalPrice = 0;
-		for (var i=0; i<obj_length; i++) {
-			if (form.cartid[i].checked == true) {
-			    newTotalPrice += Number(form.productPrice[i].value);
+		
+		/* 체크 박스 하나일때 */
+ 		if(typeof obj_length == 'undefined'){
+ 			var newTotalPrice = 0;
+			if (form.cartid.checked == true) {
+			    newTotalPrice += Number(form.productPrice.value);
 			}
+			
+			form.totalPrice.value=newTotalPrice;
+		}else{ 
+			var newTotalPrice = 0;
+			for (var i=0; i<obj_length; i++) {
+				if (form.cartid[i].checked == true) {
+				    newTotalPrice += Number(form.productPrice[i].value);
+				}
+			}
+			form.totalPrice.value=newTotalPrice;
 		}
-		form.totalPrice.value=newTotalPrice;
       
      }  
 	       
@@ -171,11 +181,35 @@
 		})
 		plusPrice(event);
 	} 
+	
+	function orderBtn(){
+		
+ 		const query = 'input[name="cartid"]:checked';
+		const selectedElements = document.querySelectorAll(query);
+		const selectedElementsCnt = selectedElements.length;
+
+		var total = form.totalPrice.value;
+		if(total == 0){
+			alert("상품 선택 후 주문해주세요");
+		}else if(selectedElementsCnt == 0){
+			form.cart.checked = true;
+			const checkboxes = document.getElementsByName('cartid');
+		
+			checkboxes.forEach((checkbox) => {
+			  checkbox.checked =true;
+			})
+			form.action = "/WUE/customer/order";
+			form.submit();
+		}else{
+			form.action = "/WUE/customer/order";
+			form.submit();
+		}
+	}
 
 </script>
 </head>
 <body>
-<form action="/WUE/customer/order" id = "form" method = 'post'>
+<form action="/WUE/customer/order" id="form" method='post'>
 <c:set var="size" value="${fn:length(cartList)}" />
 <c:choose>
 	<c:when test="${size==0}">
@@ -188,7 +222,7 @@
 <div class="cart_list">
 	
 	<div class="cart_list_up">
-			<input type="checkbox" name="cart" onclick="selectAll(this,event);">
+			<input type="checkbox" name="cart" id="cart" onclick="selectAll(this,event);" >
 		
 		<span>상품 갯수: ${size}</span>
 	</div>
@@ -202,7 +236,7 @@
 					<td class="area_image_item">
 						<div class = "image_unit_item">
 							<span class="image_chk">
-								<input type="checkbox" id = "chk_order_${cartList[i].cseq}" name="cartid" value="${cartList[i].cseq}" onclick="plusPrice(event)">							
+								<input type="checkbox" id = "chk_order_${cartList[i].cseq}" name="cartid" value="${cartList[i].cseq}" onclick="plusPrice(event)" >							
 								<label for = "chk_order_${cartList[i].cseq}">
 									<span class = "blind">
 										${cartList[i].name}
@@ -266,9 +300,9 @@
 </div>	
 </div>
 	<div>
-		<b>총액  </b><input type="text" name="totalPrice" value="${total}" disabled/>
-		<input type="submit" value="주문하기" >
-		<input type="submit" value="삭제" onclick="clickBtn();">
+		<b>총액  </b><input type="text" name="totalPrice" id = "totalPrice" value="${total}" disabled/>
+		<input type="button" value="주문하기" onclick="orderBtn();">
+		<input type="button" value="삭제" onclick="clickBtn();">
 	</div>
 </c:otherwise>
 </c:choose>

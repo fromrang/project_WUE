@@ -21,20 +21,19 @@ function useEmail() {
 	if(email.includes("@")==true){
 		str=email.split(/[@]/);
 		/* alert(str[0]); */
-		window.opener.document.getElementById("email").value=str[0];	
-		
+		window.opener.document.getElementById("email").value=str[0];
+		window.opener.document.getElementById("email").readOnly=true;
 		const el=window.opener.document.getElementById("email2");
 		const len=el.options.length;
 		for(let i=0;i<len;i++){
 			if(el.options[i].value==str[1]){
-			el.options[i].selected=true;
+				el.options[i].selected=true;
 			}
 		}
 		self.close();
 	}else{
-		
-	window.opener.document.getElementById("email").value=email;
-	self.close();
+		window.opener.document.getElementById("email").value=email;
+		self.close();
 	}
 }
 
@@ -71,16 +70,18 @@ function idCheck(){
 			  <div>
 				<c:choose>
 					<c:when test="${customer.name==null}">
-					 <p style="color: gray;">사용가능한 아이디 입니다</p>
+						<p style="color: gray;">사용가능한 아이디 입니다</p>
+						<input id="cancelBtn" type="button" value="취소">
+						<input id="useBtn" type="button" value="사용하기" onclick="useEmail()">
 					</c:when>
 					<c:otherwise>
 					<p style="color: gray;">이미 사용중인 아이디 입니다.
+					<input id="cancelBtn" type="button" value="취소">
 					</p>
 					</c:otherwise>
 				</c:choose>
 			  </div>
-			<input id="cancelBtn" type="button" value="취소">
-			<input id="useBtn" type="button" value="사용하기" onclick="useEmail()">
+			
 			</div>
 		</div>
 	</div>

@@ -12,70 +12,70 @@
 	
 	function idCheck() {
 		if(document.frmmember.email2.value == "이메일 선택"){
-	          alert("이메일을 선택하여 주세요.")}else{
-	        	  
-		window.open('Idcheck?email='+frmmember.email.value+'&email2='+frmmember.email2.value,'popup','width=500,height=300');
+	          alert("이메일을 선택하여 주세요.");
+	    }else{	  
+			window.open('Idcheck?email='+frmmember.email.value+'&email2='+frmmember.email2.value,'popup','width=500,height=300');
 		}
 	}
 	
-		 function nullCheck(){
-			 
-			 var name = document.getElementById('name');
-			 if(name.value == ""){
-		          alert("이름을 입력해 주세요!!!");                
-		          name.focus();
-		          return false;
-		          }
-		          
-			 var email=document.getElementById('email');
-			 if(email.value==""){
-				 alert('이메일을 입력해주세요!');
-				 return false;
-			 }
-			 
-			if(document.frmmember.email2.value == "이메일 선택"){
-		          alert("이메일을 선택하여 주세요.");
-		          document.frmmember.email2.focus();
-		          return false;
-		       }
-			 
-		          
-			 var pw = document.getElementById('pw');
-			 if(pw.value==""){
-					alert('비밀번호를 입력해주세요~');
-					pw.focus();
-					return false;
-			 }
-			 
-			 var pwMore=document.getElementById('pw2');
-			 if(pwMore.value==""){
-				 alert('비밀번호를 한번더 입력해주세요');
-				 pwMore.focus();
-				 return false;
-			 }
-			 
-			 if(pwMore.value!=pw.value){
-				 alert('동일한 비밀번호가 아닙니다.');
-				 return false;
-			 }
-			
-			 
-			if(document.frmmember.phone.value == "휴대전화 선택"){
-		          alert("휴대번호를 선택하여 주세요.");
-		          document.frmmember.phone.focus();
-		          return false;
-		       }
-			 
-			 
-			 var tel2=document.getElementById('phone2');
-			 var tel3=document.getElementById('phone3');
-			 if(tel2.value==""||tel3.value==""){
-				 alert('전화번호를 입력해주세요!');
-				 return false;
-			 }
-			 
-			 return true;
+	 function nullCheck(){
+		 
+		 var name = document.getElementById('name');
+		 if(name.value == ""){
+	          alert("이름을 입력해 주세요!!!");                
+	          name.focus();
+	          return false;
+	          }
+	          
+		 var email=document.getElementById('email');
+		 if(email.value==""){
+			 alert('이메일을 입력해주세요!');
+			 return false;
 		 }
+		 
+		if(document.frmmember.email2.value == "이메일 선택"){
+	          alert("이메일을 선택하여 주세요.");
+	          document.frmmember.email2.focus();
+	          return false;
+	       }
+		 
+	          
+		 var pw = document.getElementById('pw');
+		 if(pw.value==""){
+				alert('비밀번호를 입력해주세요~');
+				pw.focus();
+				return false;
+		 }
+		 
+		 var pwMore=document.getElementById('pw2');
+		 if(pwMore.value==""){
+			 alert('비밀번호를 한번더 입력해주세요');
+			 pwMore.focus();
+			 return false;
+		 }
+		 
+		 if(pwMore.value!=pw.value){
+			 alert('동일한 비밀번호가 아닙니다.');
+			 return false;
+		 }
+		
+		 
+		if(document.frmmember.phone.value == "휴대전화 선택"){
+	          alert("휴대번호를 선택하여 주세요.");
+	          document.frmmember.phone.focus();
+	          return false;
+	       }
+		 
+		 
+		 var tel2=document.getElementById('phone2');
+		 var tel3=document.getElementById('phone3');
+		 if(tel2.value==""||tel3.value==""){
+			 alert('전화번호를 입력해주세요!');
+			 return false;
+		 }
+		 
+		 return true;
+	 }
 		
 		// name=frm1  
 		 
@@ -86,11 +86,7 @@
 
 
 <!-- <form name=frm1> -->
-<form
- name="frmmember"
-action="SJoin" 
-	onsubmit="return nullCheck();" 
-	method="post" >
+<form name="frmmember" action="Join" onsubmit="return nullCheck();" method="post" >
 	<!-- true가 되어야 전송이 가능한 것, 투르가 아니면 전송을 못함 -->
 		<h1 style=" position:relative; left: 45%;">회원 가입</h1>
 		<fieldset style="width: 500px; position:relative; left: 30%;" >
@@ -109,7 +105,7 @@ action="SJoin"
       <input type=text id='email' name=email size=12 maxlength=12>&nbsp;@&nbsp;
 	<select id='email2' name=email2>
 	<option value="이메일 선택">이메일 선택</option>
-      <option value="naver.com">naver.com</option>
+    <option value="naver.com">naver.com</option>
 	<option value="gmail.com">gmail.com</option>
 	<option value="daum.net">daum.net</option>
 	<option value="nate.com">nate.com</option>
@@ -150,7 +146,7 @@ action="SJoin"
    <td colspan=2 bgcolor=white align=center height=30>   
       <input type=submit value=가입하기 >
       <input type=reset value=다시입력> 
-       <input type='reset' value='취소' onclick='location.href= "login"' />  
+       <input type='reset' value='취소' onclick='location.href= "customer/main"' />  
    </td>
 </tr>
 </table>
