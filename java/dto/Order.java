@@ -7,6 +7,7 @@ public class Order {
 	private int oseq;
 	private String email;
 	private Date reg_date;
+	private Date mod_date;
 	private int pseq;
 	private int quantity;
 	private String name;
@@ -19,7 +20,27 @@ public class Order {
 	private String sale;
 	private String result;
 	private int point;
+	private String url;
+	private int payment;
 	
+	public Date getMod_date() {
+		return mod_date;
+	}
+	public void setMod_date(Date mod_date) {
+		this.mod_date = mod_date;
+	}
+	public int getPayment() {
+		return payment;
+	}
+	public void setPayment(int payment) {
+		this.payment = payment;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
 	public int getPoint() {
 		return point;
 	}
