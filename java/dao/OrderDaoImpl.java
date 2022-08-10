@@ -7,10 +7,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import dto.Cart;
+import dto.Customer;
 import dto.Like;
 import dto.Order;
 import dto.Product;
-import mapper.CartMapper;
 import mapper.LikeMapper;
 import mapper.OrderMapper;
 import mapper.ProductMapper;
@@ -32,6 +32,16 @@ public class OrderDaoImpl {
 			sqlSession.close();
 		}
 	}
+	//사용자 데이터 가지고 오는 메소드
+	public Customer selectCustomer(String email) {
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			return sqlSession.getMapper(OrderMapper.class).selectCustomer(email);
+			
+		}finally {
+			sqlSession.close();
+		}
+	}
 	
 	
 	//주문할때 사용하는 메소드
@@ -43,7 +53,7 @@ public class OrderDaoImpl {
 			int maxOseq = sqlSession.getMapper(OrderMapper.class).selectMaxOseq();
 		
 			for(Order order: orderList) {
-				sqlSession.getMapper(OrderMapper.class).insertOrderDetail(maxOseq, order.getPseq(), order.getQuantity());
+				sqlSession.getMapper(OrderMapper.class).insertOrderDetail(maxOseq, order.getPseq(), order.getQuantity(), order.getPayment());
 				//sqlSession.getMapper(OrderMapper.class).updateCartResult(email, order.getPseq(), order.getQuantity());
 				sqlSession.getMapper(OrderMapper.class).updateCartResult(email, order.getPseq(), order.getQuantity());	
 				sqlSession.getMapper(OrderMapper.class).deleteCart(email, order.getPseq(), order.getQuantity());
@@ -111,16 +121,53 @@ public class OrderDaoImpl {
 	}
 	
 	//주문/배송 조회
-	public List<Order> selectOrderRecent(String email){
+	public List<Order> selectOrderRecent(String email) throws Exception{
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		try {
-			return sqlSession.getMapper(OrderMapper.class).selectRecentorder(email);
-			
+			List<Order> orders = new ArrayList<Order>();
+			for(Order order:sqlSession.getMapper(OrderMapper.class).selectRecentorder(email)) {
+				List<String> images =  sqlSession.getMapper(ProductMapper.class).getImages(order.getPseq());
+				order.setUrl(images.get(0));
+				orders.add(order);
+			}
+			return orders;
 		}finally {
 			sqlSession.close();
 		}
 		
 	}
 	
+	//주문 취소하기
+	public void deleteOrder(int odseq, int oseq, int payment) {
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		try {
+			sqlSession.getMapper(OrderMapper.class).deleteOrderDetail(odseq);
+			sqlSession.getMapper(OrderMapper.class).updateAmount(oseq, payment);
+			sqlSession.getMapper(OrderMapper.class).deleteOrders();
+			sqlSession.commit();
+		}finally {
+			sqlSession.close();
+		}
+	}
+	
+	//구매내역 보기
+	public List<Order> selectOrderList(String email) throws Exception{
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		try {
+			
+			List<Order> orders = new ArrayList<Order>();
+			for(Order order:sqlSession.getMapper(OrderMapper.class).selectOrderList(email)) {
+				List<String> images =  sqlSession.getMapper(ProductMapper.class).getImages(order.getPseq());
+				order.setUrl(images.get(0));
+				orders.add(order);
+			}
+			return orders;
+
+		}finally {
+			sqlSession.close();
+		}
+	}
 	
 }
