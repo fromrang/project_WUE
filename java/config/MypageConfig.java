@@ -13,6 +13,7 @@ import controller.CMyPageController;
 import dao.CustomerDaoImpl;
 import dao.LikeDaoImpl;
 import dao.OrderDaoImpl;
+import dao.ReviewDaoImpl;
 
 
 @Configuration
@@ -20,6 +21,8 @@ public class MypageConfig {
 	private CustomerDaoImpl customerDao;
 	@Autowired
 	private LikeDaoImpl likeDao;
+	@Autowired
+	private ReviewDaoImpl reviewDao;
 	private OrderDaoImpl orderDao;
 
 	private SqlSessionFactory sqlSessionFactory;
@@ -54,9 +57,16 @@ public class MypageConfig {
 	}
 	
 	@Bean
+	public ReviewDaoImpl reviewDao() {
+		ReviewDaoImpl reviewDao = new ReviewDaoImpl();
+		reviewDao.setDataSource(sqlSessionFactory);
+		return reviewDao;
+	}
+	
+	@Bean
 	public CMyPageController cMyPageController() {
 		CMyPageController cMyPageController = new CMyPageController();
-		cMyPageController.setDao(customerDao, likeDao, orderDao());
+		cMyPageController.setDao(customerDao, likeDao, orderDao(), reviewDao);
 		return cMyPageController;
 	}
 
