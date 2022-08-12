@@ -5,6 +5,7 @@ import java.util.Date;
 public class Order {
 	private int odseq;
 	private int oseq;
+	private int sseq;
 	private String email;
 	private Date reg_date;
 	private Date mod_date;
@@ -23,6 +24,14 @@ public class Order {
 	private String url;
 	private int payment;
 	
+	
+	
+	public int getSseq() {
+		return sseq;
+	}
+	public void setSseq(int sseq) {
+		this.sseq = sseq;
+	}
 	public Date getMod_date() {
 		return mod_date;
 	}
