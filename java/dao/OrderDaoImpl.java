@@ -57,6 +57,7 @@ public class OrderDaoImpl {
 				//sqlSession.getMapper(OrderMapper.class).updateCartResult(email, order.getPseq(), order.getQuantity());
 				sqlSession.getMapper(OrderMapper.class).updateCartResult(email, order.getPseq(), order.getQuantity());	
 				sqlSession.getMapper(OrderMapper.class).deleteCart(email, order.getPseq(), order.getQuantity());
+				sqlSession.getMapper(OrderMapper.class).updateQuantity(order.getPseq(), order.getQuantity());
 			}
 			sqlSession.commit();
 		}finally {
@@ -140,11 +141,16 @@ public class OrderDaoImpl {
 	//주문 취소하기
 	public void deleteOrder(int odseq, int oseq, int payment) {
 		SqlSession sqlSession = sqlSessionFactory.openSession();
-		
 		try {
+			//수량 가지고 와서 상품 주량 추가하기
+			Order order = sqlSession.getMapper(OrderMapper.class).selectOrderDetailByOdseq(odseq);
+			
 			sqlSession.getMapper(OrderMapper.class).deleteOrderDetail(odseq);
 			sqlSession.getMapper(OrderMapper.class).updateAmount(oseq, payment);
 			sqlSession.getMapper(OrderMapper.class).deleteOrders();
+			
+			
+			sqlSession.getMapper(OrderMapper.class).updateProductQua(order.getPseq(), order.getQuantity());
 			sqlSession.commit();
 		}finally {
 			sqlSession.close();
@@ -170,4 +176,19 @@ public class OrderDaoImpl {
 		}
 	}
 	
+	//주문 코드로 주문 내역 가지고 오기
+	public Order selectOrderView(int odseq) throws Exception{
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		try {
+			Order order = sqlSession.getMapper(OrderMapper.class).selectOrderView(odseq);
+			List<String> images =  sqlSession.getMapper(ProductMapper.class).getImages(order.getPseq());
+			order.setUrl(images.get(0));
+			
+			return order;
+
+		}finally {
+			sqlSession.close();
+		}
+	}
 }

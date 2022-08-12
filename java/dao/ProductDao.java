@@ -15,4 +15,5 @@ public interface ProductDao {
 	List<String> selectAllImage(int pseq) throws Exception;
 	//String selectQuantity(int pseq) throws Exception;
 	String checkLikeExist(String email, int pseq);
+	
 }
