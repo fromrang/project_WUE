@@ -11,11 +11,13 @@
 	<script type="text/javascript">
 	
 	function idCheck() {
-		if(document.frmmember.email2.value == "이메일 선택"){
+/* 		if(document.frmmember.email2.value == "이메일 선택"){
 	          alert("이메일을 선택하여 주세요.");
 	    }else{	  
 			window.open('Idcheck?email='+frmmember.email.value+'&email2='+frmmember.email2.value,'popup','width=500,height=300');
-		}
+		} */
+		
+		window.open('Idcheck?email='+frmmember.email.value+'&email2='+frmmember.email2.value,'popup','width=500,height=300');
 	}
 	
 	 function nullCheck(){
@@ -97,13 +99,13 @@
 <tr>
    <td colspan=1 bgcolor=MistyRose align=center>이름</td>
    <td><input type=text id='name' name='name' size=12 maxlength=20
-   pattern="^[가-힣]*{2,10}" >&nbsp;(한글 2자~10자로 입력해주세요)</td>
+   pattern="^[가-힣]*{2,10}">&nbsp;(한글 2자~10자로 입력해주세요)</td>
 </tr>
 <tr>
    <td colspan=1 bgcolor=MistyRose align=center>E-mail주소 </td>
    <td>
-      <input type=text id='email' name=email size=12 maxlength=12>&nbsp;@&nbsp;
-	<select id='email2' name=email2>
+      <input type=text id='email' name=email size=12 maxlength=12 onclick="idCheck()" readonly>&nbsp;@&nbsp;
+	<select id='email2' name=email2 >
 	<option value="이메일 선택">이메일 선택</option>
     <option value="naver.com">naver.com</option>
 	<option value="gmail.com">gmail.com</option>

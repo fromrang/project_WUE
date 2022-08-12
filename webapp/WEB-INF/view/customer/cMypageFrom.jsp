@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.Date"%>
-<%@ page import="java.text.SimpleDateFormat"%>
-<%
-Date nowTime = new Date();
-SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
-%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -148,10 +143,10 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 <th onclick="location.href='likeList'">좋아요</th>
 </tr>
 <tr>
-<th onclick="location.href='kind=1'">마이 리뷰</th>
+<th onclick="location.href='review'">마이 리뷰</th>
 </tr>
 <tr>
-<th onclick="location.href='kind=1'">회원정보 변경</th>
+<th onclick="location.href='change'">회원정보 변경</th>
 </tr>
 </table>
 </nav>
@@ -206,8 +201,9 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 										<em>상품 준비 중</em>
 									</c:when>
 									<c:when test="${order.result == 2}">
-										<em>배송 시작</em>
-										<span>${order.mod_date}</span>
+										<em>배송 시작</em><p>
+										<%-- <span>${order.mod_date}</span> --%>
+										<fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${order.mod_date}" />
 	
 									</c:when>
 								</c:choose>

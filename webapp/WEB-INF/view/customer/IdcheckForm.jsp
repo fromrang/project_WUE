@@ -16,6 +16,7 @@
 
 </style>
 <script type="text/javascript">
+document.getElementById("msg").style.display = "none";
 function useEmail() {
 	var email= idcheck.email.value;
 	if(email.includes("@")==true){
@@ -46,7 +47,9 @@ function idCheck(){
          alert("이메일 형식이 틀립니다.다시 입력해주세요");                
 		email.focus();
          return false;
-         }
+    }else{
+    	alert("이메일 형식으로 입력해주세요.")
+    }
 	return true;
 }
 </script>
@@ -62,12 +65,12 @@ function idCheck(){
 		<div id="chk">
 			<form action="Idcheck" method="get" name="idcheck" onsubmit="idCheck()">
 				<input type="text" name="email" value="${param.email}">
-					<input type="submit" value="다시 중복확인">
+					<input type="submit" value="중복확인">
 					<input type="hidden" name="email2" value="${param.email2}">
 			</form>
 			<div id="msg">
 			<br>
-			  <div>
+			  <div id="msg2">
 				<c:choose>
 					<c:when test="${customer.name==null}">
 						<p style="color: gray;">사용가능한 아이디 입니다</p>
@@ -75,9 +78,9 @@ function idCheck(){
 						<input id="useBtn" type="button" value="사용하기" onclick="useEmail()">
 					</c:when>
 					<c:otherwise>
-					<p style="color: gray;">이미 사용중인 아이디 입니다.
+					<p style="color: gray;">이미 사용중인 아이디 입니다.</p>
 					<input id="cancelBtn" type="button" value="취소">
-					</p>
+					
 					</c:otherwise>
 				</c:choose>
 			  </div>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -123,7 +123,10 @@
 	}
 </style>
 <script type="text/javascript">
-
+	function logoutBtn(){
+		form.action = "/WUE/customer/logout";
+		form.submit();
+	}
 </script>
 </head>
 <body>
@@ -143,7 +146,7 @@
 <th onclick="location.href='review'">마이 리뷰</th>
 </tr>
 <tr>
-<th onclick="location.href='kind=1'">회원정보 변경</th>
+<th onclick="location.href='change'">회원정보 변경</th>
 </tr>
 </table>
 </nav>
@@ -158,49 +161,9 @@
 		</h2>
 	</div>
 	<h3>
-		구매 내역 보기
+		회원 정보 변경
 	</h3>
-	<div class="codr_unit"> 
-		<table class = "cart_table">
-			<tbody>
-				<c:forEach var="order" items="${orderList}">
-					<tr class="pay_item_area" id="a">
-						<td class="area_image_item">
-							<div class = "image_unit_item">
-								<span class="image_item">
-									<img src="/WUE/img/Simage/${order.url}">
-								</span>	
-							</div>
-						</td>	
-						<td class="name_item">
-							<a href="/WUE/customer/pseq=${order.pseq}">${order.pname}</a></td>	
-						<td class="price_item_quantity">
-							<div class="cunit_price">
-								<div class = "product_price">
-									<span class="paymeny">
-										<em>${order.payment}</em>
-										<span>원</span>
-									</span>
-								</div>
-							</div>
-							<div class="codr_unit_amount">
-								<em>${order.quantity}</em>
-								<span>개</span>		
-							</div>
-						</td>
-						<td class="delivery_Status_area">
-							<div class="delivery_Status">
-								<em>주문 날짜</em><p>
-								<fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${order.mod_date}" />
-							</div>
-						</td>
-					
-					</tr>
-	
-				</c:forEach>
-			</tbody>
-		</table>
-	</div>	
+	<input type="button" value="로그아웃" onclick="logoutBtn()">
 </article>
 </main>
 </form>
