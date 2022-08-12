@@ -2,6 +2,7 @@ package mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -23,4 +24,15 @@ public interface ProductMapper {
 	@Select("select url from pimages where pseq=#{pseq}")
 	public List<String> getImages(@Param("pseq")int pseq) throws Exception;
 
+
+	//===============================================================
+	
+	@Insert("insert into product(name,kind,cost,price,sale_price,sale,sseq,quantity) values()")
+	public void SaddProduct(Product product,@Param("sseq") int sseq) throws Exception;
+	
+	@Insert("insert into pimages(url,pseq) values(#{url},#{pseq})")
+	public void SAddProductImage(@Param("url") String url,@Param("pseq") int pseq) throws Exception;
+	
+	@Select("SELECT pseq FROM product order by pseq desc limit 1")
+	public int selectPseqByAdd()throws Exception;
 }
