@@ -73,23 +73,28 @@ public class OdInsertController {
 	
 	//주문하기를 눌렀을 떄
 	@GetMapping("customer/payment")
-	public String action1(HttpSession session, OrderPage orderPage, Address address,@RequestParam("point") int point) {
+	public String action1(HttpSession session, OrderPage orderPage, Address address, @RequestParam("point") int usedPoint) {
 		Customer customer = (Customer)session.getAttribute("authInfo");
-		
+		System.out.println("사용 포인트: " + usedPoint);
+		System.out.println("결제 금액: "+  orderPage.getAmount());
 		if(address.getPostcode() != null) {
 			updateAddress(customer.getEmail(), address);
 		}
 		
 		//사용자 포인트 가지고 오기
 		int existPoint = orderDaoImpl.selectPoint(customer.getEmail());
-		point = existPoint - point;
+		int revisePoint = existPoint - usedPoint;
+		System.out.println("수정될 포인트: "+revisePoint);
 		
 		//총 주문 금액 가지고 오기(포인트 사용전)
 		int amount = orderPage.getAmount();
 		List<Order> orders = orderPage.getOrders();
 		
 		//주문 로직 수행
-		orderDaoImpl.insertOrder(customer.getEmail(), orders, point, amount);
+		orderDaoImpl.insertOrder(customer.getEmail(), orders, revisePoint, amount, usedPoint);
+		
+		//포인트 적립 수행
+		calculatePoint(customer.getEmail(), amount-usedPoint);
 		
 		return "redirect:/customer/main"; //결제 하기 버튼을 누르면 팝업 창으로 결제하시겠습니까? 물어보기 네 하면 이 메소드로 전달
 	}
@@ -102,5 +107,21 @@ public class OdInsertController {
 		orderDaoImpl.updateCustomerAddress(email, zip_code, addressinfo);
 	}
 	
+	//등급별로 포인트 적립할 수 있도록 하기
+	public void calculatePoint(String email, int amount) {
+		Customer customer = orderDaoImpl.selectCustomer(email);
+		String grade = customer.getGrade();
+		int accumulatePoint = 0;
+		
+		if(grade.equals("도라지")) {
+			accumulatePoint = (int) Math.round(amount * 0.003);
+		}else if(grade.equals("인삼")) {
+			accumulatePoint = (int) Math.round(amount * 0.005);
+		}else {
+			accumulatePoint = (int) Math.round(amount * 0.01);
+		}
+		System.out.println("적립 포인트: "+accumulatePoint);
+		orderDaoImpl.UpdateCustomerPoint(email, accumulatePoint);
+	}
 
 }
