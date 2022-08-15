@@ -26,7 +26,7 @@ public interface CustomerMapper {
 	@Select("select * from customer where status=1")
 	public List<Customer> getLeave()throws Exception;
 	
-	@Insert("insert into customer (name, email, pw, phone) values(#{name}, #{email}, #{pw}, #{phone})")
+	@Insert("insert into customer (name, email, pw, phone, point) values(#{name}, #{email}, #{pw}, #{phone}, 1000)")
 	public void insertCustomer(Customer customer) throws Exception;
 	//회원 수정
 	@Update("update customer set status = 1, mod_date = now() where email=#{email} and pw=#{pw}")
