@@ -7,8 +7,10 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 import dto.Like;
 import dto.Product;
+import dto.Wnotice;
 import mapper.LikeMapper;
 import mapper.ProductMapper;
+import mapper.WorkerMapper;
 
 public class ProductDaoImpl implements ProductDao{
 	private SqlSessionFactory sqlSessionFactory;
@@ -81,6 +83,49 @@ public class ProductDaoImpl implements ProductDao{
 			sqlSession.close();
 		}
 	}
+	
+	//공지사항 가지고 오기
+	public List<Wnotice> noticeList() throws Exception{
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			return sqlSession.getMapper(WorkerMapper.class).selctNotice();
 
+		}finally {
+			sqlSession.close();
+		}
+	}
+	
+	//자주하는 질문 가지고 오기
+	public List<Wnotice> questionsList() throws Exception{
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			return sqlSession.getMapper(WorkerMapper.class).selectQuestions();
+
+		}finally {
+			sqlSession.close();
+		}
+	}
+	
+	//공지사항, 자주하는 질문 detail 가지고 오기
+	public Wnotice noticeOne(int wseq) throws Exception{
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			return sqlSession.getMapper(WorkerMapper.class).selectNoticeDetail(wseq);
+
+		}finally {
+			sqlSession.close();
+		}
+	}
+	
+	//hit 1 증가 시키기
+	public void noticeHitPlus(int wseq) throws Exception{
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			sqlSession.getMapper(WorkerMapper.class).hitsPlusOne(wseq);
+			sqlSession.commit();
+		}finally {
+			sqlSession.close();
+		}
+	}
 
 }
