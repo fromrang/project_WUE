@@ -151,7 +151,7 @@
 	<article style="padding-left: 50px;">
 	<div>
 		<h1>
-			${sessionScope.authInfo.name}님
+			${sessionScope.cAuthInfo.name}님
 		</h1>
 		<h2>
 			point : ${customer.point}점	

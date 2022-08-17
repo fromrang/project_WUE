@@ -38,11 +38,15 @@
 	function changeamount(total){
 		// 사용할 포인트
 		let point = Number(document.getElementById('point').value);
+		if(point == 0){
+			document.getElementById('point').value = 0;
+			point = 0;
+			return;
+		}
 		// 가격
 		let amount = total;
 		// 가용
 		let exist_point = ${customer.point};
-		console.log(point)
 		if(point < 0) {
 			alert("0 보다 작은 포인트는 사용할 수 없습니다.");
 			document.getElementById('point').value = 0;
@@ -54,7 +58,7 @@
 			document.getElementById('point').value = ${customer.point};
 			point =  ${customer.point}
 		}
-		if(point < amount){
+		if(point <= amount){
 			amount = amount-point;
 			exist_point = exist_point - point;
 			document.getElementById("total").innerText = amount;
@@ -77,7 +81,7 @@
 <body>
 
 <c:set var="size" value="${fn:length(products)}" />
-<form action="/WUE/customer/payment" method = "get" name = "form">
+<form action="/WUE/customer/payment" method = "post" name = "form">
 	<div class="order_head">
 		<h2 class="head_text_h2">
 			<span class="head_text">결제하기</span>
@@ -94,8 +98,8 @@
 				</div>
 				<div class="sub_dd">
 					<div>
-						${sessionScope.authInfo.name}
-						${sessionScope.authInfo.phone}
+						${sessionScope.cAuthInfo.name}
+						${sessionScope.cAuthInfo.phone}
 					</div>
 					<c:choose>
 						<c:when test="${customer.address == null}">
@@ -123,7 +127,7 @@
 				</div>
 				<div class="sub_dd">
 					<div>
-						${sessionScope.authInfo.phone}
+						${sessionScope.cAuthInfo.phone}
 					</div>
 				</div><br><br>
 				<div class="sub_dt">
@@ -131,8 +135,8 @@
 				</div>
 				<div class="sub_dd">
 					<div>
-						${sessionScope.authInfo.name}/
-						${sessionScope.authInfo.email}
+						${sessionScope.cAuthInfo.name}/
+						${sessionScope.cAuthInfo.email}
 					</div>
 				</div>
 			</div>
@@ -198,6 +202,8 @@
 				</tr>
 				<input type="hidden" value="${products[i].pseq}" name="orders[${i}].pseq">
 				<input type="hidden" value="${products[i].quantity}" name="orders[${i}].quantity">
+				<input type="hidden" value="${products[i].url}" name="orders[${i}].url">
+				<input type="hidden" value="${products[i].name}" name="orders[${i}].pname">
 			</c:forEach>
 			</tbody>
 		</table>

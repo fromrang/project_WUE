@@ -8,31 +8,53 @@
 <meta charset="UTF-8">
 <jsp:include page = "header.jsp"/>
 <title>Insert title here</title>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
-<link rel="stylesheet" 
-href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
-integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
-crossorigin="anonymous">
-	<script type="text/javascript">
-	
-		<c:if test="${member != null && member =='notid'}" var="result">
-			alert('회원정보가 없거나 비밀번호가 틀렸습니다.');
-		</c:if>
+<style>
+.field{
+	width:300px;
+	height:30px;
+	}
+.login-btn{
+	border: none;
+	width:305px;
+	height:30px;
+	border-radius: 5px;
+	background-color: #FEDD89;
+	color: #12467a;
+	cursor:pointer;
+	}
+.message{
+	font-size: 12px;
+	color: red;
+	}
+.signup-btn{
+	padding: 0;
+	border: none;
+	background: none;
+	cursor:pointer;
+	color: #12467a;
+	}
+fieldset{
+	border:5;
+}
+</style>
 
-	</script>
 </head>
 <body>
-
 <form action="/WUE/customer/login" method="post" >
-<fieldset style="margin: auto; width: 220px; margin-top: 250px">
-	<legend>로그인</legend>
-	EAMIL  <input type = "text" name="email" value= "${member.email}">${notMember}<p>
-	PW  <input type = "password" name= "pw"><p>
-	<input type="submit" value="로그인" onload="loginCheck();">
-	<input type="reset" value="취소"><br>
-	<input type='button' class="btn btn-info" value= '회원가입' onclick= 'location.href= "/webapp/MemberAddSV"' />
-</fieldset>
+	<h1 style="text-align:center; margin-top: 80px; color: #12467a;">LOGIN</h1>
+	<fieldset style="margin: auto; width: 300px; height:230px;">
+		<p></p>
+		<input class="field" type="text" name="email" value= "${member.email}"  placeholder="EMAIL" size = "30" autofocus><p>
+		<input class="field" type="password" name= "pw" placeholder="PASSWORD" size = "30" >
+		<div style="height:10px;">
+			<span class="message">
+			${notMember}
+			</span>
+		</div><p>
+		<input type="submit" class="login-btn" value="로그인" onload="loginCheck();" size = "100">
+		<p>
+		<input type='button' class="signup-btn" value= '아직 회원이 아니신가요?' onclick= 'location.href= "joinForm"' />
+	</fieldset>
 </form>
 </body>
 </html>
