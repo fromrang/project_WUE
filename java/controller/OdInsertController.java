@@ -30,7 +30,7 @@ public class OdInsertController {
 	//결제 페이지로 정보 가지고 이동
 	@GetMapping("customer/order")
 	public String form(HttpSession session, @RequestParam("pseq")int pseq, @RequestParam("quantity") int quantity, Model model) {
-		Customer customer = (Customer)session.getAttribute("authInfo");
+		Customer customer = (Customer)session.getAttribute("cAuthInfo");
 		if(customer != null) {
 			try {
 				
@@ -54,7 +54,7 @@ public class OdInsertController {
 	//장바구니에서 결제페이지 이동
 	@PostMapping("customer/order")
 	public String form(HttpSession session, @RequestParam("cartid")ArrayList<Integer> cartidList, Model model) {
-		Customer customer = (Customer)session.getAttribute("authInfo");
+		Customer customer = (Customer)session.getAttribute("cAuthInfo");
 		if(customer != null) {
 			try {
 				List<Cart> cartList = orderDaoImpl.selectCartList(cartidList);
@@ -72,9 +72,9 @@ public class OdInsertController {
 	}
 	
 	//주문하기를 눌렀을 떄
-	@GetMapping("customer/payment")
-	public String action1(HttpSession session, OrderPage orderPage, Address address, @RequestParam("point") int usedPoint) {
-		Customer customer = (Customer)session.getAttribute("authInfo");
+	@PostMapping("customer/payment")
+	public String action1(HttpSession session, OrderPage orderPage, Address address, @RequestParam("point") int usedPoint, Model model) {
+		Customer customer = (Customer)session.getAttribute("cAuthInfo");
 		System.out.println("사용 포인트: " + usedPoint);
 		System.out.println("결제 금액: "+  orderPage.getAmount());
 		if(address.getPostcode() != null) {
@@ -93,10 +93,10 @@ public class OdInsertController {
 		//주문 로직 수행
 		orderDaoImpl.insertOrder(customer.getEmail(), orders, revisePoint, amount, usedPoint);
 		
-		//포인트 적립 수행
-		calculatePoint(customer.getEmail(), amount-usedPoint);
-		
-		return "redirect:/customer/main"; //결제 하기 버튼을 누르면 팝업 창으로 결제하시겠습니까? 물어보기 네 하면 이 메소드로 전달
+		//포인트 적립 수행-> 취소
+		//calculatePoint(customer.getEmail(), amount-usedPoint);
+		model.addAttribute("orders", orders);
+		return "customer/orderCompleteForm"; //결제 하기 버튼을 누르면 팝업 창으로 결제하시겠습니까? 물어보기 네 하면 이 메소드로 전달
 	}
 	
 	
