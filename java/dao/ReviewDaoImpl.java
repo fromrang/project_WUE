@@ -45,12 +45,7 @@ private SqlSessionFactory sqlSessionFactory;
 	public List<Review> writedReviewes(String email){
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		try {
-			List<Review> reviews = new ArrayList<Review>();
-			for(Review review : sqlSession.getMapper(OrderMapper.class).selectReviewAllbyEmail(email)) {
-				review.setImg_url(sqlSession.getMapper(OrderMapper.class).selectReviewImage(review.getRseq()));
-				reviews.add(review);
-			}
-			return reviews;
+			return sqlSession.getMapper(OrderMapper.class).selectReviewAllbyEmail(email);
 		}finally {
 			sqlSession.close();
 		}

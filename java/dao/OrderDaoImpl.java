@@ -45,11 +45,11 @@ public class OrderDaoImpl {
 	
 	
 	//주문할때 사용하는 메소드
-	public void insertOrder(String email, List<Order> orderList, int point, int amount) {
+	public void insertOrder(String email, List<Order> orderList, int revisePoint, int amount, int usedPoint) {
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		try {
-			sqlSession.getMapper(OrderMapper.class).insertOrder(email, amount);
-			sqlSession.getMapper(OrderMapper.class).updateCustomerPoint(email, point);
+			sqlSession.getMapper(OrderMapper.class).insertOrder(email, amount, usedPoint);
+			sqlSession.getMapper(OrderMapper.class).updateCustomerPoint(email, revisePoint);
 			int maxOseq = sqlSession.getMapper(OrderMapper.class).selectMaxOseq();
 		
 			for(Order order: orderList) {
@@ -139,17 +139,23 @@ public class OrderDaoImpl {
 	}
 	
 	//주문 취소하기
-	public void deleteOrder(int odseq, int oseq, int payment) {
+	public void deleteOrder(int odseq, int oseq, int payment, String email) {
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		try {
-			//수량 가지고 와서 상품 주량 추가하기
+			
 			Order order = sqlSession.getMapper(OrderMapper.class).selectOrderDetailByOdseq(odseq);
 			
 			sqlSession.getMapper(OrderMapper.class).deleteOrderDetail(odseq);
 			sqlSession.getMapper(OrderMapper.class).updateAmount(oseq, payment);
+			//orders amount가 0이면 전부 취소했다는 의미 전체 취소는 포인트를 돌려준다.
+			if(sqlSession.getMapper(OrderMapper.class).selectCancelPoint() != null) {
+				int used_point = Integer.parseInt(sqlSession.getMapper(OrderMapper.class).selectCancelPoint());
+				sqlSession.getMapper(OrderMapper.class).reUpdatePoint(used_point, email);
+			}
+			//orders amount = 0이면 삭제하기
 			sqlSession.getMapper(OrderMapper.class).deleteOrders();
 			
-			
+			//취소한 상품 수량 만큼 수량 추가해주기
 			sqlSession.getMapper(OrderMapper.class).updateProductQua(order.getPseq(), order.getQuantity());
 			sqlSession.commit();
 		}finally {
@@ -191,4 +197,129 @@ public class OrderDaoImpl {
 			sqlSession.close();
 		}
 	}
+	
+	//등급별로 포인트 적립하기
+	public void UpdateCustomerPoint(String email, int point){
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		try {
+			sqlSession.getMapper(OrderMapper.class).updatePoint(point, email);
+			sqlSession.commit();
+		}finally {
+			sqlSession.close();
+		}
+	}
+	
+	//==================== seller=============================
+	//seller에서 customer가 주문한 상품을 가져오는 메소드(주문번호 group by 적용 x=디테일)
+	public List<Order> SOrderList(int sseq,int oseq) throws Exception{
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			return	sqlSession.getMapper(OrderMapper.class).SOrderList(sseq,oseq);
+		}finally{
+			sqlSession.close();
+		}
+	}
+	
+	// 주문내역에 관한 총합계 
+	public int SOrderListCount(int sseq,int oseq) throws Exception{
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			return	sqlSession.getMapper(OrderMapper.class).SOrderListCount(sseq,oseq);
+		}finally{
+			sqlSession.close();
+		}
+		
+	}
+	
+	
+	
+	//주문 번호별 총 합산 금액을 가져오는 메소드
+	public List<Integer> STotalPrice(int sseq) throws Exception{
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			return	sqlSession.getMapper(OrderMapper.class).STotalPrice(sseq);
+		}finally{
+			sqlSession.close();
+		}
+		
+	}
+	
+	//주문 번호별 상품 내역을 가져오는 메소드 (주문번호 group by)
+	public List<Order> SOseqOrderList(int sseq) throws Exception{
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			return	sqlSession.getMapper(OrderMapper.class).SOseqOrderList(sseq);
+		}finally{
+			sqlSession.close();
+		}
+		
+	}
+	
+	//주문 번호별 총 갯수를 가져오는 메소드 (주문번호 group by)
+	public List<Integer> SOseqCountList(int sseq) throws Exception{
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			return	sqlSession.getMapper(OrderMapper.class).SOseqCountList(sseq);
+		}finally{
+			sqlSession.close();
+		}
+		
+	}
+	
+	//주문 번호별 총 합산 금액을 가져오는 메소드 (주문상태 적용)
+	public List<Integer> STotalPrice2(int sseq,int result) throws Exception{
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			return	sqlSession.getMapper(OrderMapper.class).STotalPrice2(sseq,result);
+		}finally{
+			sqlSession.close();
+		}
+		
+	}
+	
+	//주문 번호별 상품 내역을 가져오는 메소드 (주문번호 group by) (주문상태 적용)
+	public List<Order> SOseqOrderList2(int sseq,int result) throws Exception{
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			return	sqlSession.getMapper(OrderMapper.class).SOseqOrderList2(sseq,result);
+		}finally{
+			sqlSession.close();
+		}
+		
+	}
+	
+	//주문 번호별 총 갯수를 가져오는 메소드 (주문번호 group by) (주문상태 적용)
+	public List<Integer> SOseqCountList2(int sseq,int result) throws Exception{
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			return	sqlSession.getMapper(OrderMapper.class).SOseqCountList2(sseq,result);
+		}finally{
+			sqlSession.close();
+		}
+		
+	}
+	
+	//배송상태 변경
+	public void SOrderResultUpdate(int sseq,int oseq, int result) throws Exception{
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			sqlSession.getMapper(OrderMapper.class).SOrderResultUpdate(sseq, oseq, result);
+			sqlSession.commit();
+		}finally{
+			sqlSession.close();
+		}
+	}
+	
+	//==============================================================
+	public List<Order> WOrderList() throws Exception{
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			return	sqlSession.getMapper(OrderMapper.class).WAllOrderList();
+		}finally{
+			sqlSession.close();
+		}
+		
+	}
+		
 }
