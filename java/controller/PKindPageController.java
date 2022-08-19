@@ -23,7 +23,7 @@ public class PKindPageController {
 	}
 	@RequestMapping("customer/main/kind={kind}")
 	public String form(@PathVariable("kind") int kind, Model model, HttpSession session) {
-		Customer customer = (Customer)session.getAttribute("authInfo");
+		Customer customer = (Customer)session.getAttribute("cAuthInfo");
 		try {
 			List<Product> products = new ArrayList<Product>();
 			List<String> imagebyProduct = new ArrayList<String>();

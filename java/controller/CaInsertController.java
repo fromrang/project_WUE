@@ -22,7 +22,7 @@ public class CaInsertController {
 	}
 	@RequestMapping(method = RequestMethod.GET)
 	public String action(HttpSession session, @RequestParam("pseq")int pseq, @RequestParam("quantity") int quantity, Model model) {
-		Customer customer = (Customer)session.getAttribute("authInfo");
+		Customer customer = (Customer)session.getAttribute("cAuthInfo");
 		if(customer != null) {
 			try {
 				cartDaoImpl.insetCart(customer.getEmail(), pseq, quantity);

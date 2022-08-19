@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -26,8 +26,8 @@ public class CLoginController {
 	@RequestMapping(value = "customer/login", method = RequestMethod.GET)
 	public String form(Customer loginCommand, HttpSession session, Model model) { //session 쓰고 싶으면 넣어주면 된다. 여기서 인자 첫번째로 Member을 넣어주었기 때문에 위에 주석 처리한 부분이 필요 없다.
 		
-		if(session.getAttribute("authInfo") != null) {
-			if(((Customer)session.getAttribute("authInfo")).getEmail() != loginCommand.getEmail()){
+		if(session.getAttribute("cAuthInfo") != null) {
+			if(((Customer)session.getAttribute("cAuthInfo")).getEmail() != loginCommand.getEmail()){
 				return "customer/loginForm";
 			}
 		}else if(loginCommand != null) {
@@ -56,7 +56,7 @@ public class CLoginController {
 				//throw new Exception("회원자 없음");	
 			}
 			
-			session.setAttribute("authInfo", authInfo);
+			session.setAttribute("cAuthInfo", authInfo);
 			return "redirect:main";
 			
 		}catch(Exception e) {
@@ -64,7 +64,7 @@ public class CLoginController {
 			return "customer/loginForm";
 		}
 	}
-	@GetMapping("customer/logout")
+	@PostMapping("customer/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:login";

@@ -24,7 +24,7 @@ public class CartListController {
 	}
 	@GetMapping("customer/cart/list")
 	public String form(HttpSession session, Model model) {
-		Customer customer = (Customer)session.getAttribute("authInfo");
+		Customer customer = (Customer)session.getAttribute("cAuthInfo");
 		if(customer != null) {
 			try {
 				List<Cart> cartList = cartDaoImpl.selectCartList(customer.getEmail());
@@ -48,7 +48,7 @@ public class CartListController {
 	
 	@PostMapping("customer/cart/delete")
 	public String action(HttpSession session, @RequestParam("cartid")ArrayList<Integer> cartidList) {
-		Customer customer = (Customer)session.getAttribute("authInfo");
+		Customer customer = (Customer)session.getAttribute("cAuthInfo");
 		if(customer != null) {
 			try {
 				for(Integer cseq: cartidList) {

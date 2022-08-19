@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +52,7 @@ public class CMyPageController {
 	
 	@GetMapping("customer/mypage")
 	public String form(HttpSession session, Model model) {
-		Customer customer = (Customer)session.getAttribute("authInfo");
+		Customer customer = (Customer)session.getAttribute("cAuthInfo");
 		if(customer == null) {
 			return "redirect:login";
 		}else {
@@ -70,7 +71,7 @@ public class CMyPageController {
 	}
 	@GetMapping("customer/like={pseq}")
 	public String action(@PathVariable("pseq") int pseq, HttpServletRequest request, HttpSession session) {
-		Customer customer = (Customer)session.getAttribute("authInfo");
+		Customer customer = (Customer)session.getAttribute("cAuthInfo");
 		
 		if(customer == null) {
 			return "redirect:login";
@@ -84,7 +85,7 @@ public class CMyPageController {
 	
 	@GetMapping("customer/dislike={pseq}")
 	public String dislikeaction(@PathVariable("pseq") int pseq, HttpServletRequest request, HttpSession session) {
-		Customer customer = (Customer)session.getAttribute("authInfo");
+		Customer customer = (Customer)session.getAttribute("cAuthInfo");
 		String email = customer.getEmail();
 		if(email == null) {
 			return "redirect:login";
@@ -97,7 +98,7 @@ public class CMyPageController {
 	
 	@GetMapping("customer/likeList")
 	public String likeListForm(HttpSession session, Model model) {
-		Customer customer = (Customer)session.getAttribute("authInfo");
+		Customer customer = (Customer)session.getAttribute("cAuthInfo");
 		if(customer == null) {
 			return "redirect:login";
 		}else {
@@ -115,7 +116,7 @@ public class CMyPageController {
 	
 	@GetMapping("customer/like/delete")
 	public String likedeleteArr(HttpServletRequest request, HttpSession session, Model model, @RequestParam("likeid")ArrayList<Integer> pseqList) {
-		Customer customer = (Customer)session.getAttribute("authInfo");
+		Customer customer = (Customer)session.getAttribute("cAuthInfo");
 
 		if(customer == null) {
 			return "redirect:login";
@@ -132,11 +133,11 @@ public class CMyPageController {
 	@GetMapping("customer/order/delete/odseq={odseq}&oseq={oseq}&payment={payment}")
 	public String deleteOrder(HttpServletRequest request, HttpSession session, Model model, @PathVariable("odseq") int odseq,  @PathVariable("oseq") int oseq,  @PathVariable("payment") int payment) {
 		
-		Customer customer = (Customer)session.getAttribute("authInfo");
+		Customer customer = (Customer)session.getAttribute("cAuthInfo");
 		if(customer == null) {
 			return "redirect:login";
 		}else {
-			orderDao.deleteOrder(odseq, oseq, payment);
+			orderDao.deleteOrder(odseq, oseq, payment, customer.getEmail());
 			
 			String referer = request.getHeader("Referer"); // 헤더에서 이전 페이지를 읽는다.
 			return "redirect:"+ referer;
@@ -146,7 +147,7 @@ public class CMyPageController {
 	//구매내역 보기 - 배송완료된 상품만 볼거임
 	@GetMapping("customer/orderList")
 	public String OrderListForm(HttpSession session, Model model) {
-		Customer customer = (Customer)session.getAttribute("authInfo");
+		Customer customer = (Customer)session.getAttribute("cAuthInfo");
 		if(customer == null) {
 			return "redirect:login";
 		}else {
@@ -165,13 +166,48 @@ public class CMyPageController {
 	}
 	//회원정보 변경하기
 	@GetMapping("customer/change")
-	public String changeCustomerInfo(HttpSession session, Model model) {
+	public String updateCustomerForm(HttpSession session, Model model) throws Exception {
+		Customer customer=(Customer)session.getAttribute("cAuthInfo");
+		if(customer == null) {
+			return "redirect:login";
+		}
+		customer =customerDao.SelectCByEmail(customer.getEmail());
+		StringTokenizer st;
+		String delim = "-";
+		int tt = 0;
+		st = new StringTokenizer(customer.getPhone(), delim, false);
+		String[] tel = new String[3];
+		while (st.hasMoreTokens()) {
+			String token = st.nextToken();
+			tel[tt++] = token;
+		}
+		
+		model.addAttribute("tel",tel);
+		model.addAttribute("customer",customer);
+	      
 		return "customer/changeForm";
 	}
+
+	@PostMapping("customer/change")
+	public String updateCustomer(Customer customer,HttpServletRequest request) throws Exception {
+		String phone="";
+		phone+=request.getParameter("phone1");
+		phone+="-";
+		phone+=request.getParameter("phone2");
+		phone+="-";
+		phone+=request.getParameter("phone3");
+		customer.setPhone(phone);
+		
+		customerDao.custoemrUpdate(customer);
+		
+		return "redirect:change";
+		// redirect:member/list redirect:member/list
+	}
+	
 	//후기 클릭시 후기 작성 가능 상품과 작성한 후기 띄워주기
 	@GetMapping("customer/review")
 	public String formReview(HttpSession session, Model model) {
-		Customer customer = (Customer)session.getAttribute("authInfo");
+		Customer customer = (Customer)session.getAttribute("cAuthInfo");
 		if(customer == null) {
 			return "redirect:login";
 		}
@@ -193,7 +229,7 @@ public class CMyPageController {
 	//후기 작성 페이지 띄우기
 	@GetMapping("customer/reviewAdd")
 	public String form(HttpSession session, @RequestParam("odseq")int odseq, Model model) throws Exception {	
-		if (session.getAttribute("authInfo") != null) {
+		if (session.getAttribute("cAuthInfo") != null) {
 			Order order = reviewDao.selectOrderInfo(odseq);
 			model.addAttribute("order", order);
 			return "customer/reviewAddForm";
@@ -205,7 +241,7 @@ public class CMyPageController {
 	//작성한 후기 등록하기
 	@PostMapping("customer/reviewAdd")
 	public String submit(HttpSession session,HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
-		Customer customer = (Customer)session.getAttribute("authInfo");
+		Customer customer = (Customer)session.getAttribute("cAuthInfo");
 
 		try {
 			request.setCharacterEncoding("UTF-8");
