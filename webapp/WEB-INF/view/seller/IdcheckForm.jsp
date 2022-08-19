@@ -13,32 +13,30 @@
 #chk{
 	text-align: center;
 }
-/* #msg2 {
-	    display: none;
-	  }
- */
+
 </style>
 <script type="text/javascript">
-document.getElementById("msg").style.display = "none";
 function useEmail() {
 	var email= idcheck.email.value;
 	if(email.includes("@")==true){
 		str=email.split(/[@]/);
 		/* alert(str[0]); */
-		window.opener.document.getElementById("email").value=str[0];
-		window.opener.document.getElementById("email").readOnly=true;
+		window.opener.document.getElementById("email").value=str[0];	
+		
 		const el=window.opener.document.getElementById("email2");
 		const len=el.options.length;
 		for(let i=0;i<len;i++){
 			if(el.options[i].value==str[1]){
-				el.options[i].selected=true;
+			el.options[i].selected=true;
 			}
 		}
 		self.close();
 	}else{
-		window.opener.document.getElementById("email").value=email;
-		self.close();
+		
+	window.opener.document.getElementById("email").value=email;
+	self.close();
 	}
+	
 }
 
 function idCheck(){
@@ -50,9 +48,7 @@ function idCheck(){
          alert("이메일 형식이 틀립니다.다시 입력해주세요");                
 		email.focus();
          return false;
-    }else{
-    	alert("이메일 형식으로 입력해주세요.")
-    }
+         }
 	return true;
 }
 </script>
@@ -66,30 +62,28 @@ function idCheck(){
 		<hr size="1" width="350">
 		<br>
 		<div id="chk">
-			<form action="Idcheck" method="get" name="idcheck" onsubmit="idCheck()">
+			<form action="Idcheck" method="get" name="idcheck" onsubmit="return idCheck()">
 				<input type="text" name="email" value="${param.email}">
-					<input id="checkIDBtn" type="submit" value="중복확인">
+					<input type="submit" value="다시 중복확인">
 					<input type="hidden" name="email2" value="${param.email2}">
 			</form>
 			<div id="msg">
 			<br>
-			  <div id="msg2">
+			  <div>
 				<c:choose>
-					<c:when test="${customer.name==null}">
-						<p style="color: gray;">사용가능한 아이디 입니다</p>
-						<input id="cancelBtn" type="button" value="취소">
-						<input id="useBtn" type="button" value="사용하기" onclick="useEmail()">
+					<c:when test="${seller.name==null}">
+					 <p style="color: gray;">사용가능한 아이디 입니다</p>
 					</c:when>
 					<c:otherwise>
-						<p style="color: gray;">이미 사용중인 아이디 입니다.</p>
-						<input id="cancelBtn" type="button" value="취소">
+					<p style="color: gray;">이미 사용중인 아이디 입니다.
+					</p>
 					</c:otherwise>
 				</c:choose>
 			  </div>
-			
+			<input id="cancelBtn" type="button" value="취소">
+			<input id="useBtn" type="button" value="사용하기" onclick="useEmail()">
 			</div>
 		</div>
 	</div>
-
 </body>
 </html>

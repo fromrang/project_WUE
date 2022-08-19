@@ -17,7 +17,7 @@
 	width:305px;
 	height:30px;
 	border-radius: 5px;
-	background-color: #FEDD89;
+	background-color: #99ccff;
 	color: #12467a;
 	cursor:pointer;
 	}
@@ -56,20 +56,20 @@ fieldset{
 <jsp:include page = "header.jsp"/>
 </header>
 <main>
-<form action="/WUE/customer/login" method="post" >
+<form action="Slogin" method="post" >
 	<h1 style="text-align:center; margin-top: 80px; color: #12467a;">LOGIN</h1>
 	<fieldset style="margin: auto; width: 300px; height:230px;">
 		<p></p>
 		<input class="field" type="text" name="email" value= "${member.email}"  placeholder="EMAIL" size = "30" autofocus><p>
-		<input class="field" type="password" name= "pw" placeholder="PASSWORD" size = "30" >
+		<input class="field" type="password" name= "password" placeholder="PASSWORD" size = "30" >
 		<div style="height:10px;">
 			<span class="message">
 			${notMember}
 			</span>
-		</div><p>
+		</div><p style="margin-top: 20px;">
 		<input type="submit" class="login-btn" value="로그인" onload="loginCheck();" size = "100">
 		<p>
-		<input type='button' class="signup-btn" value= '아직 회원이 아니신가요?' onclick= 'location.href= "joinForm"' />
+		<input type='button' class="signup-btn" value= '아직 회원이 아니신가요?' onclick= 'location.href= "SJoin"' />
 	</fieldset>
 </form>
 </main>

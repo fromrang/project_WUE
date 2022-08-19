@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<jsp:include page="header.jsp" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +16,18 @@
 		background-color: #FEDD89;
 		color: #12467a;
 		cursor:pointer;
+	}
+	main{
+		margin-top: 200px;
+	}
+	header {
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  right: 0;
+	  justify-content: space-between;
+	  align-items: center;
+	  z-index: 1;
 	}
 </style>
 <script type="text/javascript">
@@ -95,6 +106,10 @@
 </script>
 </head>
 <body>
+<header>
+<jsp:include page = "header.jsp"/>
+</header>
+<main>
 	<form name="frmmember" action="Join" onsubmit="return nullCheck();" method="post" >
 		<!-- true가 되어야 전송이 가능한 것, 투르가 아니면 전송을 못함 -->
 		<h1 style="text-align:center; margin-top: 80px; color: #12467a;">회원 가입</h1>
@@ -165,5 +180,6 @@
 			</table>
 		</fieldset>
 	</form>
+</main>
 </body>
 </html>

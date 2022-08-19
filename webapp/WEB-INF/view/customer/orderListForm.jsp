@@ -6,7 +6,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<jsp:include page = "header.jsp"/>
 <title>Insert title here</title>
 <style type="text/css">
 	.cart_list {
@@ -121,12 +120,25 @@
 		margin-top: 200px;
 		margin-left: 300px;	
 	}
+
+	header {
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  right: 0;
+	  justify-content: space-between;
+	  align-items: center;
+	  z-index: 1;
+	}
 </style>
 <script type="text/javascript">
 
 </script>
 </head>
 <body>
+<header>
+<jsp:include page = "header.jsp"/>
+</header>
 <form action="" id="form">
 <nav class="menu">
 <table>

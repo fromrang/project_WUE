@@ -5,8 +5,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 <meta charset="UTF-8">
-<jsp:include page = "header.jsp"/>
 <title>Insert title here</title>
 <style type="text/css">
         ul {
@@ -26,6 +28,18 @@
 		    width: 232px;
 		    margin-right: 30px;
 		    padding-bottom: 24px;
+		}
+			  	main{
+			margin-top: 160px;
+		}
+		header {
+		  position: fixed;
+		  top: 0;
+		  left: 0;
+		  right: 0;
+		  justify-content: space-between;
+		  align-items: center;
+		  z-index: 1;
 		}
 		
 
@@ -55,27 +69,44 @@
 </script> 
 </head>
 <body>
+<header>
+<jsp:include page = "header.jsp"/>
+</header>
+<main>
 <form action="" name="form">
 <c:set var="size" value="${fn:length(products)}" />
 
-<div class="product_List" id ="area_itemlist">
+<div class="product_List" id ="area_itemlist" style="margin-left: 100px;">
 		<ul class="cunit_thmb_lst">
 			<%-- <c:forEach var="product" items="${products}"> --%>
 			<c:forEach var="i" begin="0" end="${size-1}">
 				<li class="cunit_t232">
 					<div class = "cunit_prod">
-						<img src="/WUE/img/Simage/${imagebyProduct[i]}" style="width:100px; height:100px;">
+						<c:choose>
+								<c:when test="${products[i].quantity == 0}">
+									<img src="/WUE/img/Simage/${imagebyProduct[i]}" style="width:180px; height:180px;">
+								</c:when>
+								<c:otherwise>
+									<a href="/WUE/customer/pseq=${products[i].pseq}">
+										<img src="/WUE/img/Simage/${imagebyProduct[i]}" style="width:180px; height:180px;">
+									</a>							
+								</c:otherwise>
+							</c:choose>
 						<span>${product[i].like}</span>
 					</div>
 					<c:choose>
 						<c:when test="${products[i].like eq 'Exist'}">
-							<div>
-								<input type="button" value="좋아요 취소" onclick="disLike(${products[i].pseq})">
+							<div style="margin-left: 150px;">
+								<button value="좋아요 취소" onclick="disLike(${products[i].pseq})">
+									<i class="fas fa-heart fa-xl" onclick="disLike(${product.pseq})"></i>
+								</button>
 							</div>
 						</c:when>
 						<c:otherwise>
-							<div>
-								<input type="button" value="좋아요" onclick="insertLike(${products[i].pseq})">
+							<div style="margin-left: 150px;">
+								<button value="좋아요" onclick="insertLike(${products[i].pseq})">
+									<img src="/WUE/img/pngegg.png" style="width: 18px; height: 18px;">
+								</button>
 							</div>
 						</c:otherwise>
 					</c:choose>
@@ -127,5 +158,6 @@
 		</ul>
 </div>
 </form>
+</main>
 </body>
 </html>

@@ -16,13 +16,13 @@ div {
 
 a {
    text-decoration-line: none;
-   color: #12467a;
+   
 }
 
 .search {
-   position: absolute;
+   position: fixed;
    text-align: center;
-   margin-left: 600px;
+   margin-left: 700px;
    top: 15px;
    margin-top: 15px;
    padding: 0;
@@ -57,19 +57,21 @@ button{
 </script>
 </head>
 <body>
+<div style="width:1920px; align:center;">
 	<form action="" name="headerForm">
-		<div class="search">
-		   <div style="padding-right:10px;">
-		      <input type="text" name="search" maxlength="10" placeholder="검색어를 입력해주세요" style="width:500px; text-align: center; "/>
-		      <button onclick="searchBtnClick()"><i class="fas fa-search"></i></button>	
-		   </div>
+		<div class="search_area">
+			<div class="search">
+			   <div style="padding-right:10px;">
+			      <input type="text" name="search" maxlength="10" placeholder="검색어를 입력해주세요" style="width:500px; text-align: center; "/>
+			      <button onclick="searchBtnClick()"><i class="fas fa-search"></i></button>	
+			   </div>
+			</div>
 		</div>
 	</form>
-   <div
-      style="background-color: #FEDD89; color: #31383F; height: 100px; padding: 5px;">
-      <a href="/WUE/customer/main"><img src="/WUE/img/fial.png"
-         style="width: 100px; height: 100px;"></a>
-     <div style="text-align: center; margin-top: -35px; font-size:22px;">
+   <div style="background-color: #FEDD89; color: #31383F; height: 100px; padding: 5px;">
+      <a href="/WUE/customer/main"><img src="/WUE/img/simbol.png"
+         style="width: 100px; height: 100px; margin-left: 20px"></a>
+     <div style="text-align: center; margin-top: -35px; font-size:22px; color: #12467a;">
 			<a href="/WUE/customer/main/kind=1">Fruit</a>&nbsp;&nbsp; <a
 				href="/WUE/customer/main/kind=2">Vegetable</a>&nbsp;&nbsp; <a
 				href="/WUE/customer/main/kind=3">Rice/Mixed grains</a>&nbsp;&nbsp; <a
@@ -78,28 +80,28 @@ button{
 	</div>
       <c:choose>
          <c:when test="${empty sessionScope.cAuthInfo}">
-            <div style="margin-top: -20px; margin-left: 1510px;">
+            <div style="margin-top: -20px; margin-left: 1670px;">
                <a href="/WUE/customer/login">로그인</a>
             </div>
-            <div style="margin-top: -22px; margin-left: 1575px;">
+            <div style="margin-top: -22px; margin-left: 1750px;">
                <a href="/WUE/customer/joinForm">회원가입</a>
             </div>
          </c:when>
          <c:otherwise>
-            <div style="margin-top: -80px; margin-left: 1600px;">
+            <div style="margin-top: -80px; margin-left: 1750px;">
                <span>${sessionScope.cAuthInfo.name}님</span>
             </div>
             <div style="height: 10px;"></div>
             <div class="header__img"
-               style="margin-top: 20px; margin-left: 1550px;">
+               style="margin-top: 20px; margin-left: 1700px;">
                <a href="/WUE/customer/cart/list"><i
                   class="fas fa-shopping-cart fa-xl"></i></a>
             </div>
             <div class="header__img"
-               style="margin-top: -22px; margin-left: 1600px;">
+               style="margin-top: -22px; margin-left: 1750px;">
                <a href="/WUE/customer/likeList"><i class="fas fa-heart fa-xl"></i></a>
             </div>
-            <div class="header__img" style="margin-top: -23px; margin-left: 1650px;">
+            <div class="header__img" style="margin-top: -23px; margin-left: 1800px;">
                <a href="/WUE/customer/mypage"><i class="fas fa-user fa-xl"></i></a>
             </div>
             <!-- <a href="/WUE/customer/logout">로그아웃</a> -->
@@ -109,5 +111,6 @@ button{
    </div>
    <script src="https://kit.fontawesome.com/4a9dbb7224.js"
       crossorigin="anonymous"></script>
+</div>
 </body>
 </html>

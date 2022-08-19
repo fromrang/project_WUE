@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<jsp:include page = "header.jsp"/>
 <title>Insert title here</title>
 <style type="text/css">
         ul {
@@ -57,7 +56,7 @@
 		    position: relative;
 		    float: left;
 		    width: 350px;
-		    margin-left: 130px;
+		    margin-left: 250px;
 		    height: 150px;
 		}
 		.notice_all_area{
@@ -77,10 +76,25 @@
 		.detail_area{
 			margin: 20px; 
 		}
-		
+	  	main{
+			margin-top: 160px;
+		}
+		header {
+		  position: fixed;
+		  top: 0;
+		  left: 0;
+		  right: 0;
+		  justify-content: space-between;
+		  align-items: center;
+		  z-index: 1;
+		}		
 </style>
 </head>
 <body>
+<header>
+<jsp:include page = "header.jsp"/>
+</header>
+<main>
 <div class="notice_all_area">
 	<div class="notice_area" >
 		<div class="notice_title" >
@@ -119,5 +133,6 @@
 		<span>${wnotice.detail}</span>
 	</div>
 </div>
+</main>
 </body>
 </html>

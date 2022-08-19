@@ -8,6 +8,23 @@
 <link rel="stylesheet" href="/WUE/css/order.css" />
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+main{
+	margin-top: 160px;
+}
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1;
+}	
+body{
+	margin:0px;
+}
+</style>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 	function execDaumPostcode() {
@@ -79,7 +96,10 @@
 </script>
 </head>
 <body>
-
+<header>
+<jsp:include page = "header.jsp"/>
+</header>
+<main>
 <c:set var="size" value="${fn:length(products)}" />
 <form action="/WUE/customer/payment" method = "post" name = "form">
 	<div class="order_head">
@@ -246,5 +266,6 @@
 	</div>
 </div>
 </form>
+</main>
 </body>
 </html>

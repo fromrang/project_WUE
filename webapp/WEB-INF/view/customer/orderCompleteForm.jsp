@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<jsp:include page = "header.jsp"/>
 <title>Insert title here</title>
 <style type="text/css">
 .complete_message{
@@ -41,9 +40,25 @@
 	margin-top:50px;
 	margin-left:620px;
 }
+	  	main{
+			margin-top: 160px;
+		}
+		header {
+		  position: fixed;
+		  top: 0;
+		  left: 0;
+		  right: 0;
+		  justify-content: space-between;
+		  align-items: center;
+		  z-index: 1;
+		}		
 </style>
 </head>
 <body>
+<header>
+<jsp:include page = "header.jsp"/>
+</header>
+<main>
 <div class="complete_area">
 	<div class="complete_message">
 		<h2 class="complete_message_title">주문이 완료되었습니다.</h2>
@@ -85,5 +100,6 @@
 	</div>
 
 </div>
+</main>
 </body>
 </html>

@@ -6,7 +6,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<jsp:include page = "header.jsp"/>
 <title>Insert title here</title>
 <style type="text/css">
         ul {
@@ -27,7 +26,18 @@
 		    margin-right: 30px;
 		    padding-bottom: 24px;
 		}
-		
+	  	main{
+			margin-top: 160px;
+		}
+		header {
+		  position: fixed;
+		  top: 0;
+		  left: 0;
+		  right: 0;
+		  justify-content: space-between;
+		  align-items: center;
+		  z-index: 1;
+		}				
 
 </style>
 <script type="text/javascript">
@@ -55,6 +65,10 @@
 </script> 
 </head>
 <body>
+<header>
+<jsp:include page = "header.jsp"/>
+</header>
+<main>
 <form action="" name="form">
 <div class="product_List" id ="area_itemlist">
 		<ul class="cunit_thmb_lst">
@@ -123,5 +137,6 @@
 		</ul>
 </div>
 </form>
+</main>
 </body>
 </html>

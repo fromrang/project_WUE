@@ -15,7 +15,6 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
-<jsp:include page = "header.jsp"/>
 <script type="text/javascript">
 	function nullCheck(){
 		 
@@ -124,9 +123,18 @@ div {
 }
 .main_area{
 	position: relative;
-	margin-top: 200px;
+	margin-top: 150px;
 	margin-left: 300px;	
 }
+	header {
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  right: 0;
+	  justify-content: space-between;
+	  align-items: center;
+	  z-index: 1;
+	}
 /* .register {
    border: 4px outset pink;
 } */
@@ -134,6 +142,9 @@ div {
 <title>Member Management</title>
 </head>
 <body>
+<header>
+<jsp:include page = "header.jsp"/>
+</header>
    <form action='reviewAdd' method='get'>
 	<nav class="menu">
 		<table>
@@ -157,7 +168,7 @@ div {
       </form>
 
       <main class="to_do_list">
-         <div style="margin-top: 300px; margin-left: 220px;">
+         <div style="margin-top: 200px; margin-left: 220px;">
             <form action="reviewAdd" method="post" onsubmit="return nullCheck();" enctype="multipart/form-data">
                <table class="register" border=1 align=center cellspacing=1 width=600>
                   <tr>

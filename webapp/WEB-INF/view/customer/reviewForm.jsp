@@ -7,7 +7,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<jsp:include page = "header.jsp"/>
 <title>Insert title here</title>
 <style type="text/css">
 	.cart_list {
@@ -147,7 +146,16 @@
 	  }
 	  [id$="-toggle"] {
 	    margin-right: 15px;
-	  }
+	  }	
+	  header {
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  right: 0;
+	  justify-content: space-between;
+	  align-items: center;
+	  z-index: 1;
+	}
 </style>
 <!-- <script type="text/javascript">
 	function submitReviewAdd(odseq){
@@ -157,7 +165,9 @@
 </script> -->
 </head>
 <body>
-
+<header>
+<jsp:include page = "header.jsp"/>
+</header>
 <nav class="menu">
 	<table>
 		<tr>
@@ -221,42 +231,51 @@
 	</div>
 
 <c:set var="size" value="${fn:length(reviews)}" />
-
-<h3>작성한 후기</h3>
-	<div>
-		<%-- <c:forEach var="review" items="${reviews}"> --%>
-		<c:forEach var="i" begin="0" end="${size-1}">
-			<div class="faq-content">
-				<button class="title" id="que-${i}"><span id="que-${i}-toggle">+</span><span>${reviews[i].content}</span></button>
-				<div class="content" id="ans-${i}">
-					<table class="register" width=600>
-	                  <tr>
-	                     <td width=100>상품명 : </td>
-	                     <td>
-	                     	${reviews[i].pname}
-	                     </td>
-	                  </tr>
-	                  <tr height="10">
-	                  </tr>
-	                  <tr>
-	                     <td width=100></td>
-	                     <td>
-	                     	<c:forEach var="image" items= "${reviews[i].img_url}">
-	                     		<img src="/WUE/img/rimages/${image}" style="width:200px; height:200px;">
-	                     	</c:forEach>
-	                     </td>
-	                  </tr>
-	                   <tr height="10">
-	                  </tr>
-	                  <tr>
-	                  	<td width=100></td>
-	                     <td colspan=2  width=100 >${reviews[i].content}</td>
-	                  </tr>
-	               </table>
-				</div>
+<c:choose>
+	<c:when test="${size==0}">
+		<div>
+		상품을 구매해보세요!
+		</div>			
+	</c:when>
+	<c:otherwise>
+		<h3>작성한 후기</h3>
+			<div>
+				<%-- <c:forEach var="review" items="${reviews}"> --%>
+				
+				<c:forEach var="i" begin="0" end="${size-1}">
+					<div class="faq-content">
+						<button class="title" id="que-${i}"><span id="que-${i}-toggle">+</span><span>${reviews[i].content}</span></button>
+						<div class="content" id="ans-${i}">
+							<table class="register" width=600>
+			                  <tr>
+			                     <td width=100>상품명 : </td>
+			                     <td>
+			                     	${reviews[i].pname}
+			                     </td>
+			                  </tr>
+			                  <tr height="10">
+			                  </tr>
+			                  <tr>
+			                     <td width=100></td>
+			                     <td>
+			                     	<c:forEach var="image" items= "${reviews[i].img_url}">
+			                     		<img src="/WUE/img/rimages/${image}" style="width:200px; height:200px;">
+			                     	</c:forEach>
+			                     </td>
+			                  </tr>
+			                   <tr height="10">
+			                  </tr>
+			                  <tr>
+			                  	<td width=100></td>
+			                     <td colspan=2  width=100 >${reviews[i].content}</td>
+			                  </tr>
+			               </table>
+						</div>
+					</div>
+				</c:forEach>
 			</div>
-		</c:forEach>
-	</div>
+</c:otherwise>
+</c:choose>
 </main>
 
 <script>

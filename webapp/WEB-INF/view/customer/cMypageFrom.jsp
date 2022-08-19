@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<jsp:include page = "header.jsp"/>
+
 <title>Insert title here</title>
 <style type="text/css">
 	.cart_list {
@@ -121,6 +121,21 @@
 		margin-top: 200px;
 		margin-left: 300px;	
 	}
+	header {
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  right: 0;
+	  justify-content: space-between;
+	  align-items: center;
+	  z-index: 1;
+	}
+/* 	main {
+	  position: fixed;
+
+	  justify-content: space-between;
+	  align-items: center;
+	} */
 </style>
 <script type="text/javascript">
 	function cancelBtn(odseq, oseq, payment){
@@ -130,6 +145,10 @@
 </script>
 </head>
 <body>
+<header>
+<jsp:include page = "header.jsp"/>
+</header>
+<main>
 <form action="" id="form">
 <nav class="menu">
 <table>
@@ -154,8 +173,11 @@
 	<article style="padding-left: 50px;">
 	<div>
 		<h1>
-			${sessionScope.authInfo.name}님
+			${sessionScope.cAuthInfo.name}님
 		</h1>
+		<h2>
+			${sessionScope.cAuthInfo.grade} 등급
+		</h2>
 		<h2>
 			point : ${customer.point}점	
 		</h2>
@@ -237,5 +259,6 @@
 </article>
 </main>
 </form>
+</main>
 </body>
 </html>

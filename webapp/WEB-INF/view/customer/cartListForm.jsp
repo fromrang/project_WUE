@@ -6,7 +6,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<jsp:include page = "header.jsp"/>
 <title>Insert title here</title>
 <style type="text/css">
 	.cart_list {
@@ -99,6 +98,26 @@
 	    color: #777;
 	    text-align: center;
 	}
+	.cart_insert_message{
+		text-align: center;
+	}
+	header {
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  right: 0;
+	  justify-content: space-between;
+	  align-items: center;
+	  z-index: 1;
+	}
+	main{
+		position: relative;
+		margin-top: 200px;
+	}
+	body{
+		margin : 0px
+	}
+	
 </style>
 <script type="text/javascript">
 	function count(type, cart)  {
@@ -209,104 +228,117 @@
 </script>
 </head>
 <body>
+<header>
+<jsp:include page = "header.jsp"/>
+</header>
+<main>
 <form action="/WUE/customer/order" id="form" method='post'>
-<c:set var="size" value="${fn:length(cartList)}" />
-<c:choose>
-	<c:when test="${size==0}">
-		<div>
-		삼품을 장바구니에 추가해보세요.
-		</div>			
-	</c:when>
-	<c:otherwise>
-	
-<div class="cart_list">
-	
-	<div class="cart_list_up">
-			<input type="checkbox" name="cart" id="cart" onclick="selectAll(this,event);" >
-		
-		<span>상품 갯수: ${size}</span>
-	</div>
-
-<div class="codr_unit"> 
-	<table class = "cart_table">
-		<tbody>
-			<c:set var="total" value="0"/>
-			<c:forEach var="i" begin="0" end="${size-1}">
-				<tr class="pay_item_area" id="a">
-					<td class="area_image_item">
-						<div class = "image_unit_item">
-							<span class="image_chk">
-								<input type="checkbox" id = "chk_order_${cartList[i].cseq}" name="cartid" value="${cartList[i].cseq}" onclick="plusPrice(event)" >							
-								<label for = "chk_order_${cartList[i].cseq}">
-									<span class = "blind">
-										${cartList[i].name}
-									</span>
-									<span class="blind">
-										상품 선택
-									</span>
-								</label>
-							</span>
-							<span class="image_item">
-								<img src="/WUE/img/Simage/${imagebyProduct[i]}">
-							</span>
-							
-						</div>
-					</td>	
-					<td class="name_item">
-						<a href="/WUE/customer/pseq=${cartList[i].pseq}">${cartList[i].name}</a></td>	
-					<%-- <td class = "quantity_item">${cartList[i].quantity}</td> --%>
-					<td class="price_item_quantity">
-						<div class="cunit_price">
-							<div class = "product_price">
-								<c:choose>
-								<c:when test="${cartList[i].sale eq 'y'}">
-									<em class = "price">${cartList[i].sale_price}</em>
-									<input type = "hidden" name ="productPrice" value="${cartList[i].quantity*cartList[i].sale_price}"/>         
-                					<c:set var= "productPrice" value = "${cartList[i].quantity * cartList[i].sale_price}"/>
-               						<c:set var="total" value = "${total + cartList[i].quantity * cartList[i].sale_price}"/> 
-									<span>원</span>					
-								</c:when>
-								<c:otherwise>
-									<em>${cartList[i].price * cartList[i].quantity}</em>
-									<input type = "hidden" name ="productPrice" value="${cartList[i].quantity*cartList[i].price}"/>         
-                					<c:set var= "productPrice" value = "${cartList[i].quantity * cartList[i].price}"/>
-                					<c:set var="total" value = "${total + cartList[i].quantity * cartList[i].price}"/> 
-									<span>원</span>				
-							
-								</c:otherwise>
-								</c:choose>		
-							</div>
-						</div>
-						<div class="codr_unit_amount">
-							<em>${cartList[i].quantity}</em>
-							<span>개</span>		
-							<%-- <div class="codr_amount">
-								<input type='button' onclick='count("minus", "${cartList[i]}");' value='-'/>
-								<input type = "text" value=${cartList[i].quantity} id='quantity_${i}' name='quantity' onchange='count("text")'>
-								<input type='button'
-								       onclick='count("plus", "${cartList[i]}");'	
-								       value='+'/>
-							</div> --%>
-
-						</div>
-					</td>
+	<c:set var="size" value="${fn:length(cartList)}" />
+	<c:choose>
+		<c:when test="${size==0}">
+			<div class="cart_insert_message">
+				<h2>
+					상품을 장바구니에 추가해보세요.
+				</h2>
+			</div>			
+		</c:when>
+		<c:otherwise>
+			<div class="cart_list">
+				
+				<div class="cart_list_up">
+						<input type="checkbox" name="cart" id="cart" onclick="selectAll(this,event);" >
 					
-					
-				</tr>
-
-			</c:forEach>
-		</tbody>
-	</table>
-</div>	
-</div>
-	<div>
-		<b>총액  </b><input type="text" name="totalPrice" id = "totalPrice" value="${total}" disabled/>
-		<input type="button" value="주문하기" onclick="orderBtn();">
-		<input type="button" value="삭제" onclick="clickBtn();">
-	</div>
-</c:otherwise>
-</c:choose>
-</form>
-
+					<span>상품 갯수: ${size}</span>
+				</div>
+			
+			<div class="codr_unit"> 
+				<table class = "cart_table">
+					<tbody>
+						<c:set var="total" value="0"/>
+						<c:forEach var="i" begin="0" end="${size-1}">
+							<tr class="pay_item_area" id="a">
+								<td class="area_image_item">
+									<div class = "image_unit_item">
+										<span class="image_chk">
+											<c:choose>
+												<c:when test="${cartList[i].total_quantity == 0}">
+													<span></span>	
+												</c:when>
+												<c:otherwise>
+													<input type="checkbox" id = "chk_order_${cartList[i].cseq}" name="cartid" value="${cartList[i].cseq}" onclick="plusPrice(event)" >
+												</c:otherwise>	
+											</c:choose>	
+																		
+											<label for = "chk_order_${cartList[i].cseq}">
+												<span class = "blind">
+													${cartList[i].name}
+												</span>
+												<span class="blind">
+													상품 선택
+												</span>
+											</label>
+										</span>
+										<span class="image_item">
+											<img src="/WUE/img/Simage/${imagebyProduct[i]}">
+										</span>
+										
+									</div>
+								</td>	
+								<td class="name_item">
+									<a href="/WUE/customer/pseq=${cartList[i].pseq}">${cartList[i].name}</a></td>	
+								<%-- <td class = "quantity_item">${cartList[i].quantity}</td> --%>
+								<td class="price_item_quantity">
+									<div class="cunit_price">
+										<div class = "product_price">
+											<c:choose>
+											<c:when test="${cartList[i].total_quantity == 0}">
+												<span></span>	
+											</c:when>
+											<c:when test="${cartList[i].sale eq 'y'}">
+												<em class = "price">${cartList[i].sale_price}</em>
+												<input type = "hidden" name ="productPrice" value="${cartList[i].quantity*cartList[i].sale_price}"/>         
+			                					<c:set var= "productPrice" value = "${cartList[i].quantity * cartList[i].sale_price}"/>
+			               						<c:set var="total" value = "${total + cartList[i].quantity * cartList[i].sale_price}"/> 
+												<span>원</span>					
+											</c:when>
+											<c:otherwise>
+												<em>${cartList[i].price * cartList[i].quantity}</em>
+												<input type = "hidden" name ="productPrice" value="${cartList[i].quantity*cartList[i].price}"/>         
+			                					<c:set var= "productPrice" value = "${cartList[i].quantity * cartList[i].price}"/>
+			                					<c:set var="total" value = "${total + cartList[i].quantity * cartList[i].price}"/> 
+												<span>원</span>				
+										
+											</c:otherwise>
+											</c:choose>		
+										</div>
+									</div>
+									<div class="codr_unit_amount">
+										<c:choose>
+											<c:when test="${cartList[i].total_quantity == 0}">
+												<span>품절</span>	
+											</c:when>
+											<c:otherwise>
+												<em>${cartList[i].quantity}</em>
+												<span>개</span>
+											</c:otherwise>	
+										</c:choose>	
+									</div>
+								</td>
+							</tr>
+			
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>	
+			</div>
+				<div>
+					<b>총액  </b><input type="text" name="totalPrice" id = "totalPrice" value="${total}" disabled/>
+					<input type="button" value="주문하기" onclick="orderBtn();">
+					<input type="button" value="삭제" onclick="clickBtn();">
+				</div>
+			</c:otherwise>
+		</c:choose>
+	</form>
+</main>
 </body>
 </html>
