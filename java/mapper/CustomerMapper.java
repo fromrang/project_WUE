@@ -28,8 +28,17 @@ public interface CustomerMapper {
 	
 	@Insert("insert into customer (name, email, pw, phone, point) values(#{name}, #{email}, #{pw}, #{phone}, 1000)")
 	public void insertCustomer(Customer customer) throws Exception;
-	//회원 수정
-	@Update("update customer set status = 1, mod_date = now() where email=#{email} and pw=#{pw}")
-	public void WithdrawalCustomer(@Param("email")String email, @Param("pw")String pw);
+	//회원 grade
+	@Select("select * from customer where email=#{email}")
+	public Customer getSelect(@Param("email") String email) throws Exception;
+	//회원 grade 변경
+	@Update("update customer set name=#{name},email=#{email},pw=#{pw},phone=#{phone},grade=#{grade},point=#{point} where email=#{email}")
+	public int getUpdate(Customer customer) throws Exception;
 	
+	//회원 탈퇴
+	@Update("update customer set status = 1, mod_date = now() where email=#{email}")
+	public void WithdrawalCustomer(@Param("email")String email);
+	//회원 수정
+	@Update("update customer set name=#{name}, pw=#{pw}, phone=#{phone}, zip_code=#{zip_code}, address=#{address} where email=#{email}")
+	public void updateCustomer(Customer customer) throws Exception;
 }
