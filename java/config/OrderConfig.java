@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import controller.OdInsertController;
+import controller.SOrderDetailController;
+import controller.SOrderListController;
 import dao.OrderDaoImpl;
 
 @Configuration
@@ -38,10 +40,20 @@ public class OrderConfig {
 		odInsertController.setOrderDaoImpl(orderDaoImpl);
 		return odInsertController;
 	}
-//	@Bean
-//	public OrderController ordercontroller() {
-//		OrderController ordercontroller = new OrderController();
-//		return ordercontroller;
-//	}
 
+	
+	//========================================seller================
+	@Bean
+	public SOrderListController SOrderListController() {
+		SOrderListController SOrderListController = new SOrderListController();
+		SOrderListController.setOrderDaoImpl(orderDaoImpl);
+		return SOrderListController;
+	}
+
+	@Bean
+	public SOrderDetailController SOrderDetailController() {
+		SOrderDetailController SOrderDetailController = new SOrderDetailController();
+		SOrderDetailController.setOrderDaoImpl(orderDaoImpl);
+		return SOrderDetailController;
+	}
 }

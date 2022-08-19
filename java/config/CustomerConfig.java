@@ -38,20 +38,20 @@ public class CustomerConfig {
 	}
 	
 	@Bean
-	public CLoginController logInController() {
+	public CLoginController cLoginController() {
 		//loginController로 객체를 찾아서 생성한다.
-		CLoginController logInController = new CLoginController();
-		logInController.setcustomerDao(customerDao);
+		CLoginController cLoginController = new CLoginController();
+		cLoginController.setcustomerDao(customerDao);
 		
-		return logInController;
+		return cLoginController;
 	}
 	
 	@Bean
-	public CJoinController joinController() {
-		CJoinController joinController = new CJoinController();
-		joinController.setcustomerDao(customerDao);
+	public CJoinController cJoinController() {
+		CJoinController cJoinController = new CJoinController();
+		cJoinController.setcustomerDao(customerDao);
 		
-		return joinController;
+		return cJoinController;
 	}
 	
 	@Bean
