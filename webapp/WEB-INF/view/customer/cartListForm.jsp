@@ -187,8 +187,16 @@
      }  
 	       
 	function clickBtn() {
-	   form.action = "/WUE/customer/cart/delete"; 
-	   form.submit(); 
+		const query = 'input[name="cartid"]:checked';
+		const selectedElements = document.querySelectorAll(query);
+		const selectedElementsCnt = selectedElements.length;
+		
+		if(selectedElementsCnt == 0){
+			alert("선택된 상품이 없습니다.");
+		}else{
+	   		form.action = "/WUE/customer/cart/delete"; 
+	   		form.submit(); 
+		}
 	}
 
 	function selectAll(selectAll,event)  {
@@ -248,7 +256,7 @@
 				<div class="cart_list_up">
 						<input type="checkbox" name="cart" id="cart" onclick="selectAll(this,event);" >
 					
-					<span>상품 갯수: ${size}</span>
+					<span>상품 종류: ${size} 건</span>
 				</div>
 			
 			<div class="codr_unit"> 
@@ -331,7 +339,7 @@
 				</table>
 			</div>	
 			</div>
-				<div>
+				<div style="margin:20px;">
 					<b>총액  </b><input type="text" name="totalPrice" id = "totalPrice" value="${total}" disabled/>
 					<input type="button" value="주문하기" onclick="orderBtn();">
 					<input type="button" value="삭제" onclick="clickBtn();">

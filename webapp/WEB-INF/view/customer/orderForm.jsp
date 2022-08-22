@@ -55,34 +55,48 @@ body{
 	function changeamount(total){
 		// 사용할 포인트
 		let point = Number(document.getElementById('point').value);
-		if(point == 0){
-			document.getElementById('point').value = 0;
-			point = 0;
-			return;
-		}
+		
+		
 		// 가격
 		let amount = total;
 		// 가용
 		let exist_point = ${customer.point};
+		
+		if(point == 0){
+			document.getElementById('point').value = 0;
+			point = 0;
+			document.getElementById("total").innerText = amount;
+			document.getElementById("exist_point").innerText = exist_point;
+			return;
+		}
 		if(point < 0) {
 			alert("0 보다 작은 포인트는 사용할 수 없습니다.");
 			document.getElementById('point').value = 0;
 			point =  0;
 			return;
 		}
-		if(point > ${customer.point}){
-			alert("사용 가능한 포인트를 초과하였습니다.")
-			document.getElementById('point').value = ${customer.point};
-			point =  ${customer.point}
-		}
-		if(point <= amount){
+		if(point > amount){
+			alert("주문금액을 초과할수 없습니다.");
+			document.getElementById('point').value = 0;
+			point =  0;
 			amount = amount-point;
 			exist_point = exist_point - point;
 			document.getElementById("total").innerText = amount;
 			document.getElementById("exist_point").innerText = exist_point;
+		}else if(point > ${customer.point}){
+			alert("사용 가능한 포인트를 초과하였습니다.");
+			
+			document.getElementById('point').value = ${customer.point};
+			point =  ${customer.point}
+			amount = amount-point;
+			document.getElementById("total").innerText = amount;
+			document.getElementById("exist_point").innerText = exist_point;
 		}else{
-			alert("주문금액을 초과할수 없습니다.");
-		}	
+			amount = amount-point;
+			exist_point = exist_point - point;
+			document.getElementById("total").innerText = amount;
+			document.getElementById("exist_point").innerText = exist_point;
+		}
 		
 	}
 	function submitForm(){

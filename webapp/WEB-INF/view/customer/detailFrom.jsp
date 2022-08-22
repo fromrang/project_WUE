@@ -70,7 +70,19 @@ ul>li {
 	width: 100px;
 	position: relative;
 }
-
+.before_sale_price .price {
+    		color: #777;
+		    font-size: 14px;
+		    letter-spacing: -0.5px;
+		    text-decoration: line-through;
+		    vertical-align: middle;
+}
+.cunit_price{
+	margin-left:620px;
+}
+.product_price{
+	font-size: 30px;
+}
 </style>
 <script type="text/javascript">
 	function getImgAssoItem(image){
@@ -145,6 +157,29 @@ ul>li {
 				&nbsp;&nbsp;&nbsp;<img src="/WUE/img/${seller.url}"
 					style="margin-left: 500px; width: 150px; height: 150px; border-radius: 500px;">
 				</a>
+				<c:choose>
+					<c:when test="${product.sale eq 'y'}">
+					<div class="cunit_price">
+						<div class="before_sale_price">
+							<em class = "price">${product.price}</em>
+							<span>원</span>	
+						</div>
+						
+						<div class = "product_price">
+							<em class = "price">${product.sale_price}</em>
+							<span>원</span>									
+						</div>
+					</div>
+					</c:when>
+					<c:otherwise>
+					<div class="cunit_price">
+						<div class = "product_price">
+							<em>${product.price}</em>
+							<span>원</span>									
+						</div>
+					</div>
+					</c:otherwise>
+				</c:choose>
 				<p>
 					<input style="margin-left: 500px;" type='button'
 						onclick='count("minus")' value='-' /> <input type="text" value=1

@@ -5,6 +5,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
@@ -79,13 +82,17 @@
 					</div>
 					<c:choose>
 						<c:when test="${product.like eq 'Exist'}">
-							<div>
-								<input type="button" value="좋아요 취소" onclick="disLike(${product.pseq})">
+							<div style="margin-left: 150px;">
+								<button value="좋아요 취소" onclick="disLike(${products[i].pseq})">
+									<i class="fas fa-heart fa-xl" onclick="disLike(${product.pseq})"></i>
+								</button>
 							</div>
 						</c:when>
 						<c:otherwise>
-							<div>
-								<input type="button" value="좋아요" onclick="insertLike(${product.pseq})">
+							<div style="margin-left: 150px;">
+								<button value="좋아요" onclick="insertLike(${products[i].pseq})">
+									<img src="/WUE/img/pngegg.png" style="width: 18px; height: 18px;">
+								</button>
 							</div>
 						</c:otherwise>
 					</c:choose>

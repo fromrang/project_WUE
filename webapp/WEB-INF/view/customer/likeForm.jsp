@@ -54,8 +54,18 @@
 		form.submit();
 	}
 	function clickBtn() {
-	   form.action = "/WUE/customer/like/delete"; 
-	   form.submit(); 
+		
+		const query = 'input[name="likeid"]:checked';
+		const selectedElements = document.querySelectorAll(query);
+		const selectedElementsCnt = selectedElements.length;
+		
+		if(selectedElementsCnt == 0){
+			alert("선택된 상품이 없습니다.");
+		}else{
+			 form.action = "/WUE/customer/like/delete"; 
+			 form.submit(); 
+		}
+	  
 	}
 </script>
 </head>

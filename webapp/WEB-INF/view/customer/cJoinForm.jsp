@@ -118,13 +118,13 @@
 				<tr>
 				   <td colspan=1 align=center style="background-color: #FEDD89;">이름</td>
 				   <td>
-				   	<input type=text id='name' name='name' size=20 maxlength=20 pattern="^[가-힣]*{2,10}">&nbsp;(한글 2자~10자로 입력해주세요)
+				   	<input type=text id='name' name='name' value='${ param.mname }' size=20 maxlength=20 pattern="^[가-힣]*{2,10}">&nbsp;(한글 2자~10자로 입력해주세요)
 				   </td>
 				</tr>
 				<tr>
 				   <td colspan=1 align=center style="background-color: #FEDD89;">E-mail주소 </td>
 				   <td>
-					   <input type=text id='email' name=email size=12 maxlength=12 onclick="idCheck()" readonly>&nbsp;@&nbsp;
+					   <input type=text id='email' name=email  value='${ param.email }' size=12 maxlength=12 onclick="idCheck()" readonly>&nbsp;@&nbsp;
 					   <select id='email2' name=email2 >
 							<option value="이메일 선택">이메일 선택</option>
 						    <option value="naver.com">naver.com</option>
@@ -139,12 +139,12 @@
 			<tr>
 			   <td align=center style="background-color: #FEDD89;">비밀번호</td>
 			   <td> 
-			      <input type=password id='pw' name=pw size=12 maxlength=20
+			      <input type=password id='pw' name=pw  value='${ param.pwd }' size=12 maxlength=20
 			      pattern="[a-zA-Z0-9]{6,20}">&nbsp;(영어 및 숫자만 허용,6글자~20글자)</td>
 			</tr>
 			<tr>
 			   <td align=center style="background-color: #FEDD89;">비밀번호 확인</td>
-			   <td><input type=password id='pw2' name=pw2 size=12 maxlength=20
+			   <td><input type=password id='pw2'  value='${ param.pwd }' name=pw2 size=12 maxlength=20
 			    pattern="[a-zA-Z0-9]{6,20}">&nbsp;(영어 및 숫자만 허용,6글자~20글자)</td>
 			</tr>
 			

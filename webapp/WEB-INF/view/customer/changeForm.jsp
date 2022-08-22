@@ -231,9 +231,7 @@
 			</h2>
 		</div>
 		<h3>
-			회원 정보 변경
-			${customer.zip_code}
-			${customer.address}
+			회원 정보 변경	
 		</h3>
 		<div class="info_all_area">
 			<div class="password_area">
