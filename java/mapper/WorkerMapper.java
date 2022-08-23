@@ -40,7 +40,7 @@ public interface WorkerMapper {
 	public int getNoticeAdd(Wnotice notice) throws Exception;
 
 	// 게시판 공지사항 list
-	@Select("select * from wnotice where type=0")
+	@Select("select * from wnotice where type != 1")
 	public List<Wnotice> getNoticeAll() throws Exception;
 
 	// 게시판 QnA list
@@ -88,8 +88,10 @@ public interface WorkerMapper {
 	public void hitsPlusOne(@Param("wseq") int wseq) throws Exception;
 
 	// 주문량이 많은 상품 ranking top 8 받아오기
-	//@Select("select * from (select pseq,pname,payment,sum(quantity),dense_rank() over (order by sum(quantity) desc)as ranking from order_view GROUP BY pseq) ranked where ranked.ranking<8")
-	@Select("select pseq, count(pseq) from order_view group by pseq order by count(pseq) desc limit 8")	
+	// @Select("select * from (select pseq,pname,payment,sum(quantity),dense_rank()
+	// over (order by sum(quantity) desc)as ranking from order_view GROUP BY pseq)
+	// ranked where ranked.ranking<8")
+	@Select("select pseq, count(pseq) from order_view group by pseq order by count(pseq) desc limit 8")
 	public List<Integer> getRank() throws Exception;
 
 	// ranking top 상품 best 상태 y로 변경
@@ -105,10 +107,12 @@ public interface WorkerMapper {
 	public int getDeleteBest(@Param("pseq") int pseq) throws Exception;
 
 	// 좋아요가 많은 상품 ranking top 6 list 받아오기
-	//@Select("select * from (select pseq,count(*),dense_rank() over (order by count(*) desc)as ranking from like_view GROUP BY pseq) ranked where ranked.ranking<6")
+	// @Select("select * from (select pseq,count(*),dense_rank() over (order by
+	// count(*) desc)as ranking from like_view GROUP BY pseq) ranked where
+	// ranked.ranking<6")
 	@Select("select pseq, count(pseq) from like_view group by pseq order by count(pseq) desc limit 6;")
 	public List<Integer> getLikeRank() throws Exception;
-	
+
 	// ranking top 상품 recommend 상태 y로 변경
 	@Update("update product set recommend='y'where pseq=#{pseq}")
 	public int getRecommend(@Param("pseq") int pseq) throws Exception;
@@ -121,21 +125,34 @@ public interface WorkerMapper {
 	@Update("update product set recommend='n'where pseq=#{pseq}")
 	public int getDeleteRecommend(@Param("pseq") int pseq) throws Exception;
 
+	// sale y->n 설정
+	@Update("update product set sale='n' where pseq=#{pseq}")
+	public int getDiscount(@Param("pseq") int pseq) throws Exception;
+
+	// sale n->y 설정
+	@Update("update product set sale='y' where pseq=#{pseq}")
+	public int getNotDiscount(@Param("pseq") int pseq) throws Exception;
+
 	// 1번 셀러 수수료 관리 리스트
 	@Select("select * from seller1")
-	public List<SellerSales> getSeller1Sale() throws Exception;	
+	public List<SellerSales> getSeller1Sale() throws Exception;
+
 	// 2번 셀러 수수료 관리 리스트
 	@Select("select * from seller2")
 	public List<SellerSales> getSeller2Sale() throws Exception;
+
 	// 3번 셀러 수수료 관리 리스트
 	@Select("select * from seller3")
 	public List<SellerSales> getSeller3Sale() throws Exception;
+
 	// 4번 셀러 수수료 관리 리스트
 	@Select("select * from seller4")
 	public List<SellerSales> getSeller4Sale() throws Exception;
+
 	// 5번 셀러 수수료 관리 리스트
 	@Select("select * from seller5")
 	public List<SellerSales> getSeller5Sale() throws Exception;
+
 	// 6번 셀러 수수료 관리 리스트
 	@Select("select * from seller6")
 	public List<SellerSales> getSeller6Sale() throws Exception;

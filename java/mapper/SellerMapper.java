@@ -1,3 +1,4 @@
+
 package mapper;
 
 import java.util.List;
@@ -80,12 +81,24 @@ public interface SellerMapper {
 		@Select("SELECT fseq FROM farm order by fseq desc limit 1")
 		public int selectFseqByAdd()throws Exception;
 		
+		@Update("update farm set experience_context=#{experience_context} where fseq=#{fseq}")
+		 public void UpdateSamallDelete(@Param("fseq") int fseq,@Param("experience_context")String experience_context) throws Exception;
+		
+		@Update("update farm_postimage set fseq=#{fseq} where  email=#{email}")
+		 public void UpdateimageSamallDelete(@Param("fseq") int fseq,@Param("email")String email) throws Exception;
+		
+		@Select("SELECT * FROM farm where email=#{email} order by fseq limit 1;")
+		public int selectSmallFseqByAdd(@Param("email")String email)throws Exception;
+		
+		@Select("SELECT experience_context FROM farm where fseq=#{fseq}")
+		public String selectContextByAdd(@Param("fseq") int fseq)throws Exception;
+		
 		//주말농장 사진 등록
 		@Insert("insert into farm_postimage(url,fseq,email) values(#{url},#{fseq},#{email})")
 		public void SAddfarmImage(@Param("url") String url,@Param("fseq") int fseq,@Param("email") String email) throws Exception;
 		
 		//주말농장 등록 여부 확인 
-		@Select("SELECT * FROM farm where email=#{email}")
+		@Select("SELECT * FROM farm where email=#{email}  order by experience_date,experience_time")
 		public List<SellerFarm> Sconfirmfarm(@Param("email")String email)throws Exception;
 		
 		//전체 셀러 리스트

@@ -67,4 +67,8 @@ public interface ProductMapper {
 	
 	@Update("update product set name=#{name},kind=#{kind},cost=#{cost},price=#{price},sale_price=#{sale_price},quantity=#{quantity} where pseq=#{pseq}")
 	 public void SProductUpdate(Product product) throws Exception;
+	
+	@Select("SELECT sum(quantity) FROM order_view where pseq=#{pseq};")
+	public Integer SProudctSaleCount(@Param("pseq")int pseq) throws Exception;
+
 }
