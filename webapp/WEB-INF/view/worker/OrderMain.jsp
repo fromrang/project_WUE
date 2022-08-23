@@ -210,8 +210,7 @@ menu박스 가운데정렬, 글자가운데 정렬 */
 					<c:forEach items="${seller}" var="seller">
 						<tr align="center">
 							<td style="border-bottom: 1px solid #444444; padding: 10px;">${seller.name}</td>
-							<td style="border-bottom: 1px solid #444444; padding: 10px;"><a
-								href="update?email=${seller.email}">${seller.email}</a></td>
+							<td style="border-bottom: 1px solid #444444; padding: 10px;">${seller.email}</td>
 							<td style="border-bottom: 1px solid #444444; padding: 10px;">${seller.pw}</td>
 							<td style="border-bottom: 1px solid #444444; padding: 10px;">${seller.phone}</td>
 							<td style="border-bottom: 1px solid #444444; padding: 10px;">${seller.zip_num}</td>

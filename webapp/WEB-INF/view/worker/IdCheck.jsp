@@ -16,20 +16,22 @@
 		<c:choose>
 			<c:when test="${worker.id != null}">
 				<p style="color:red">이미 사용 중인 아이디입니다.	<p>
-				<input type ="hidden" name="result" value="N"/>					
+				<input type ="hidden" name="result" value="N"/>		
+				<input type="button" value="취소" onclick="window.close()">			
 			</c:when>
 			<c:when test="${worker.id == null}">
 				<p style="color:red">사용 가능한 아이디입니다.<p>
 				<input type ="hidden" name="result" value="Y"/>
+				<input type="button" value="취소" onclick="window.close()">
+		<!-- <input type="button" value="사용하기" onclick="sendCheckValue()"> -->
+				<input type="button" value="사용하기" onclick="window.close()">
 			</c:when>		
 			<c:otherwise>				
 				<input type ="hidden" name="result" value="N"/>
 			</c:otherwise>			
 		</c:choose>	
 		
-		<input type="button" value="취소" onclick="window.close()">
-		<!-- <input type="button" value="사용하기" onclick="sendCheckValue()"> -->
-		<input type="button" value="사용하기" onclick="window.close()">
+		
 	</form>
 </body>
 </html>

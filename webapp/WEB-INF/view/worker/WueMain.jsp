@@ -382,6 +382,13 @@ li {
 	position: fixed;
 }
 </style>
+<script type="text/javascript">
+function chatBtn() {
+
+		window.open('http://192.168.0.59:3000/','popup','width=500,height=600');
+	}
+
+</script>
 <title>What You Eat Main</title>
 </head>
 <body>
@@ -422,7 +429,9 @@ li {
 		<!-- <input class="search" placeholder="문의사항을 입력해주세요" value=""> -->
 		<i class="fas fa-headset fa-3x"
 			style="margin-left: 1500px; margin-top: 55px;"></i>
-		<button class="chat" type="button">문의하기</button>
+		<!-- <a href="http://192.168.0.59:3000/"> -->
+			<button class="chat" type="button" onclick="chatBtn();">문의하기</button>
+		<!-- </a> -->
 		<!-- </div> -->
 	</nav>
 

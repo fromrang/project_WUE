@@ -54,6 +54,16 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 		document.getElementById("dpTime").innerHTML = ampm + hours + ":"
 				+ minutes + ":" + seconds;
 	}
+
+	function discount(pseq) {
+		form.action = "/WUE/worker/discount=" + pseq;
+		form.submit();
+	}
+
+	function notDiscount(pseq) {
+		form.action = "/WUE/worker/notDiscount=" + pseq;
+		form.submit();
+	}
 </script>
 <style type="text/css">
 ul li {
@@ -100,20 +110,21 @@ menu박스 가운데정렬, 글자가운데 정렬 */
 </style>
 </head>
 <body>
-	<form action='kind' method='get'>
+	<form action='kind' method='get' name='form'>
 		<header class="header" style="z-index: 2;">
 			<div class="header__img">
 				<img src="/WUE/img/logoWorker.png" />
 			</div>
-			
-				<div style="margin-right: 125px; float: right; margin-top: -90px;"><%=sf.format(nowTime)%></div>
-				<div style="margin: 20px; float: right; margin-top: -90px;">
-					<span id="dpTime">오후 01:44:40</span>
-				</div>
-				<div class="header__img" style="margin-top: -60px;">
-					<i class="fas fa-user-cog fa-3x"></i>&nbsp;&nbsp;&nbsp;<span>${authInfo.name} 님 로그인</span>
-				</div>
-			
+
+			<div style="margin-right: 125px; float: right; margin-top: -90px;"><%=sf.format(nowTime)%></div>
+			<div style="margin: 20px; float: right; margin-top: -90px;">
+				<span id="dpTime">오후 01:44:40</span>
+			</div>
+			<div class="header__img" style="margin-top: -60px;">
+				<i class="fas fa-user-cog fa-3x"></i>&nbsp;&nbsp;&nbsp;<span>${authInfo.name}
+					님 로그인</span>
+			</div>
+
 		</header>
 		<script src="https://kit.fontawesome.com/4a9dbb7224.js"
 			crossorigin="anonymous"></script>
@@ -124,7 +135,8 @@ menu박스 가운데정렬, 글자가운데 정렬 */
 						정보</th>
 				</tr>
 				<tr>
-					<th style="border: 4px outset pink;" onclick="location.href='management'"> 회원 관리</th>
+					<th style="border: 4px outset pink;"
+						onclick="location.href='management'">회원 관리</th>
 				</tr>
 				<tr style="height: 140px;">
 					<th style="border: 4px outset pink;">
@@ -144,7 +156,8 @@ menu박스 가운데정렬, 글자가운데 정렬 */
 					</th>
 				</tr>
 				<tr>
-					<th style="border: 4px outset pink;" onclick="location.href='event'">이벤트 관리</th>
+					<th style="border: 4px outset pink;"
+						onclick="location.href='event'">이벤트 관리</th>
 				</tr>
 				<tr style="height: 140px;">
 					<th style="border: 4px outset pink;">
@@ -167,23 +180,24 @@ menu박스 가운데정렬, 글자가운데 정렬 */
 					</th>
 				</tr>
 				<tr>
-					<th style="border: 4px outset pink;" onclick="location.href='seller_order'">주문내역 관리</th>
+					<th style="border: 4px outset pink;"
+						onclick="location.href='seller_order'">주문내역 관리</th>
 				</tr>
 				<tr>
 					<th style="border: 4px outset pink;">
-					<div id="menu2">
-						<ul>
-							<li><a href="sales">매출 관리 &nbsp;&nbsp;&nbsp;</a>
-								<ul>
-									<li><a href="sales">이익 관리&nbsp;&nbsp;&nbsp;</a></li>
-									<li><a href="expenditure">지출 관리 &nbsp;&nbsp;&nbsp;</a></li>
-								</ul></li>
+						<div id="menu2">
 							<ul>
-								<li>&nbsp;&nbsp;</li>
+								<li><a href="sales">매출 관리 &nbsp;&nbsp;&nbsp;</a>
+									<ul>
+										<li><a href="sales">이익 관리&nbsp;&nbsp;&nbsp;</a></li>
+										<li><a href="expenditure">지출 관리 &nbsp;&nbsp;&nbsp;</a></li>
+									</ul></li>
+								<ul>
+									<li>&nbsp;&nbsp;</li>
+								</ul>
 							</ul>
-						</ul>
-					</div>
-				</th>
+						</div>
+					</th>
 				</tr>
 			</table>
 		</nav>
@@ -208,6 +222,7 @@ menu박스 가운데정렬, 글자가운데 정렬 */
 						<th style="border-bottom: 1px solid #444444; padding: 10px;"><b>Image</b></th>
 						<th style="border-bottom: 1px solid #444444; padding: 10px;"><b>Name</b></th>
 						<th style="border-bottom: 1px solid #444444; padding: 10px;"><b>Price</b></th>
+						<th style="border-bottom: 1px solid #444444; padding: 10px;"><b>Sale</b></th>
 					</tr>
 					<c:set var="size" value="${fn:length(products)}" />
 					<%-- <c:forEach var="product" items="${products}"> --%>
@@ -231,9 +246,23 @@ menu박스 가운데정렬, 글자가운데 정렬 */
 											세일가 : <em class="price" style="color: red;">${products[i].sale_price}</em>
 											<span>원</span>
 									</c:when>
-									<c:otherwise>
+									<c:otherwise>			
 										정상가 : <em>${products[i].price}</em>
 										<span>원</span>
+										<p>
+											세일가 : <em class="price" style="color: red;">${products[i].sale_price}</em>
+											<span>원</span>
+									</c:otherwise>
+								</c:choose>
+							</td>
+							<td td style="border-bottom: 1px solid #444444; padding: 10px;">
+								<c:choose>
+									<c:when test="${products[i].sale eq 'y'}">
+										<button type="button" onclick="discount(${products[i].pseq})">세일중</button>
+									</c:when>
+									<c:otherwise>
+										<button type="button"
+											onclick="notDiscount(${products[i].pseq})">세일 안하는 중</button>
 									</c:otherwise>
 								</c:choose>
 							</td>

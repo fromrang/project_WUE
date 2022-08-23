@@ -127,7 +127,7 @@ td {
 			</tr>
 			<tr>
 				<td bgcolor=MistyRose align=center>비밀번호 확인</td>
-				<td><input type=text id='pw2' name=pw2 size=12 maxlength=12>&nbsp;(영어 + 숫자, 6자~ 20자로 입력해주세요</td>
+				<td><input type=password id='pw2' name=pw2 size=12 maxlength=12>&nbsp;(영어 + 숫자, 6자~ 20자로 입력해주세요</td>
 			</tr>
 			<tr>
 				<td bgcolor=MistyRose align=center>이름</td>
