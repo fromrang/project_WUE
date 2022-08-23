@@ -19,6 +19,7 @@ import controller.WAddController;
 import controller.WBoardController;
 import controller.WBoardUpdateController;
 import controller.WDeleteController;
+import controller.WDiscountController;
 import controller.WLeaveController;
 import controller.WListController;
 import controller.WLoginController;
@@ -190,6 +191,13 @@ public class WorkerConfig implements WebMvcConfigurer {
 		PRegController pRegController = new PRegController();
 		pRegController.setProductDao(productDao, workerDao);
 		return pRegController;
+	}
+
+	@Bean // 세일 등록/취소
+	public WDiscountController wDiscountController() {
+		WDiscountController wDiscountController = new WDiscountController();
+		wDiscountController.setProductDao(productDao, workerDao);
+		return wDiscountController;
 	}
 
 // 주문내역관리---------------------------------------------------------------------------
