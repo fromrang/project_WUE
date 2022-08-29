@@ -3,6 +3,7 @@ package dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import dto.Seller;
 import dto.SellerFarm;
@@ -51,6 +52,8 @@ public interface SellerDao {
 		public Integer getRramRelyCount(int fseq) throws Exception;
 		public void SPostRelyeDelte(int postnumber) throws Exception;
 		List<Wnotice> noticeList() throws Exception;
-	
-
+		public int selectSmallFseqByAdd(String email)throws Exception;
+		public String selectContextByAdd(int fseq)throws Exception;
+		 public void UpdateSamallDelete(int fseq,String experience_context) throws Exception;
+		 public void UpdateimageSamallDelete(int fseq,String email) throws Exception;
 }

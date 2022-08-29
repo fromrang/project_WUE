@@ -3,6 +3,7 @@ package dao;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.stereotype.Repository;
 
 import dto.Product;
 import dto.Seller;
@@ -10,7 +11,7 @@ import dto.Wnotice;
 
 public interface ProductDao {
 	//Search products by category
-	void setDataSource(SqlSessionFactory sqlSessionFactory);
+	//void setDataSource(SqlSessionFactory sqlSessionFactory);
 	List<Product> selectByCategory(int kind) throws Exception;
 	List<Product> selectByBest() throws Exception;
 	List<Product> selectByRecommend() throws Exception;
@@ -35,5 +36,5 @@ public interface ProductDao {
 	void SProudctImageDelte(int pseq) throws Exception;
 	public Product selectProuctupdate(String pseq)throws Exception;
 	public void SProductUpdate(Product product) throws Exception;
-
+	public Integer SProudctSaleCount(int pseq) throws Exception;
 }

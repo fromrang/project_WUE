@@ -2,7 +2,10 @@ package dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import dto.Customer;
+
 
 public interface CustomerDao {
 	Customer SelectCByEmail(String email) throws Exception;

@@ -5,19 +5,21 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import dto.Order;
-import dto.Product;
 import dto.Review;
 import mapper.OrderMapper;
 import mapper.ProductMapper;
-
+@Repository
 public class ReviewDaoImpl {
-private SqlSessionFactory sqlSessionFactory;
+	@Autowired
+	private SqlSessionFactory sqlSessionFactory;
 	
-	public void setDataSource(SqlSessionFactory sqlSessionFactory) {
-		this.sqlSessionFactory = sqlSessionFactory;
-	}
+//	public void setDataSource(SqlSessionFactory sqlSessionFactory) {
+//		this.sqlSessionFactory = sqlSessionFactory;
+//	}
 	
 	//후기 작성 가능한 상품 리스트 리턴
 	public List<Order> canBeReview(String email) throws Exception{

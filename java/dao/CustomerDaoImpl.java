@@ -6,20 +6,22 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import dto.Customer;
 import mapper.CustomerMapper;
 
-
+@Repository
 public class CustomerDaoImpl implements CustomerDao{
 //	
 //	@Autowired private CustomerMapper mapper;
 //	 
+	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 	
-	public void setDataSource(SqlSessionFactory sqlSessionFactory) {
-		this.sqlSessionFactory = sqlSessionFactory;
-	}
+//	public void setDataSource(SqlSessionFactory sqlSessionFactory) {
+//		this.sqlSessionFactory = sqlSessionFactory;
+//	}
 
 	@Override
 	public Customer SelectCByEmail(String email) throws Exception {

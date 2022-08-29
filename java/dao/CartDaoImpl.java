@@ -4,16 +4,21 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Repository;
 
 import dto.Cart;
 import mapper.CartMapper;
 
+@Repository
 public class CartDaoImpl {
+	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 	
-	public void setDataSource(SqlSessionFactory sqlSessionFactory) {
-		this.sqlSessionFactory = sqlSessionFactory;
-	}
+//	public void setDataSource(SqlSessionFactory sqlSessionFactory) {
+//		this.sqlSessionFactory = sqlSessionFactory;
+//	}
 	
 	public void insetCart(String email, int pseq, int quantity) {
 		SqlSession sqlSession = sqlSessionFactory.openSession();

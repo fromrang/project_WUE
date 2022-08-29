@@ -2,6 +2,8 @@ package dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import dto.Sales;
 import dto.SellerSales;
 import dto.Wnotice;
@@ -43,4 +45,7 @@ public interface WorkerDao {
 	int recommend(int pseq) throws Exception;
 	List<Integer> recommendList() throws Exception;
 	int deleteRecommend(int pseq) throws Exception;
+	//product sale여부 변경
+	int discount(int pseq) throws Exception;
+	int notDiscount(int pseq) throws Exception;
 }

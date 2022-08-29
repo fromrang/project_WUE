@@ -1,23 +1,25 @@
 package dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import dto.Seller;
 import dto.SellerFarm;
 import dto.SellerInstagram;
 import dto.Wnotice;
 import mapper.SellerMapper;
-
+@Repository
 public class SellerDaoImpl implements SellerDao {
+	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 
-	public void setDataSource(SqlSessionFactory sqlSessionFactory) {
-		this.sqlSessionFactory = sqlSessionFactory;
-	}
+//	public void setDataSource(SqlSessionFactory sqlSessionFactory) {
+//		this.sqlSessionFactory = sqlSessionFactory;
+//	}
 
 	@Override
 	public Seller SelectCByEmail(String email) throws Exception {
@@ -542,6 +544,52 @@ public class SellerDaoImpl implements SellerDao {
 		}finally {
 			sqlSession.close();		
 		}
+		
+	}
+
+	@Override
+	public int selectSmallFseqByAdd(String email) throws Exception {
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			return sqlSession.getMapper(SellerMapper.class).selectSmallFseqByAdd(email);
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	@Override
+	public String selectContextByAdd(int fseq)throws Exception {
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			return sqlSession.getMapper(SellerMapper.class).selectContextByAdd(fseq);
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	@Override
+	public void UpdateSamallDelete(int fseq, String experience_context) throws Exception {
+		SqlSession sqlSession=sqlSessionFactory.openSession();
+		try {
+			sqlSession.getMapper(SellerMapper.class).UpdateSamallDelete(fseq, experience_context);
+			sqlSession.commit();
+		}finally{
+			// TODO: handle exception
+			sqlSession.close();
+	}
+		
+	}
+
+	@Override
+	public void UpdateimageSamallDelete(int fseq, String email) throws Exception {
+		SqlSession sqlSession=sqlSessionFactory.openSession();
+		try {
+			sqlSession.getMapper(SellerMapper.class).UpdateimageSamallDelete(fseq, email);
+			sqlSession.commit();
+		}finally{
+			// TODO: handle exception
+			sqlSession.close();
+	}
 		
 	}
 	

@@ -5,17 +5,20 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import dto.Like;
 import mapper.LikeMapper;
 import mapper.ProductMapper;
-
+@Repository
 public class LikeDaoImpl {
+	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 	
-	public void setDataSource(SqlSessionFactory sqlSessionFactory) {
-		this.sqlSessionFactory = sqlSessionFactory;
-	}
+//	public void setDataSource(SqlSessionFactory sqlSessionFactory) {
+//		this.sqlSessionFactory = sqlSessionFactory;
+//	}
 	
 	//좋아요 등록하기
 	public void insertLikeTable(String email, int pseq){

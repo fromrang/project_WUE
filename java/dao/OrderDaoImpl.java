@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import dto.Cart;
 import dto.Customer;
@@ -14,13 +16,14 @@ import dto.Product;
 import mapper.LikeMapper;
 import mapper.OrderMapper;
 import mapper.ProductMapper;
-
+@Repository
 public class OrderDaoImpl {
+	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 	
-	public void setDataSource(SqlSessionFactory sqlSessionFactory) {
-		this.sqlSessionFactory = sqlSessionFactory;
-	}
+//	public void setDataSource(SqlSessionFactory sqlSessionFactory) {
+//		this.sqlSessionFactory = sqlSessionFactory;
+//	}
 	
 	//사용자 point 가지고 오는 메소드
 	public int selectPoint(String email) {

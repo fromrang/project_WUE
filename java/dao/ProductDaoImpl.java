@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import dto.Like;
 import dto.Product;
@@ -13,14 +15,15 @@ import dto.Wnotice;
 import mapper.LikeMapper;
 import mapper.ProductMapper;
 import mapper.WorkerMapper;
-
+@Repository
 public class ProductDaoImpl implements ProductDao{
+	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 	
-	@Override
-	public void setDataSource(SqlSessionFactory sqlSessionFactory) {
-		this.sqlSessionFactory = sqlSessionFactory;
-	}
+//	@Override
+//	public void setDataSource(SqlSessionFactory sqlSessionFactory) {
+//		this.sqlSessionFactory = sqlSessionFactory;
+//	}
 	@Override
 	public List<Product> selectByCategory(int kind) throws Exception {
 		SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -190,6 +193,7 @@ public class ProductDaoImpl implements ProductDao{
 		public int selectPseqByAdd() throws Exception {
 			SqlSession sqlSession = sqlSessionFactory.openSession();
 			try {
+				
 			   return sqlSession.getMapper(ProductMapper.class).selectPseqByAdd();
 			}finally{
 				sqlSession.close();
@@ -276,5 +280,15 @@ public class ProductDaoImpl implements ProductDao{
 					
 		}
 		
+		@Override
+		public Integer SProudctSaleCount(int pseq) throws Exception{
+			SqlSession sqlSession = sqlSessionFactory.openSession();
+			try {
+			   return sqlSession.getMapper(ProductMapper.class).SProudctSaleCount(pseq);
+			}finally{
+				sqlSession.close();
+			}
+		}
+
 
 }

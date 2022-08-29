@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import dto.Sales;
 import dto.SellerSales;
@@ -11,12 +13,14 @@ import dto.Wnotice;
 import dto.Worker;
 import mapper.WorkerMapper;
 
+@Repository
 public class WorkerDaoImpl implements WorkerDao {
+	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 
-	public void setDataSource(SqlSessionFactory sqlSessionFactory) {
-		this.sqlSessionFactory = sqlSessionFactory;
-	}
+//	public void setDataSource(SqlSessionFactory sqlSessionFactory) {
+//		this.sqlSessionFactory = sqlSessionFactory;
+//	}
 
 	@Override
 	public Worker SelectById(String id) throws Exception {
@@ -354,4 +358,29 @@ public class WorkerDaoImpl implements WorkerDao {
 			sqlSession.close();
 		}
 	}
+	
+	@Override
+	public int discount(int pseq) throws Exception {
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			int count = sqlSession.getMapper(WorkerMapper.class).getDiscount(pseq);
+			sqlSession.commit();
+			return count;
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	@Override
+	public int notDiscount(int pseq) throws Exception {
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			int count = sqlSession.getMapper(WorkerMapper.class).getNotDiscount(pseq);
+			sqlSession.commit();
+			return count;
+		} finally {
+			sqlSession.close();
+		}
+	}	
+
 }
