@@ -155,7 +155,7 @@
 <th onclick="location.href='review'">마이 리뷰</th>
 </tr>
 <tr>
-<th onclick="location.href='kind=1'">회원정보 변경</th>
+<th onclick="location.href='change'">회원정보 변경</th>
 </tr>
 </table>
 </nav>
