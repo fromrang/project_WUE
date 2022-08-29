@@ -1,5 +1,6 @@
 package controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,12 +14,13 @@ import dto.Worker;
 @Controller
 @RequestMapping("worker/update")
 public class WUpdateController {
+	@Autowired
 	private WorkerDaoImpl workerDao;
 
-	public WUpdateController setworkerDao(WorkerDaoImpl workerDao) {
-		this.workerDao = workerDao;
-		return this;
-	}
+//	public WUpdateController setworkerDao(WorkerDaoImpl workerDao) {
+//		this.workerDao = workerDao;
+//		return this;
+//	}
 	@RequestMapping(method = RequestMethod.GET)
 	public String form(@RequestParam(value = "id")String id, Model model) {
 		try {

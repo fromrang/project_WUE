@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.CustomEditorConfigurer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +20,13 @@ import dto.SellerInstagram;
 
 @Controller
 public class InstargramAllPost {
-
+	@Autowired
 	private SellerDaoImpl sellerDao;
 
-	public InstargramAllPost setcustomerDao(SellerDaoImpl sellerDao) {
-		this.sellerDao = sellerDao;
-		return this;
-	}
+//	public InstargramAllPost setcustomerDao(SellerDaoImpl sellerDao) {
+//		this.sellerDao = sellerDao;
+//		return this;
+//	}
 
 	@RequestMapping(value = "seller/instagramAll")
 	public String form(HttpSession session, Model model) {

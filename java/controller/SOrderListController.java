@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,12 +19,13 @@ import dto.Seller;
 @Controller
 /* @RequestMapping("seller/SOrderList") */
 public class SOrderListController {
+	@Autowired
 	private OrderDaoImpl orderDaoImpl;
 	
-	public SOrderListController setOrderDaoImpl(OrderDaoImpl orderDaoImpl) {
-		this.orderDaoImpl = orderDaoImpl;
-		return this;
-	}
+//	public SOrderListController setOrderDaoImpl(OrderDaoImpl orderDaoImpl) {
+//		this.orderDaoImpl = orderDaoImpl;
+//		return this;
+//	}
 	
 	@RequestMapping(value = "seller/SOrderList")
 	public String form(HttpSession session, Model model) throws Exception { //session 쓰고 싶으면 넣어주면 된다. 여기서 인자 첫번째로 Member을 넣어주었기 때문에 위에 주석 처리한 부분이 필요 없다.

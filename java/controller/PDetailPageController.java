@@ -2,6 +2,7 @@ package controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,15 +17,18 @@ import dto.SellerInstagram;
 
 @Controller
 public class PDetailPageController {
+	@Autowired
 	private ProductDao productDao;
+	@Autowired
 	private SellerDao sellerDao;
+	@Autowired
 	private ReviewDaoImpl reviewDao;
-	public PDetailPageController setProductDao(ProductDao productDao, ReviewDaoImpl reviewDao, SellerDao sellerDao) {
-		this.productDao = productDao;
-		this.reviewDao = reviewDao;
-		this.sellerDao = sellerDao;
-		return this;
-	}
+//	public PDetailPageController setProductDao(ProductDao productDao, ReviewDaoImpl reviewDao, SellerDao sellerDao) {
+//		this.productDao = productDao;
+//		this.reviewDao = reviewDao;
+//		this.sellerDao = sellerDao;
+//		return this;
+//	}
 	@GetMapping("customer/pseq={pseq}")
 	public String form(@PathVariable("pseq") int pseq, Model model) {
 		try {

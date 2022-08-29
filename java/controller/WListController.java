@@ -1,5 +1,6 @@
 package controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,12 +11,13 @@ import dao.WorkerDaoImpl;
 @Controller
 @RequestMapping("worker/list")
 public class WListController {
+	@Autowired
 	private WorkerDaoImpl workerDao;
 
-	public WListController setworkerDao(WorkerDaoImpl workerDao) {
-		this.workerDao = workerDao;
-		return this;
-	}
+//	public WListController setworkerDao(WorkerDaoImpl workerDao) {
+//		this.workerDao = workerDao;
+//		return this;
+//	}
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String list(Model model) throws Exception{

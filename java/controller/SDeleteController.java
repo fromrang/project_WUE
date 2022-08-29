@@ -2,6 +2,7 @@ package controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,12 +13,13 @@ import dto.Seller;
 @Controller
 @RequestMapping("seller/SDelete")
 public class SDeleteController {
+	@Autowired
 	private SellerDaoImpl sellerDao;
 
-	public SDeleteController setcustomerDao(SellerDaoImpl sellerDao) {
-		this.sellerDao = sellerDao;
-		return this;
-	}
+//	public SDeleteController setcustomerDao(SellerDaoImpl sellerDao) {
+//		this.sellerDao = sellerDao;
+//		return this;
+//	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public String submit(Seller updateMember,HttpSession session) throws Exception {

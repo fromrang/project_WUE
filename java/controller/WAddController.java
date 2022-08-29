@@ -2,6 +2,7 @@ package controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,12 +13,13 @@ import dto.Worker;
 @Controller
 @RequestMapping("worker/add")
 public class WAddController {
+	@Autowired
 	private WorkerDaoImpl workerDao;
 
-	public WAddController setworkerDao(WorkerDaoImpl workerDao) {
-		this.workerDao = workerDao;
-		return this;
-	}
+//	public WAddController setworkerDao(WorkerDaoImpl workerDao) {
+//		this.workerDao = workerDao;
+//		return this;
+//	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String add(Worker worker, HttpServletRequest request)throws Exception {

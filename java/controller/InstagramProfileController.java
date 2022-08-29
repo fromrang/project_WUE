@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +20,13 @@ import dto.SellerInstagram;
 
 @Controller
 public class InstagramProfileController {
+	@Autowired
 	private SellerDaoImpl sellerDao;
 
-	public InstagramProfileController setcustomerDao(SellerDaoImpl sellerDao) {
-		this.sellerDao = sellerDao;
-		return this;
-	}
+//	public InstagramProfileController setcustomerDao(SellerDaoImpl sellerDao) {
+//		this.sellerDao = sellerDao;
+//		return this;
+//	}
 	
 	
 	@RequestMapping(value="seller/instagramProfile")

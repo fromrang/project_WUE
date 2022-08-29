@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,17 +19,19 @@ import dto.SellerInstagram;
 @Controller
 @RequestMapping("seller/SMain")
 public class SMainController {
-	
+	@Autowired
 	private SellerDaoImpl sellerDao;
+	@Autowired
 	private ProductDao productDao;
+	@Autowired
 	private OrderDaoImpl orderDaoImpl;
 
-	public SMainController setProductDao(SellerDaoImpl sellerDao, ProductDao productDao, OrderDaoImpl orderDaoImpl) {
-		this.sellerDao = sellerDao;
-		this.productDao=productDao;
-		this.orderDaoImpl=orderDaoImpl;
-		return this;
-	}
+//	public SMainController setProductDao(SellerDaoImpl sellerDao, ProductDao productDao, OrderDaoImpl orderDaoImpl) {
+//		this.sellerDao = sellerDao;
+//		this.productDao=productDao;
+//		this.orderDaoImpl=orderDaoImpl;
+//		return this;
+//	}
 	
 	
 	@RequestMapping(method = RequestMethod.GET)

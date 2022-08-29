@@ -1,5 +1,6 @@
 package controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,12 +12,13 @@ import dto.Worker;
 @Controller
 @RequestMapping("worker/idcheck")
 public class IdCheckController {
+	@Autowired
 	private WorkerDaoImpl workerDao;
 
-	public IdCheckController setworkerDao(WorkerDaoImpl workerDao) {
-		this.workerDao = workerDao;
-		return this;
-	}
+//	public IdCheckController setworkerDao(WorkerDaoImpl workerDao) {
+//		this.workerDao = workerDao;
+//		return this;
+//	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String idcheck(Worker worker, Model model) throws Exception {

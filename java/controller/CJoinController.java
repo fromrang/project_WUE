@@ -5,6 +5,7 @@ import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +17,13 @@ import dto.Customer;
 
 @Controller
 public class CJoinController {
+	@Autowired
 	private CustomerDao customerDao;
 
-	public CJoinController setcustomerDao(CustomerDao customerDao) {
-		this.customerDao = customerDao;
-		return this;
-	}
+//	public CJoinController setcustomerDao(CustomerDao customerDao) {
+//		this.customerDao = customerDao;
+//		return this;
+//	}
 
 	@RequestMapping("customer/joinForm")
 	public String form() {

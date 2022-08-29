@@ -2,6 +2,7 @@ package controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,16 +16,18 @@ import dto.Order;
 @Controller
 //@RequestMapping("worker/order")
 public class WOrderController {
-private OrderDaoImpl orderDaoImpl;
-private SellerDaoImpl sellerDao;
+	@Autowired
+	private OrderDaoImpl orderDaoImpl;
+	@Autowired
+	private SellerDaoImpl sellerDao;
 
-	public WOrderController setOrderDaoImpl(OrderDaoImpl orderDaoImpl,SellerDaoImpl sellerDao) {
-		this.orderDaoImpl = orderDaoImpl;
-		this.sellerDao = sellerDao;
-		return this;
-	}
+//	public WOrderController setOrderDaoImpl(OrderDaoImpl orderDaoImpl,SellerDaoImpl sellerDao) {
+//		this.orderDaoImpl = orderDaoImpl;
+//		this.sellerDao = sellerDao;
+//		return this;
+//	}
 	
-	//ÁÖ¹®¹øÈ£ Àû¿ë¾ÈÇÑ ÀüÃ¼ 
+	//ï¿½Ö¹ï¿½ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ 
 	@RequestMapping(value = "worker/order")
 		public String form(@RequestParam(value="sseq")int sseq, Model model) throws Exception { 
 			List<Order> order = orderDaoImpl.SOseqOrderList(sseq);
@@ -33,7 +36,7 @@ private SellerDaoImpl sellerDao;
 			
 			for(int i=0;i<count.size();i++) {
 				if(count.get(i)>1) {
-					order.get(i).setPname(order.get(i).getPname()+"¿Ü "+ (count.get(i)-1)+"°Ç");
+					order.get(i).setPname(order.get(i).getPname()+"ì™¸ "+ (count.get(i)-1)+"ê°œ");
 				}
 			}
 
@@ -44,7 +47,7 @@ private SellerDaoImpl sellerDao;
 			return "worker/OrderManagement";
 		}
 
-	//ÁÖ¹®¹øÈ£º°
+	//ï¿½Ö¹ï¿½ï¿½ï¿½È£ï¿½ï¿½
 		@RequestMapping(value = "worker/order_catagory")
 		public String form2(Model model,@RequestParam(value="sseq")int sseq,@RequestParam(value="result")int result) throws Exception { 
 			List<Order> order=orderDaoImpl.SOseqOrderList2(sseq,result);
@@ -54,7 +57,7 @@ private SellerDaoImpl sellerDao;
 			
 			for(int i=0;i<count.size();i++) {
 				if(count.get(i)>1) {
-					order.get(i).setPname(order.get(i).getPname()+"¿Ü "+ (count.get(i)-1)+"°Ç");
+					order.get(i).setPname(order.get(i).getPname()+"ì™¸ "+ (count.get(i)-1)+"ê°œ");
 				}
 			}
 

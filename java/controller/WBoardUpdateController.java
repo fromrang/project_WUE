@@ -1,5 +1,6 @@
 package controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,12 +15,13 @@ import dto.Wnotice;
 @Controller
 @RequestMapping("worker/board_update")
 public class WBoardUpdateController {
+	@Autowired
 	private WorkerDaoImpl workerdao;
 
-	public WBoardUpdateController setNoticeDao(WorkerDaoImpl workerdao) {
-		this.workerdao = workerdao;
-		return this;
-	}
+//	public WBoardUpdateController setNoticeDao(WorkerDaoImpl workerdao) {
+//		this.workerdao = workerdao;
+//		return this;
+//	}
 
 	@RequestMapping(method = RequestMethod.GET)
 //	@GetMapping("worker/board_update")

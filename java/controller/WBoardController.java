@@ -2,6 +2,7 @@ package controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,12 +15,13 @@ import dto.Wnotice;
 @Controller
 //@RequestMapping("worker/board")
 public class WBoardController {	
+	@Autowired
 	private WorkerDaoImpl workerdao;
 
-	public WBoardController setNoticeDao(WorkerDaoImpl workerdao) {
-		this.workerdao = workerdao;
-		return this;
-	}
+//	public WBoardController setNoticeDao(WorkerDaoImpl workerdao) {
+//		this.workerdao = workerdao;
+//		return this;
+//	}
 	@GetMapping("worker/board")
 	public String form() throws Exception{
 		return "worker/BulletinBoard";
@@ -35,7 +37,7 @@ public class WBoardController {
 	public String delete(@RequestParam("wseq")int wseq, Model model, HttpServletRequest request)throws Exception{
 		System.out.println("!!!wdwd"+wseq);
 		workerdao.delete(wseq);
-		String referer = request.getHeader("Referer"); // Çì´õ¿¡¼­ ÀÌÀü ÆäÀÌÁö¸¦ ÀÐ´Â´Ù.
+		String referer = request.getHeader("Referer"); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð´Â´ï¿½.
         return "redirect:"+ referer;
 
 		

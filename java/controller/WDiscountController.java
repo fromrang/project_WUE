@@ -2,6 +2,7 @@ package controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,14 +12,16 @@ import dao.WorkerDao;
 
 @Controller
 public class WDiscountController {
+	@Autowired
 	private ProductDao productDao;
+	@Autowired
 	private WorkerDao workerDao;
 
-	public WDiscountController setProductDao(ProductDao productDao, WorkerDao workerDao) {
-		this.productDao = productDao;
-		this.workerDao = workerDao;
-		return this;
-	}
+//	public WDiscountController setProductDao(ProductDao productDao, WorkerDao workerDao) {
+//		this.productDao = productDao;
+//		this.workerDao = workerDao;
+//		return this;
+//	}
 	
 	@GetMapping("worker/discount={pseq}")
 	public String action(@PathVariable("pseq") int pseq, HttpServletRequest request) {

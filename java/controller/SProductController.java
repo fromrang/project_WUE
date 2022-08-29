@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,12 +19,13 @@ import dto.Seller;
 
 @Controller
 public class SProductController {
+	@Autowired
 	private ProductDao productDao;
 	
-	public SProductController setProductDao(ProductDao productDao) {
-		this.productDao = productDao;
-		return this;
-	}
+//	public SProductController setProductDao(ProductDao productDao) {
+//		this.productDao = productDao;
+//		return this;
+//	}
 	
 	
 	@RequestMapping(value="seller/ProuctList")
@@ -36,29 +38,42 @@ public class SProductController {
 		List<Product> sellproduct =productDao.selectSellProductList(String.valueOf(seller.getSseq()));
 		List<String> image =new ArrayList<String>();
 		List<String> imageFrist=new ArrayList<String>();
+		List<Integer> sumSaleCount=new ArrayList<Integer>();
 		 
 		for(Product url:sellproduct) {
 			image=productDao.selectAllImage(url.getPseq());
 			imageFrist.add(image.get(0));
+			if(productDao.SProudctSaleCount(url.getPseq())==null) {
+				sumSaleCount.add(0);
+			}else {
+				sumSaleCount.add(productDao.SProudctSaleCount(url.getPseq()));
+				
+			}
 		}
 		
 		List<Product> readyproduct=productDao.selectReadyProductList(String.valueOf(seller.getSseq()));
 		
 		List<String> image2 =new ArrayList<String>();
 		List<String> imageFrist2=new ArrayList<String>();
-		 
+		List<Integer> sumSaleCount2=new ArrayList<Integer>();
 
 		for(Product url:readyproduct) {
 			image2=productDao.selectAllImage(url.getPseq());
 			imageFrist2.add(image2.get(0));
-//			System.out.println(image2.get(0));
+			if(productDao.SProudctSaleCount(url.getPseq())==null) {
+				sumSaleCount2.add(0);
+			}else {
+				sumSaleCount2.add(productDao.SProudctSaleCount(url.getPseq()));
+				
+			}
 		}
 		
 		model.addAttribute("Sellproduct", sellproduct);
 		model.addAttribute("Sellimage", imageFrist);
 		model.addAttribute("readyproduct", readyproduct);
 		model.addAttribute("Sellimage2", imageFrist2);
-		
+		model.addAttribute("sumSaleCount2", sumSaleCount2);
+		model.addAttribute("sumSaleCount", sumSaleCount);
 		return "seller/SProductListForm";
 	}
 

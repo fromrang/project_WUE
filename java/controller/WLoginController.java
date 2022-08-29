@@ -3,6 +3,7 @@ package controller;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -15,12 +16,13 @@ import dto.Worker;
 @Controller
 @RequestMapping("worker/login")
 public class WLoginController {
+	@Autowired
 	private WorkerDaoImpl workerDao;
 
-	public WLoginController setworkerDao(WorkerDaoImpl workerDao) {
-		this.workerDao = workerDao;
-		return this;
-	}
+//	public WLoginController setworkerDao(WorkerDaoImpl workerDao) {
+//		this.workerDao = workerDao;
+//		return this;
+//	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String form(Worker loginCommand, HttpSession session, Model model) {

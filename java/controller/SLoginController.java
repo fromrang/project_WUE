@@ -3,6 +3,7 @@ package controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,15 +18,16 @@ import dto.Seller;
 
 @Controller
 public class SLoginController {
-
+	@Autowired
 	private SellerDaoImpl sellerDao;
+	@Autowired
 	private CustomerDaoImpl customerDao;
 
-	public SLoginController setcustomerDao(SellerDaoImpl sellerDao,CustomerDaoImpl customerDao) {
-		this.customerDao=customerDao;
-		this.sellerDao = sellerDao;
-		return this;
-	}
+//	public SLoginController setcustomerDao(SellerDaoImpl sellerDao,CustomerDaoImpl customerDao) {
+//		this.customerDao=customerDao;
+//		this.sellerDao = sellerDao;
+//		return this;
+//	}
 	
 	
 	@RequestMapping(method = RequestMethod.GET,value="seller/Slogin")

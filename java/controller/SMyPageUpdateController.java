@@ -5,6 +5,7 @@ import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,12 +17,13 @@ import dto.Seller;
 @Controller
 @RequestMapping("seller/SUpdate")
 public class SMyPageUpdateController {
+	@Autowired
 	private SellerDaoImpl sellerDao;
 
-	public SMyPageUpdateController setcustomerDao(SellerDaoImpl sellerDao) {
-		this.sellerDao = sellerDao;
-		return this;
-	}
+//	public SMyPageUpdateController setcustomerDao(SellerDaoImpl sellerDao) {
+//		this.sellerDao = sellerDao;
+//		return this;
+//	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String form(HttpSession session, Model model) throws Exception {

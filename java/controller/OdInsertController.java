@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,11 +23,12 @@ import dto.Product;
 
 @Controller
 public class OdInsertController {
+	@Autowired
 	private OrderDaoImpl orderDaoImpl;
-	public OdInsertController setOrderDaoImpl(OrderDaoImpl orderDaoImpl) {
-		this.orderDaoImpl = orderDaoImpl;
-		return this;
-	}
+//	public OdInsertController setOrderDaoImpl(OrderDaoImpl orderDaoImpl) {
+//		this.orderDaoImpl = orderDaoImpl;
+//		return this;
+//	}
 	//결제 페이지로 정보 가지고 이동
 	@GetMapping("customer/order")
 	public String form(HttpSession session, @RequestParam("pseq")int pseq, @RequestParam("quantity") int quantity, Model model) {

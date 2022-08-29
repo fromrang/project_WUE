@@ -5,11 +5,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import dao.ProductDao;
@@ -19,11 +18,12 @@ import dto.Wnotice;
 
 @Controller
 public class PFirstPageController {
+	@Autowired
 	private ProductDao productDao;
-	public PFirstPageController setProductDao(ProductDao productDao) {
-		this.productDao = productDao;
-		return this;
-	}
+//	public PFirstPageController setProductDao(ProductDao productDao) {
+//		this.productDao = productDao;
+//		return this;
+//	}
 	
 	@GetMapping("customer/main")
 	public String form(Model model,HttpSession session) {

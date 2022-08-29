@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,11 +17,12 @@ import dto.Product;
 
 @Controller
 public class PKindPageController {
+	@Autowired
 	private ProductDao productDao;
-	public PKindPageController setProductDao(ProductDao productDao) {
-		this.productDao = productDao;
-		return this;
-	}
+//	public PKindPageController setProductDao(ProductDao productDao) {
+//		this.productDao = productDao;
+//		return this;
+//	}
 	@RequestMapping("customer/main/kind={kind}")
 	public String form(@PathVariable("kind") int kind, Model model, HttpSession session) {
 		Customer customer = (Customer)session.getAttribute("cAuthInfo");

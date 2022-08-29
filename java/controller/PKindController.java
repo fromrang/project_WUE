@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,14 +17,16 @@ import dto.Product;
 @Controller
 @RequestMapping("worker/kind={kind}")
 public class PKindController {
+	@Autowired
 	private ProductDao productDao;
+	@Autowired
 	private WorkerDao workerDao;
 
-	public PKindController setProductDao(ProductDao productDao, WorkerDao workerDao) {
-		this.productDao = productDao;
-		this.workerDao = workerDao;
-		return this;
-	}
+//	public PKindController setProductDao(ProductDao productDao, WorkerDao workerDao) {
+//		this.productDao = productDao;
+//		this.workerDao = workerDao;
+//		return this;
+//	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String form(@PathVariable("kind") int kind, Model model) {

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,12 +24,13 @@ import dto.SellerInstagram;
 @Controller
 @RequestMapping("seller/instagramProfileUpdate")
 public class InstaProfileUpdateController {
+	@Autowired
 	private SellerDaoImpl sellerDao;
 
-	public InstaProfileUpdateController setcustomerDao(SellerDaoImpl sellerDao) {
-		this.sellerDao = sellerDao;
-		return this;
-	}
+//	public InstaProfileUpdateController setcustomerDao(SellerDaoImpl sellerDao) {
+//		this.sellerDao = sellerDao;
+//		return this;
+//	}
 	@RequestMapping(method = RequestMethod.GET)
 	public String form(HttpSession session,@RequestParam(value="seller_email")String seller_email,Model model) throws Exception {		
 		if (session.getAttribute("authInfo") == null) {
@@ -62,15 +64,11 @@ public class InstaProfileUpdateController {
 		System.out.println(multi.getParameter("commnet"));
 		
 		SellerInstagram seller=sellerDao.InstagramProfile(updateSeller.getSeller_email());
-		System.out.println(seller.getUrl());
-		
-		if(seller.getUrl().equals(multi.getParameter("url"))) {
-			updateSeller.setUrl(multi.getParameter("url"));
-			sellerDao.UpdateInstaSeller(updateSeller);	
-		}
-		
-		if(seller.getUrl()!=(multi.getParameter("img"))) {
+
+
+		if(seller.getUrl()!=multi.getFilesystemName("img")) {
 			try {
+				if(!multi.getFilesystemName("img").isEmpty()) {
 				Enumeration files = multi.getFileNames();
 				while (files.hasMoreElements()) {
 					String file = (String) files.nextElement();
@@ -80,13 +78,13 @@ public class InstaProfileUpdateController {
 					updateSeller.setUrl(file_name);	
 				}
 				sellerDao.UpdateInstaSeller(updateSeller);
+			}
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
 			}
 		}
-		SellerInstagram	member=sellerDao.InstagramProfile(updateSeller.getSeller_email());
-		model.addAttribute("user", member);
+		
 		return "redirect:myinstagramProfile";
 	}
 

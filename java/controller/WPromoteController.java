@@ -1,5 +1,6 @@
 package controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,12 +14,13 @@ import dto.Customer;
 @Controller
 @RequestMapping("worker/promote")
 public class WPromoteController {
+	@Autowired
 	private CustomerDaoImpl customerDao;
 	
-	public WPromoteController setDao(CustomerDaoImpl customerDao) {
-		this.customerDao = customerDao;
-		return this;
-	}
+//	public WPromoteController setDao(CustomerDaoImpl customerDao) {
+//		this.customerDao = customerDao;
+//		return this;
+//	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	//@GetMapping("worker/promote")

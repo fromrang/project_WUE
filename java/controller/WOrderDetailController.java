@@ -2,6 +2,7 @@ package controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,14 +13,15 @@ import dto.Order;
 
 @Controller
 public class WOrderDetailController {
+	@Autowired
 	private OrderDaoImpl orderDaoImpl;
 	
-	public WOrderDetailController setOrderDaoImpl(OrderDaoImpl orderDaoImpl) {
-		this.orderDaoImpl = orderDaoImpl;
-		return this;
-	}
+//	public WOrderDetailController setOrderDaoImpl(OrderDaoImpl orderDaoImpl) {
+//		this.orderDaoImpl = orderDaoImpl;
+//		return this;
+//	}
 	
-	//ÁÖ¹®¹øÈ£ »ó¼¼ 
+	//ï¿½Ö¹ï¿½ï¿½ï¿½È£ ï¿½ï¿½ 
 		@RequestMapping(value = "worker/order_detail")
 		public String form(Model model,@RequestParam(value="sseq")int sseq,@RequestParam(value="oseq") int oseq) throws Exception {
 			List<Order> order=orderDaoImpl.SOrderList(sseq,oseq);

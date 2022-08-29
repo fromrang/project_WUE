@@ -1,5 +1,6 @@
 package controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,11 +9,12 @@ import dao.WorkerDaoImpl;
 
 @Controller
 public class WSalesController {
+	@Autowired
 	private WorkerDaoImpl workerDao;
-	public WSalesController setDao(WorkerDaoImpl workerdao) {
-		this.workerDao = workerdao;
-		return this;
-	}
+//	public WSalesController setDao(WorkerDaoImpl workerdao) {
+//		this.workerDao = workerdao;
+//		return this;
+//	}
 	
 	//@RequestMapping(method = RequestMethod.GET)
 	@RequestMapping(value ="worker/sales")

@@ -3,6 +3,7 @@ package controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,12 +15,13 @@ import dto.Seller;
 @Controller
 @RequestMapping("seller/Idcheck")
 public class SIdCheckController {
+	@Autowired
 	private SellerDaoImpl sellerDao;
-
-	public SIdCheckController setcustomerDao(SellerDaoImpl sellerDao) {
-		this.sellerDao = sellerDao;
-		return this;
-	}
+//
+//	public SIdCheckController setcustomerDao(SellerDaoImpl sellerDao) {
+//		this.sellerDao = sellerDao;
+//		return this;
+//	}
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String sumbit(HttpServletRequest request,Model model) throws Exception {

@@ -1,5 +1,7 @@
 package controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,12 +29,13 @@ import dto.SellerInstagram;
 
 @Controller
 public class SFarmController {
+	@Autowired
 	private SellerDaoImpl sellerDao;
 
-	public SFarmController setcustomerDao(SellerDaoImpl sellerDao) {
-		this.sellerDao = sellerDao;
-		return this;
-	}
+//	public SFarmController setcustomerDao(SellerDaoImpl sellerDao) {
+//		this.sellerDao = sellerDao;
+//		return this;
+//	}
 	
 	
 	@RequestMapping(value="seller/farmForm")
@@ -158,14 +162,17 @@ public class SFarmController {
 		     List<SellerFarm> farmpost=new ArrayList<SellerFarm>();
 			 List<String> farmimage=new ArrayList();
 			 SellerInstagram farmprofileImage=null;
+			 int samllFseq=0;
 		     
 		     for(Seller farmseller:sellerlist) {
 		    	 
 		    	 farmpost =sellerDao.Sconfirmfarm(seller.getEmail());
+		    	 samllFseq=sellerDao.selectSmallFseqByAdd(seller.getEmail());
 		    	 farmseller.setFramList(farmpost);
 		     }
 		    
 		     model.addAttribute("posting2",sellerlist);
+		     model.addAttribute("samllFseq",samllFseq);
 		return "seller/FarmUpdateFrom";
 	}
 	
@@ -181,10 +188,10 @@ public class SFarmController {
 			}
 		Seller seller=(Seller)session.getAttribute("authInfo");
 		for(int i=0;i<fseq.size();i++) {
-			if(i==0) {
+			if(fseq.get(i)==sellerDao.selectSmallFseqByAdd(seller.getEmail())) {
 			sellerDao.UpdateInstafarm(fseq.get(i), experience_time.get(i),experience_price.get(i) , experience_date.get(i), experience_number.get(i), request.getParameter("experience_context"));
 			}
-			if(i>0) {
+			else {
 			 sellerDao.UpdateInstafarm(fseq.get(i), experience_time.get(i),experience_price.get(i) , experience_date.get(i), experience_number.get(i), "");
 			}
 //			System.out.println(experience_date.get(i));
@@ -205,7 +212,17 @@ public class SFarmController {
 		Seller seller=(Seller)session.getAttribute("authInfo");
 		
 		 String farm=repuset.getParameter("fseq");
-		 sellerDao.SfarmDelte(Integer.valueOf(farm));
+//		 System.out.println(repuset.getParameter("experience_context"));
+//		 System.out.println(farm);
+		 if(farm.equals(String.valueOf(sellerDao.selectSmallFseqByAdd(seller.getEmail())))){
+			 String context=sellerDao.selectContextByAdd(sellerDao.selectSmallFseqByAdd(seller.getEmail()));
+//			 System.out.println(context);
+			 sellerDao.SfarmDelte(Integer.valueOf(farm));
+		    sellerDao.UpdateimageSamallDelete(sellerDao.selectSmallFseqByAdd(seller.getEmail()), seller.getEmail());
+		   sellerDao.UpdateSamallDelete(sellerDao.selectSmallFseqByAdd(seller.getEmail()),context);
+		 }else {
+			// sellerDao.SfarmDelte(Integer.valueOf(farm));
+		 }
 		 
 		return "redirect:myinstagramProfile";
 	}

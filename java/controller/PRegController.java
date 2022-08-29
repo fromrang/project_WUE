@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,14 +26,16 @@ import dto.Worker;
 @Controller
 @RequestMapping("worker/reg")
 public class PRegController {
+	@Autowired
 	private ProductDao productDao;
+	@Autowired
 	private WorkerDaoImpl workerDao;
 
-	public PRegController setProductDao(ProductDao productDao, WorkerDaoImpl workerDao) {
-		this.productDao = productDao;
-		this.workerDao = workerDao;
-		return this;
-	}
+//	public PRegController setProductDao(ProductDao productDao, WorkerDaoImpl workerDao) {
+//		this.productDao = productDao;
+//		this.workerDao = workerDao;
+//		return this;
+//	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String form() throws Exception {
@@ -46,14 +49,14 @@ public class PRegController {
 		try {
 			request.setCharacterEncoding("UTF-8");
 			response.setContentType("text/html;charset=UTF-8");
-			String savePath = "/img/Simage"; // ¿©±â¸¦ ¹Ù²ãÁÖ¸é ´Ù¿î¹Þ´Â °æ·Î°¡ ¹Ù²ñ
-			// Æú´õ¸¦ ¸¸µé¾îÁà¾ßÇÏ¸ç ±×·¡¾ß ½ÇÁ¦°æ·Î¿¡ ÆÄÀÏÀÌ ¿Ã¶ó°¨ (webapp¿¡´Â ÆÄÀÏÀÌ ¿Ã¶ó°¡Áö ¾ÊÀ½)
-			int uploadFileSizeLimit = 10 * 1080 * 1920; // ÃÖ´ë ¾÷·Îµå ÆÄÀÏ Å©±â 10mb·Î Á¦ÇÑ
+			String savePath = "/img/Simage"; // ï¿½ï¿½ï¿½â¸¦ ï¿½Ù²ï¿½ï¿½Ö¸ï¿½ ï¿½Ù¿ï¿½Þ´ï¿½ ï¿½ï¿½Î°ï¿½ ï¿½Ù²ï¿½
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¶ï¿½ (webappï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¶ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+			int uploadFileSizeLimit = 10 * 1080 * 1920; // ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ 10mbï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			PrintWriter out = response.getWriter();
-			String encType = "UTF-8"; // ÀÎÄÚµù ¹æ½Ä ÁöÁ¤
+			String encType = "UTF-8"; // ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			ServletContext context = request.getServletContext();
-			String uploadFilePath = context.getRealPath(savePath); // ¼­¹ö»óÀÇ ½ÇÃ¼ µð·ºÅä¸®
-			// ½ÇÁ¦·Î ¿Ã¶ó°¡¸é ÁöÁ¤µÇ¾î ÀúÀåµÇ´Â °æ·Î
+			String uploadFilePath = context.getRealPath(savePath); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ä¸®
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¶ó°¡¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½
 			MultipartRequest multi = new MultipartRequest(request, uploadFilePath, uploadFileSizeLimit, encType,
 					new DefaultFileRenamePolicy());
 
@@ -73,7 +76,7 @@ public class PRegController {
 				String file = (String) files.nextElement();
 				String file_name = multi.getFilesystemName(file);
 				String ori_file_name = multi.getOriginalFileName(file);
-//				System.out.println("»çÁø"+ori_file_name);
+//				System.out.println("ï¿½ï¿½ï¿½ï¿½"+ori_file_name);
 				if (!file.equals("productImage")) {
 					urlImage.add(file);
 				}

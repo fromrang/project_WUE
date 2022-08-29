@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,11 +18,12 @@ import dto.Customer;
 
 @Controller
 public class CartListController {
+	@Autowired
 	private CartDaoImpl cartDaoImpl;
-	public CartListController setCartDaoImpl(CartDaoImpl cartDaoImpl) {
-		this.cartDaoImpl = cartDaoImpl;
-		return this;
-	}
+//	public CartListController setCartDaoImpl(CartDaoImpl cartDaoImpl) {
+//		this.cartDaoImpl = cartDaoImpl;
+//		return this;
+//	}
 	@GetMapping("customer/cart/list")
 	public String form(HttpSession session, Model model) {
 		Customer customer = (Customer)session.getAttribute("cAuthInfo");
