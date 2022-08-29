@@ -16,7 +16,7 @@ import dao.OrderDaoImpl;
 
 @Configuration
 public class OrderConfig {
-	@Autowired
+	//@Autowired
 	private OrderDaoImpl orderDaoImpl;
 	private SqlSessionFactory sqlSessionFactory;
 	
@@ -28,32 +28,32 @@ public class OrderConfig {
 		
 		}catch(Exception e) {e.printStackTrace();}
 	}
-	@Bean
-	public OrderDaoImpl orderDaoImpl() {
-		OrderDaoImpl orderDaoImpl = new OrderDaoImpl();
-		orderDaoImpl.setDataSource(sqlSessionFactory);
-		return orderDaoImpl;
-	}
-	@Bean
-	public OdInsertController odInsertController() {
-		OdInsertController odInsertController = new OdInsertController();
-		odInsertController.setOrderDaoImpl(orderDaoImpl);
-		return odInsertController;
-	}
-
-	
-	//========================================seller================
-	@Bean
-	public SOrderListController SOrderListController() {
-		SOrderListController SOrderListController = new SOrderListController();
-		SOrderListController.setOrderDaoImpl(orderDaoImpl);
-		return SOrderListController;
-	}
-
-	@Bean
-	public SOrderDetailController SOrderDetailController() {
-		SOrderDetailController SOrderDetailController = new SOrderDetailController();
-		SOrderDetailController.setOrderDaoImpl(orderDaoImpl);
-		return SOrderDetailController;
-	}
+//	@Bean
+//	public OrderDaoImpl orderDaoImpl() {
+//		OrderDaoImpl orderDaoImpl = new OrderDaoImpl();
+//		orderDaoImpl.setDataSource(sqlSessionFactory);
+//		return orderDaoImpl;
+//	}
+//	@Bean
+//	public OdInsertController odInsertController() {
+//		OdInsertController odInsertController = new OdInsertController();
+//		odInsertController.setOrderDaoImpl(orderDaoImpl);
+//		return odInsertController;
+//	}
+//
+//	
+//	//========================================seller================
+//	@Bean
+//	public SOrderListController SOrderListController() {
+//		SOrderListController SOrderListController = new SOrderListController();
+//		SOrderListController.setOrderDaoImpl(orderDaoImpl);
+//		return SOrderListController;
+//	}
+//
+//	@Bean
+//	public SOrderDetailController SOrderDetailController() {
+//		SOrderDetailController SOrderDetailController = new SOrderDetailController();
+//		SOrderDetailController.setOrderDaoImpl(orderDaoImpl);
+//		return SOrderDetailController;
+//	}
 }

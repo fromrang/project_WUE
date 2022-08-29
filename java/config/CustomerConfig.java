@@ -18,8 +18,9 @@ import dao.CustomerDaoImpl;
 @Configuration
 //@Import ( CustomerMapper.class)
 public class CustomerConfig {
-	@Autowired
+	//@Autowired
 	private CustomerDaoImpl customerDao;
+	//@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 	
 	public CustomerConfig() {
@@ -29,38 +30,38 @@ public class CustomerConfig {
 			sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 		}catch(Exception e) {e.printStackTrace();}
 	}
-	
-	@Bean
-	public CustomerDaoImpl customerDao() {
-		CustomerDaoImpl customer = new CustomerDaoImpl();
-		customer.setDataSource(sqlSessionFactory); // mybatis 적용
-		return customer;
-	}
-	
-	@Bean
-	public CLoginController cLoginController() {
-		//loginController로 객체를 찾아서 생성한다.
-		CLoginController cLoginController = new CLoginController();
-		cLoginController.setcustomerDao(customerDao);
-		
-		return cLoginController;
-	}
-	
-	@Bean
-	public CJoinController cJoinController() {
-		CJoinController cJoinController = new CJoinController();
-		cJoinController.setcustomerDao(customerDao);
-		
-		return cJoinController;
-	}
-	
-	@Bean
-	public CIdCheckController cIdCheckController() {
-		CIdCheckController cIdCheckController = new CIdCheckController();
-		cIdCheckController.setcustomerDao(customerDao);
-		
-		return cIdCheckController;
-	}
+
+//	@Bean
+//	public CustomerDaoImpl customerDao() {
+//		CustomerDaoImpl customer = new CustomerDaoImpl();
+//		customer.setDataSource(sqlSessionFactory); // mybatis 적용
+//		return customer;
+//	}
+//	
+//	@Bean
+//	public CLoginController cLoginController() {
+//		//loginController로 객체를 찾아서 생성한다.
+//		CLoginController cLoginController = new CLoginController();
+//		cLoginController.setcustomerDao(customerDao);
+//		
+//		return cLoginController;
+//	}
+//	
+//	@Bean
+//	public CJoinController cJoinController() {
+//		CJoinController cJoinController = new CJoinController();
+//		cJoinController.setcustomerDao(customerDao);
+//		
+//		return cJoinController;
+//	}
+//	
+//	@Bean
+//	public CIdCheckController cIdCheckController() {
+//		CIdCheckController cIdCheckController = new CIdCheckController();
+//		cIdCheckController.setcustomerDao(customerDao);
+//		
+//		return cIdCheckController;
+//	}
 	
 
 }

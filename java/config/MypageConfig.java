@@ -19,9 +19,9 @@ import dao.ReviewDaoImpl;
 @Configuration
 public class MypageConfig {
 	private CustomerDaoImpl customerDao;
-	@Autowired
+	//@Autowired
 	private LikeDaoImpl likeDao;
-	@Autowired
+	//@Autowired
 	private ReviewDaoImpl reviewDao;
 	private OrderDaoImpl orderDao;
 
@@ -32,42 +32,42 @@ public class MypageConfig {
 			String resource = "dao/mybatis-config.xml";
 			InputStream inputStream = Resources.getResourceAsStream(resource);
 			sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-			customerDao = customerDao();
-			orderDao = orderDao();
+//			customerDao = customerDao();
+//			orderDao = orderDao();
 		}catch(Exception e) {e.printStackTrace();}
 	}
 	
 
-	public CustomerDaoImpl customerDao() {
-		CustomerDaoImpl customer = new CustomerDaoImpl();
-		customer.setDataSource(sqlSessionFactory); // mybatis 적용
-		return customer;
-	}
-	@Bean
-	public LikeDaoImpl likeDao() {
-		LikeDaoImpl likeDao = new LikeDaoImpl();
-		likeDao.setDataSource(sqlSessionFactory); // mybatis 적용
-		return likeDao;
-	}
-
-	public OrderDaoImpl orderDao() {
-		OrderDaoImpl orderDao = new OrderDaoImpl();
-		orderDao.setDataSource(sqlSessionFactory);
-		return orderDao;
-	}
-	
-	@Bean
-	public ReviewDaoImpl reviewDao() {
-		ReviewDaoImpl reviewDao = new ReviewDaoImpl();
-		reviewDao.setDataSource(sqlSessionFactory);
-		return reviewDao;
-	}
-	
-	@Bean
-	public CMyPageController cMyPageController() {
-		CMyPageController cMyPageController = new CMyPageController();
-		cMyPageController.setDao(customerDao, likeDao, orderDao(), reviewDao);
-		return cMyPageController;
-	}
+//	public CustomerDaoImpl customerDao() {
+//		CustomerDaoImpl customer = new CustomerDaoImpl();
+//		customer.setDataSource(sqlSessionFactory); // mybatis 적용
+//		return customer;
+//	}
+//	@Bean
+//	public LikeDaoImpl likeDao() {
+//		LikeDaoImpl likeDao = new LikeDaoImpl();
+//		likeDao.setDataSource(sqlSessionFactory); // mybatis 적용
+//		return likeDao;
+//	}
+//
+//	public OrderDaoImpl orderDao() {
+//		OrderDaoImpl orderDao = new OrderDaoImpl();
+//		orderDao.setDataSource(sqlSessionFactory);
+//		return orderDao;
+//	}
+//	
+//	@Bean
+//	public ReviewDaoImpl reviewDao() {
+//		ReviewDaoImpl reviewDao = new ReviewDaoImpl();
+//		reviewDao.setDataSource(sqlSessionFactory);
+//		return reviewDao;
+//	}
+//	
+//	@Bean
+//	public CMyPageController cMyPageController() {
+//		CMyPageController cMyPageController = new CMyPageController();
+//		cMyPageController.setDao(customerDao, likeDao, orderDao(), reviewDao);
+//		return cMyPageController;
+//	}
 
 }
