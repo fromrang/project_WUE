@@ -1,14 +1,13 @@
 package controller;
 
-import java.util.StringTokenizer;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -45,7 +44,8 @@ public class CJoinController {
 		phone += "-";
 		phone += request.getParameter("phone3");
 		customer.setPhone(phone);
-
+		
+		customer.setPw(encrypt(customer.getPw()));
 		customerDao.CustomerJoin(customer);
 		return "redirect:login";
 	}
@@ -62,6 +62,21 @@ public class CJoinController {
 			return "redirect:main";
 		}
 	}
+	
+    public String encrypt(String text) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(text.getBytes());
+
+        return bytesToHex(md.digest());
+    }
+
+    private String bytesToHex(byte[] bytes) {
+        StringBuilder builder = new StringBuilder();
+        for (byte b : bytes) {
+            builder.append(String.format("%02x", b));
+        }
+        return builder.toString();
+    }
 	 
 
 }

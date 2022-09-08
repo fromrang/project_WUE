@@ -1,13 +1,15 @@
 package controller;
 
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -43,8 +45,9 @@ public class CLoginController {
 	@RequestMapping(value = "customer/login", method = RequestMethod.POST)
 	//바로 이어서 쓰는게 멀티플컨트롤러
 	public String submit(Customer loginCommand, HttpSession session, HttpServletResponse response, Model model) {
-
+		
 		try {
+			loginCommand.setPw(encrypt(loginCommand.getPw()));
 			if(customerDao.SelectCByEmail(loginCommand.getEmail()) == null){
 				model.addAttribute("notMember", "존재하지 않는 회원입니다.");
 				return "customer/loginForm";
@@ -71,4 +74,19 @@ public class CLoginController {
 		session.invalidate();
 		return "redirect:login";
 	}
+	
+    public String encrypt(String text) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(text.getBytes());
+
+        return bytesToHex(md.digest());
+    }
+
+    private String bytesToHex(byte[] bytes) {
+        StringBuilder builder = new StringBuilder();
+        for (byte b : bytes) {
+            builder.append(String.format("%02x", b));
+        }
+        return builder.toString();
+    }
 }
