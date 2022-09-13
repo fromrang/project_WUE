@@ -137,6 +137,15 @@ public class CustomerDaoImpl implements CustomerDao{
 			sqlSession.close();
 		}
 	}
+	
+	public Customer findCustomer(String name, String phone) throws Exception{
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			return sqlSession.getMapper(CustomerMapper.class).selectCustomerNamePhone(name, phone);
+		}finally {
+			sqlSession.close();
+		}
+	}
 
 	
 }
