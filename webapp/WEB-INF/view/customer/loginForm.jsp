@@ -49,7 +49,12 @@ fieldset{
 		}
 
 </style>
+<script type="text/javascript">
 
+function findIdForm(){
+	window.open('findId','popup','width=500,height=600');
+}
+</script>
 </head>
 <body>
 <header>
@@ -71,6 +76,11 @@ fieldset{
 		<p>
 		<input type='button' class="signup-btn" value= '아직 회원이 아니신가요?' onclick= 'location.href= "joinForm"' />
 	</fieldset>
+	<div style="text-align:center; font-size: 12px;" >
+		<input type='button' class="signup-btn" value= '아이디 찾기' onclick= 'findIdForm()' />
+		<span>|</span>
+		<input type='button' class="signup-btn" value= '비밀번호 찾기' onclick= '' />
+	</div>
 </form>
 </main>
 </body>
