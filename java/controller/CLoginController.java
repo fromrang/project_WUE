@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+
+
 import dao.CustomerDaoImpl;
 import dto.Customer;
 
@@ -120,6 +122,37 @@ public class CLoginController {
 			e.printStackTrace();
 		}
     	return "customer/findIdForm";
+    }
+    //비밀번호 찾기 창 켜기
+    @GetMapping("customer/findPw")
+    public String findPw() {
+    	return "customer/findPwForm";
+    }
+    
+    //비밀번호 찾기 action
+    @PostMapping("customer/findPw")
+    public String findPwAction(HttpServletRequest request, Model model){
+    	String phone = "";
+		phone += request.getParameter("phone1");
+		phone += "-";
+		phone += request.getParameter("phone2");
+		phone += "-";
+		phone += request.getParameter("phone3");
+		
+		String email = request.getParameter("email");
+		String name = request.getParameter("name");
+		
+		try {
+			Customer newCustoemr = customerDao.findCustomer(name, phone);
+			if(newCustoemr.getEmail() == email) {
+				model.addAttribute("email", newCustoemr.getEmail());
+			}else {
+				model.addAttribute("message", "이메일이 일치하지 않습니다.");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+    	return "customer/login";
     }
     
 }
