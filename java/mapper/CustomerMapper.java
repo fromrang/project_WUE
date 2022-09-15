@@ -41,4 +41,12 @@ public interface CustomerMapper {
 	//회원 수정
 	@Update("update customer set name=#{name}, pw=#{pw}, phone=#{phone}, zip_code=#{zip_code}, address=#{address} where email=#{email}")
 	public void updateCustomer(Customer customer) throws Exception;
+	
+	//회원 검색(아이디 찾기)
+	@Select("select * from customer where name=#{name} and phone=#{phone}")
+	public Customer selectCustomerNamePhone(@Param("name")String name, @Param("phone")String phone);
+	
+	//비밀번호 변경
+	@Update("update customer set pw=#{pw} where email=#{email}")
+	public void changePw(@Param("pw")String pw, @Param("email")String email);
 }
