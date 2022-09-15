@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js"> </script> 
+<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js"> </script> 
 <script type="text/javascript"> 
 	(function(){ 
     	emailjs.init("YOUR_USER_ID"); 
@@ -21,11 +21,12 @@
 	       console.log('SUCCESS!', response.status, response.text);
 	    }, function(error) {
 	       console.log('FAILED...', error);
+	       
 	    });
-</script>
+</script> -->
 </head>
 <body>
-<form action="/WUE/customer/findId" method="post" >
+<form action="/WUE/customer/findPw" method="post" >
 	<!-- <h1 style="text-align:center; margin-top: 80px; color: #12467a;">아이디 찾기</h1> -->
 	<fieldset style="margin: auto; width: 300px; height:230px;">
 		<p></p>
@@ -51,8 +52,12 @@
 		</div><p>
 		<input class="field" type="text" name= "email" size = "4" >
 		<input type="submit" class="login-btn" value="임시 비밀번호 발급받기" size = "100">
-
-		
+		<div style="height:10px;">
+			<span class="message">
+			${password} 
+			${message}
+			</span>
+		</div><p>
 	</fieldset>
 
 </form>
