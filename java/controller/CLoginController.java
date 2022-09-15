@@ -3,6 +3,7 @@ package controller;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-
 
 import dao.CustomerDaoImpl;
 import dto.Customer;
@@ -142,17 +141,39 @@ public class CLoginController {
 		String email = request.getParameter("email");
 		String name = request.getParameter("name");
 		
+		//System.out.printf("%s | %s | %s",phone, name, email);
+		
 		try {
 			Customer newCustoemr = customerDao.findCustomer(name, phone);
-			if(newCustoemr.getEmail() == email) {
-				model.addAttribute("email", newCustoemr.getEmail());
+			
+			if(newCustoemr == null){
+				model.addAttribute("message", "존배하지 않는 회원입니다.");
+			}else if(newCustoemr.getEmail().equals(email)) {
+				String newPw = newPassword();
+				customerDao.changePw(encrypt(newPw), email);
+				model.addAttribute("password", newPw);
+				//디비 비밀번호 변경
 			}else {
 				model.addAttribute("message", "이메일이 일치하지 않습니다.");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-    	return "customer/login";
+		return "customer/findPwForm";
+    }
+    
+    public String newPassword() {
+    	
+        int leftLimit = 48; // numeral '0'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 10;
+        Random random = new Random();
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                                       .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                                       .limit(targetStringLength)
+                                       .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                                       .toString();
+    	return generatedString;
     }
     
 }
