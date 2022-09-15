@@ -146,6 +146,18 @@ public class CustomerDaoImpl implements CustomerDao{
 			sqlSession.close();
 		}
 	}
+	
+	public void changePw(String pw, String email) throws Exception {
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			sqlSession.getMapper(CustomerMapper.class).changePw(pw, email);
+			sqlSession.commit();
+		} catch (Exception e) {
+			sqlSession.rollback(); 									
+		} finally {
+			sqlSession.close();
+		}
+	}
 
 	
 }
