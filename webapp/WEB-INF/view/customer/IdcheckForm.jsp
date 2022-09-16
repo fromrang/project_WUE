@@ -66,7 +66,7 @@ function idCheck(){
 		<hr size="1" width="350">
 		<br>
 		<div id="chk">
-			<form action="Idcheck" method="get" name="idcheck" onsubmit="idCheck()">
+			<form action="Idcheck" method="post" name="idcheck" onsubmit="idCheck()">
 				<input type="text" name="email" value="${param.email}">
 					<input id="checkIDBtn" type="submit" value="중복확인">
 					<input type="hidden" name="email2" value="${param.email2}">
@@ -75,14 +75,17 @@ function idCheck(){
 			<br>
 			  <div id="msg2">
 				<c:choose>
+					<c:when test="${message==null}">
+						<input id="cancelBtn" type="button" value="취소" onclick="self.close();">
+					</c:when>
 					<c:when test="${customer.name==null}">
 						<p style="color: gray;">사용가능한 아이디 입니다</p>
-						<input id="cancelBtn" type="button" value="취소">
+						<input id="cancelBtn" type="button" value="취소" onclick="self.close();">
 						<input id="useBtn" type="button" value="사용하기" onclick="useEmail()">
 					</c:when>
 					<c:otherwise>
 						<p style="color: gray;">이미 사용중인 아이디 입니다.</p>
-						<input id="cancelBtn" type="button" value="취소">
+						<input id="cancelBtn" type="button" value="취소" onclick="self.close();">
 					</c:otherwise>
 				</c:choose>
 			  </div>

@@ -51,8 +51,13 @@ fieldset{
 </style>
 <script type="text/javascript">
 
+
 function findIdForm(){
 	window.open('findId','popup','width=500,height=600');
+}
+
+function findPwForm(){
+	window.open('findPw','popup','width=500,height=600');
 }
 </script>
 </head>
@@ -63,6 +68,10 @@ function findIdForm(){
 <main>
 <form action="/WUE/customer/login" method="post" >
 	<h1 style="text-align:center; margin-top: 80px; color: #12467a;">LOGIN</h1>
+	<div class="message" style="text-align: center;">
+		<span style="font-size: 20px; color: red;">${message}</span>
+	</div>
+	<p>
 	<fieldset style="margin: auto; width: 300px; height:230px;">
 		<p></p>
 		<input class="field" type="text" name="email" value= "${member.email}"  placeholder="EMAIL" size = "30" autofocus><p>
@@ -79,7 +88,7 @@ function findIdForm(){
 	<div style="text-align:center; font-size: 12px;" >
 		<input type='button' class="signup-btn" value= '아이디 찾기' onclick= 'findIdForm()' />
 		<span>|</span>
-		<input type='button' class="signup-btn" value= '비밀번호 찾기' onclick= '' />
+		<input type='button' class="signup-btn" value= '비밀번호 찾기' onclick= 'findPwForm()' />
 	</div>
 </form>
 </main>
