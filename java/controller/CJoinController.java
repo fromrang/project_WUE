@@ -8,16 +8,17 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import dao.CustomerDao;
+import dao.CustomerDaoImpl;
 import dto.Customer;
 
 @Controller
 public class CJoinController {
 	@Autowired
-	private CustomerDao customerDao;
+	private CustomerDaoImpl customerDao;
 
 //	public CJoinController setcustomerDao(CustomerDao customerDao) {
 //		this.customerDao = customerDao;
@@ -30,7 +31,7 @@ public class CJoinController {
 	}
 
 	@PostMapping("customer/Join")
-	public String submit(Customer customer, HttpServletRequest request) throws Exception {
+	public String submit(Customer customer, HttpServletRequest request, Model model) throws Exception {
 		String email = "";
 		email += request.getParameter("email");
 		email += "@";
@@ -45,9 +46,19 @@ public class CJoinController {
 		phone += request.getParameter("phone3");
 		customer.setPhone(phone);
 		
-		customer.setPw(encrypt(customer.getPw()));
-		customerDao.CustomerJoin(customer);
-		return "redirect:login";
+		Customer existCustomer = customerDao.findCustomer(customer.getName(), phone);
+		if(existCustomer == null) {
+			customer.setPw(encrypt(customer.getPw()));
+			customerDao.CustomerJoin(customer);
+			model.addAttribute("message", "1000point 적립 완료:)");
+			return "customer/loginForm";
+		}else {
+			model.addAttribute("message", "이미 존재하는 회원입니다.");
+			return "customer/loginForm";
+		}
+		
+		
+		
 	}
 	
 	@PostMapping("customer/delete") 
