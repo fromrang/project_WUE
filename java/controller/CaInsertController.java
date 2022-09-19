@@ -29,7 +29,6 @@ public class CaInsertController {
 		if(customer != null) {
 			try {
 				cartDaoImpl.insetCart(customer.getEmail(), pseq, quantity);
-				//장바구니가 추가되었다는 알람창이 떴으면 좋겠다.
 				return "redirect:/customer/pseq="+pseq;
 			}catch(Exception e) {
 				e.printStackTrace();
