@@ -29,8 +29,16 @@ public class CartDaoImpl {
 				sqlSession.commit();
 			}else {
 				int newQuantity = cart.getQuantity() + quantity;
-				sqlSession.getMapper(CartMapper.class).updateCart(email, pseq, newQuantity);
-				sqlSession.commit();
+				if(newQuantity > 10) {
+					sqlSession.getMapper(CartMapper.class).updateCart(email, pseq, 10);
+					sqlSession.commit();
+				}else if(newQuantity > cart.getTotal_quantity()) {
+					sqlSession.getMapper(CartMapper.class).updateCart(email, pseq, cart.getTotal_quantity());
+					sqlSession.commit();
+				}else {
+					sqlSession.getMapper(CartMapper.class).updateCart(email, pseq, newQuantity);
+					sqlSession.commit();
+				}
 			}
 		}finally {
 			sqlSession.close();
@@ -60,6 +68,16 @@ public class CartDaoImpl {
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		try {
 			return sqlSession.getMapper(CartMapper.class).getImages(pseq);			
+		}finally{
+			sqlSession.close();
+		}
+	}
+	
+	public void updateCartQuantity(String email, int pseq, int quantity){
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			sqlSession.getMapper(CartMapper.class).updateCart(email, pseq, quantity);	
+			sqlSession.commit();
 		}finally{
 			sqlSession.close();
 		}
