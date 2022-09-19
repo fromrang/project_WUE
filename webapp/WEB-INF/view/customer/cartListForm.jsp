@@ -19,6 +19,13 @@
 	.codr_unit{
 		padding	: 30px 10px;
 	}
+	.before_price{
+		color: #777;
+		font-size: 14px;
+		letter-spacing: -0.5px;
+		text-decoration: line-through;
+		vertical-align: middle;
+	}
 	table {
 	    display: table;
 	    border-collapse: separate;
@@ -58,6 +65,12 @@
 	    word-break: break-all;
 	    clip: rect(0, 0, 0, 0);
 	}
+	.count_button{
+		border: 0;
+		outline: 0;
+		background: none;
+	
+	}
 	.image_chk{
 		position: relative;
 	    min-width: 15px;
@@ -87,13 +100,19 @@
 	    margin: 0;
 	    
 	}
-	#quantity {
+	.quantity_input {
 	    display: block;
 	    width: 40px;
 	    height: 28px;
 	    border: 0;
 	    background: none;
 	    font-size: 14px;
+	    line-height: 28px;
+	    color: #777;
+	    text-align: center;
+	}
+	.gae{
+		font-size: 14px;
 	    line-height: 28px;
 	    color: #777;
 	    text-align: center;
@@ -120,9 +139,10 @@
 	
 </style>
 <script type="text/javascript">
+/*
 	function count(type, cart)  {
 		//var i = Number(i);
-		/*
+		
 		console.log(i);
 		  // 결과를 표시할 element
 		   
@@ -160,9 +180,9 @@
 		  }	  
 		  // 결과 출력
 		  resultElement.value = number;
-		  */
+		  
 	}
-	
+	*/
 	function plusPrice(event){
 		var obj_length = form.productPrice.length;
 		
@@ -231,6 +251,47 @@
 			form.action = "/WUE/customer/order";
 			form.submit();
 		}
+	}
+	
+	function count(type, i)  {
+		  // 결과를 표시할 element
+		  const resultElement = document.getElementById('quantity_'+i);
+		  const totalElement = document.getElementById('total_quantity_'+i);
+		  const pseqElement = document.getElementById('pseq_'+i);
+		  
+		  let number = resultElement.value;
+		  let quantity = totalElement.value;
+		  let pseq = pseqElement.value;
+		  // 더하기/빼기
+		  if(type === 'plus') {
+		    number = parseInt(number) + 1;
+		  }else if(type === 'minus')  {
+			  if(number == 1){
+				  number = 1;
+			  }else{				  
+			    number = parseInt(number) - 1;
+			  }
+		  }else if(type == 'text'){
+			  if(number <= 0){
+				  number =1;
+			  }else{
+				  resultElement.value = number;
+			  }
+		  }
+		  
+		  if(number >= 11){
+			  alert("최대 구매 수량은 10개 입니다.");
+			  number = 10;
+		  }
+		  if(number == parseInt(quantity)+1){
+			  alert("현재 재고는"+ quantity +"입니다.");
+			  number = parseInt(quantity);
+		  }	  
+		  // 결과 출력
+		  resultElement.value = number;
+		  
+		  form.action = "/WUE/customer/cart/insert/pseq="+pseq+"/quantity="+number;
+		  form.submit();
 	}
 
 </script>
@@ -303,6 +364,7 @@
 												<span></span>	
 											</c:when>
 											<c:when test="${cartList[i].sale eq 'y'}">
+												<em class = "before_price">${cartList[i].price}원</em><p>
 												<em class = "price">${cartList[i].sale_price}</em>
 												<input type = "hidden" name ="productPrice" value="${cartList[i].quantity*cartList[i].sale_price}"/>         
 			                					<c:set var= "productPrice" value = "${cartList[i].quantity * cartList[i].sale_price}"/>
@@ -310,7 +372,7 @@
 												<span>원</span>					
 											</c:when>
 											<c:otherwise>
-												<em>${cartList[i].price * cartList[i].quantity}</em>
+												<em class = "price">${cartList[i].price}</em>
 												<input type = "hidden" name ="productPrice" value="${cartList[i].quantity*cartList[i].price}"/>         
 			                					<c:set var= "productPrice" value = "${cartList[i].quantity * cartList[i].price}"/>
 			                					<c:set var="total" value = "${total + cartList[i].quantity * cartList[i].price}"/> 
@@ -326,8 +388,20 @@
 												<span>품절</span>	
 											</c:when>
 											<c:otherwise>
-												<em>${cartList[i].quantity}</em>
-												<span>개</span>
+												<%-- <em>${cartList[i].quantity}</em>
+												<span>개</span> --%>
+												<div class="minus_button" style="float: left; ">
+													<input class="count_button" type='button' onclick='count("minus", ${i})' value='-' />
+												</div>
+												<div class="quantity_text"  style="float: left; ">
+													<input type="text" value='${cartList[i].quantity}' id='quantity_${i}' name='quantity' onchange='count("text", ${i})' class="quantity_input">
+													<input type="hidden" value='${cartList[i].total_quantity}' id='total_quantity_${i}' name='total_quantity' >
+													<input type="hidden" value='${cartList[i].pseq}' id='pseq_${i}' name='pseq' >  
+												</div>
+												<div class="plus_button"  style="float: left; ">
+													<input class="count_button" class="count_button"type='button' onclick='count("plus", ${i})' value='+' />
+												</div>
+												<span class="gae">개</span>
 											</c:otherwise>	
 										</c:choose>	
 									</div>

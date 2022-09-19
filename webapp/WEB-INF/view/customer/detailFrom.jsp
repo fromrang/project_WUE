@@ -91,8 +91,10 @@ ul>li {
 	}
 	
 	function cartInsertAction(){
+		
 		form.action="cart/insert";
 		form.submit();
+		window.open('cartAlarm','popup','width=400,height=200, left=1000, top=700');
 		
 	}
 	function orderInsertAction(){
@@ -181,11 +183,9 @@ ul>li {
 					</c:otherwise>
 				</c:choose>
 				<p>
-					<input style="margin-left: 500px;" type='button'
-						onclick='count("minus")' value='-' /> <input type="text" value=1
-						id='quantity' name='quantity' onchange='count("text")'
-						class="quantity_input"> <input type='button'
-						onclick='count("plus")' value='+' />
+					<input style="margin-left: 500px;" type='button' onclick='count("minus")' value='-' /> 
+					<input type="text" value=1 id='quantity' name='quantity' onchange='count("text")' class="quantity_input"> 
+					<input type='button' onclick='count("plus")' value='+' />
 			</div>
 			<p>
 			<c:choose>
