@@ -23,7 +23,7 @@ public interface CartMapper {
 	@Select("select url from pimages where pseq=#{pseq}")
 	public List<String> getImages(@Param("pseq")int pseq) throws Exception;
 	
-	@Select("select * from cart where email = #{email} and pseq=#{pseq}")
+	@Select("select * from cart_view where email = #{email} and pseq=#{pseq}")
 	public Cart selectCartOne(@Param("email")String email, @Param("pseq")int pseq);
 	
 	@Update("update cart set quantity=#{quantity} where  email = #{email} and pseq=#{pseq}")
